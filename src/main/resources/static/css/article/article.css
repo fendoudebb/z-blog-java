@@ -1,0 +1,51 @@
+pre {
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+pre code {
+    white-space: nowrap;
+}
+
+code > ol {
+    margin: 0;
+}
+
+.label {
+    padding: .3em .5em;
+}
+
+.article-column {
+    background-color: white;
+}
+
+.article-tag {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.page-header {
+    margin: 0;
+    padding: 0;
+}
+
+pre {
+    position: relative
+}
+
+pre:hover .hljs-button {
+    display: block
+}
+
+.hljs-button {
+    display: none;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    font-size: 12px;
+    color: white;
+    padding: 2px 8px;
+    margin: 2px;
+    cursor: pointer;
+}

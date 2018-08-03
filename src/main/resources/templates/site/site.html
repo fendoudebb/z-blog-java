@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>网址导航 | msj</title>
+    <meta name="keywords" th:content="网址导航,网址,导航,麦司机">
+    <meta name="description" th:content="网址导航 麦司机">
+    <meta name="copyright" content="maisiji.cn">
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+    <link href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" rel="stylesheet">
+    <link href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/common.css}" >
+</head>
+<body>
+<div th:replace="/base/navbar :: navbar"></div>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 article-column">
+
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<span th:replace="/base/js :: js"></span>
+</body>
+</html>

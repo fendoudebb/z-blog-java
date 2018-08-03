@@ -1,0 +1,67 @@
+package com.msj.blog.exception;
+
+import com.msj.blog.entity.vo.MsgTable;
+import com.msj.blog.entity.vo.Response;
+import com.msj.blog.util.IpUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.TypeMismatchException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
+import org.thymeleaf.exceptions.TemplateInputException;
+
+@ControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+
+    /**
+     * 权限不足异常
+     * @return 返回403页面
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ModelAndView handlerAccessDeniedException() {
+        return new ModelAndView("error/403");
+    }
+
+    /**
+     * 路径不存在异常
+     * @return 返回404页面
+     */
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ModelAndView handlerNoHandlerFoundException() {
+        return new ModelAndView("error/404");
+    }
+
+    @ExceptionHandler(TemplateInputException.class)
+    public ModelAndView handlerTemplateInputException(TemplateInputException e) {
+        log.error("ip: {}, {} template not found", IpUtil.getIpAddress() ,e.getTemplateName());
+        return new ModelAndView("error/404");
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public Response handleException(Exception e) {
+        e.printStackTrace();
+        log.error("ExceptionHandler -> {}", e);
+        Response response = new Response();
+        if (e instanceof ServiceException) {
+            ServiceException se = (ServiceException) e;
+            response.setMsg(se.getMsg());
+        } else if (e instanceof MissingServletRequestParameterException) {
+            response.setMsg(MsgTable.MISSING_PARAMETERS);
+        } else if (e instanceof TypeMismatchException) {
+            response.setMsg(MsgTable.MISMATCH_TYPE);
+        } else if (e instanceof HttpMessageNotReadableException){
+            response.setMsg(MsgTable.MISSING_REQUEST_PARAM);
+        }else {
+            response.setMsg(MsgTable.INTERNAL_ERROR);
+        }
+        return response.fail();
+    }
+
+}

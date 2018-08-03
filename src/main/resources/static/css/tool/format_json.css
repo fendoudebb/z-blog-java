@@ -1,0 +1,109 @@
+.format-json-area {
+    height: 100%;
+    margin-top: 50px;
+}
+
+#json-textarea {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 50vh;
+    max-height: 50vh;
+}
+
+#json {
+    border: 1px solid #563d7c;
+    border-radius: 2px;
+    background-color: #ffffffff;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-break: break-all;
+    min-height: 50vh;
+    max-height: 50vh;
+    min-width: 100%;
+    max-width: 100%
+}
+
+#format-json-result-btn-group {
+    margin-top: 20px;
+}
+
+#format-json-result:-moz-full-screen {
+    background: white;
+    min-height: 100vh;
+    max-height: 100vh;
+    min-width: 100%;
+    max-width: 100%
+}
+#format-json-result:-webkit-full-screen {
+    background: white;
+    min-height: 100vh;
+    max-height: 100vh;
+    min-width: 100%;
+    max-width: 100%
+}
+#format-json-result:fullscreen {
+    background: white;
+    min-height: 100vh;
+    max-height: 100vh;
+    min-width: 100%;
+    max-width: 100%
+}
+
+#format-json-result:-moz-full-screen > #json {
+    min-height: 80vh;
+    max-height: 80vh;
+}
+#format-json-result:-webkit-full-screen > #json {
+    min-height: 80vh;
+    max-height: 80vh;
+}
+#format-json-result:fullscreen > #json {
+    min-height: 80vh;
+    max-height: 80vh;
+}
+
+#format-json-result:-moz-full-screen > #format-json-result-btn-group {
+    margin-top: 5vh;
+}
+#format-json-result:-webkit-full-screen > #format-json-result-btn-group {
+    margin-top: 5vh;
+}
+#format-json-result:fullscreen > #format-json-result-btn-group {
+    margin-top: 5vh;
+}
+
+/*html:-moz-full-screen {
+    background: red;
+}
+
+html:-webkit-full-screen {
+    background: red;
+}
+
+body:-ms-fullscreen {
+    overflow: auto; !* fix for IE11 scrollbar *!
+}
+
+html:fullscreen {
+    background: red;
+}*/
+
+#go-top {
+    cursor: pointer;
+    display: none;
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    /*background:url(../../images/favicon.ico) no-repeat -70px 0px;*/
+    background-color: white;
+    border: 1px solid #DCDCDC;
+    text-align: center;
+}
+
+.icon-up {
+    line-height: 50px;
+    color: #5BC0DE;
+    font-size: 25px
+}

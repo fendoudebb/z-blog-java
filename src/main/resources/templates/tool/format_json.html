@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>格式化JSON | msj</title>
+    <meta name="keywords" content="格式化json,解析json,压缩json,格式化,解析,压缩">
+    <meta name="description" content="格式化json,解析json,压缩json,格式化,解析,压缩">
+    <meta name="copyright" content="maisiji.cn">
+    <meta name="revisit-after" content="7 days"><!--搜索引擎爬虫重访时间-->
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+    <link href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" rel="stylesheet">
+    <link href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://s.maisiji.cn/lib/jquery-jsonview/1.2.3/jquery.jsonview.min.css" rel="stylesheet">
+    <link href="https://s.maisiji.cn/lib/toastr/2.1.4/toastr.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/iconfont.css}" rel="stylesheet">
+    <link th:href="@{/css/tool/format_json.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="/base/navbar :: navbar"></div>
+<div class="row format-json-area">
+    <div class="col-md-5 col-md-offset-1">
+        <textarea class="form-control" id="json-textarea" rows="20" placeholder="请输入JSON字符串" title="格式化JSON"></textarea>
+        <div style="margin-top: 20px">
+            <button id="format-btn" type="button" class="btn btn-primary" title="解析json">解析
+            </button>
+            <button id="compress-btn" type="button" class="btn btn-info" title="压缩成一行">压缩
+            </button>
+            <button type="button" class="btn btn-success" data-clipboard-target="#json-textarea" title="复制文本内容">复制
+            </button>
+            <button id="save-btn" type="button" class="btn btn-warning" title="保存至本地">保存
+            </button>
+            <button id="clear-btn" type="button" class="btn btn-default" onclick="" title="清空数据">清空
+            </button>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div id="format-json-result">
+            <div id="json" title="格式化json结果"></div>
+            <div id="format-json-result-btn-group" style="margin-top: 20px">
+                <button id="collapse-expand-btn" type="button" class="btn btn-primary" title="折叠/展开json">折叠
+                </button>
+                <button id="full-screen-btn" type="button" class="btn btn-info" title="全屏显示">全屏
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="go-top" title="回到顶部">
+    <!--<i class="glyphicon glyphicon-menu-up go-top-icon"></i>-->
+    <i class="iconfont icon-up"></i>
+</div>
+
+<span th:replace="/base/js :: js"></span>
+<script src="https://s.maisiji.cn/lib/jquery-jsonview/1.2.3/jquery.jsonview.min.js"></script>
+<script src="https://s.maisiji.cn/lib/toastr/2.1.4/toastr.min.js"></script>
+<script src="https://s.maisiji.cn/lib/clipboard/2.0.1/clipboard.min.js"></script>
+<script th:src="@{/js/tool/format_json.js}"></script>
+</body>
+</html>

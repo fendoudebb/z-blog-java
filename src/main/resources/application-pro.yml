@@ -1,0 +1,23 @@
+spring:
+  thymeleaf:
+    cache: true
+  jpa:
+    show-sql: false
+  resources:
+    chain:
+      # 启用缓存
+      cache: true
+      # 开启gzip压缩
+      gzipped: true
+    cache:
+      cachecontrol:
+        max-age: 3600s
+      # 资源缓存时间，单位秒
+      period: 2592000s #单位:秒, 此处为30天
+wechat:
+  app-id: d
+  app-secret: e
+  token: f
+
+
+

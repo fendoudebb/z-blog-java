@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:inline="text">[[${article.getTitle()}]] | msj</title>
+    <meta name="keywords" th:content="${article.getKeywords()}">
+    <meta name="description" th:content="${article.description}">
+    <meta name="copyright" content="maisiji.cn">
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+    <link href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" rel="stylesheet">
+    <link href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://s.maisiji.cn/lib/highlight/9.12.0/css/androidstudio.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/common.css}" >
+    <link rel="stylesheet" th:href="@{/css/article/article.css}">
+</head>
+<body>
+<div th:replace="/base/navbar :: navbar"></div>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 article-column">
+        <div class="page-header">
+            <h1 class="article-title"  th:text="${article.getTitle()}"></h1>
+        </div>
+        <div style="margin-top: 5px" th:unless="${showDetailInfo}">
+            <span th:class="${article.isOriginal() ? 'label label-success' : 'label label-info'}"
+                  th:text="${article.isOriginal() ? '原创' : '转发'}"></span>
+            <span class="article-tag" th:text="${article.getAuthor()}"></span>
+            <span class="article-tag" th:text="${article.getArticleModuleAlias()}"></span>
+            <span class="article-tag" th:text="${#temporals.format(article.getUpdateTime(),'yyy-MM-dd')}"></span>
+        </div>
+
+        <div style="margin-top: 15px" th:utext="${article.getContent()}"></div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<span th:replace="/base/js :: js"></span>
+<script src="https://s.maisiji.cn/lib/highlight/9.12.0/js/highlight.min.js"></script>
+<script src="https://s.maisiji.cn/lib/clipboard/2.0.1/clipboard.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+
+    $("pre").each(function (index, element) {
+        let preTag = $(this);
+        preTag.append("<div class='hljs-button' title='Copy to Clipboard'>Copy</div>");
+        let id = "code" + index;
+        preTag.children("code").attr("id", id);
+        preTag.children(".hljs-button").attr("data-clipboard-target", "#" + id);
+    });
+    let clipboard = new ClipboardJS('.hljs-button');
+    clipboard.on('success', function (e) {
+        e.clearSelection();
+        let copyBtn = $(e.trigger);
+        copyBtn.html("Copy Success");
+        setTimeout(function () {
+            copyBtn.html("Copy");
+        }, 1000);
+
+    });
+    clipboard.on('error', function (e) {
+        let copyBtn = $(e.trigger);
+        copyBtn.html("Copy Fail");
+        setTimeout(function () {
+            copyBtn.html("Copy");
+        }, 1000);
+    });
+</script>
+</body>
+</html>

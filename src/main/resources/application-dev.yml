@@ -1,0 +1,30 @@
+spring:
+  thymeleaf:
+    cache: false
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/msg-admin?useUnicode=true&amp;characterEncoding=utf8mb4
+    username: root
+    password: root
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+wechat:
+  app-id: a
+  app-secret: b
+  token: c
+
+logging:
+  path: D:/share_log/
