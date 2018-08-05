@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class BaseController {
     @Resource
-    private HttpServletRequest request;
+    protected HttpServletRequest request;
 
     protected <T> Response<T> getResponse(T data) {
         Response<T> response = new Response<>();

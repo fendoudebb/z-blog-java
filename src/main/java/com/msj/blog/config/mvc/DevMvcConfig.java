@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -32,14 +31,14 @@ public class DevMvcConfig implements WebMvcConfigurer {
         configurer.setTaskExecutor((AsyncTaskExecutor) appExecutor.getExecutor());
     }
 
-    @Override
+    /*@Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedHeaders("*")
                 .allowedMethods("*")
                 .allowCredentials(true)
-                .allowedOrigins("http://localhost:8082");
-    }
+                .allowedOrigins("http://localhost:8081");
+    }*/
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

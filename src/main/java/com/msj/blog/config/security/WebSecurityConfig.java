@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
@@ -76,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
         http
                 .csrf().disable()
 
@@ -120,7 +119,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .expiredUrl("/login?expire")
                     .sessionRegistry(getSessionRegistry())*/;
         http.httpBasic();
-
+        // @formatter:on
 
         /*http
                 .csrf().disable()
@@ -153,8 +152,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .key("token_key");*/
     }
 
-    @Bean
-    public SessionRegistry getSessionRegistry(){
-        return new SessionRegistryImpl();
-    }
 }

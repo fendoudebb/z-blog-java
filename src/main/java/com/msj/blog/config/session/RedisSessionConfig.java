@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 @Configuration
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds=2000,redisNamespace = "msg-blog-session")
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds=2000,redisNamespace = "msj-blog-session")
 public class RedisSessionConfig {
     /*@Bean
     public CookieSerializer cookieSerializer() {

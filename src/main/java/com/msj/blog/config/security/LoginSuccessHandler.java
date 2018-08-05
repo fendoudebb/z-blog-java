@@ -45,8 +45,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
         session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
         try {
-            response.setHeader("Access-Control-Allow-Origin", "http://localhost:8082");
-            response.setHeader("Access-Control-Allow-Credentials", "true");
             response.setContentType("application/json;charset=UTF-8");
             @Cleanup PrintWriter out = response.getWriter();
             Response<List<String>> res = new Response<>();
