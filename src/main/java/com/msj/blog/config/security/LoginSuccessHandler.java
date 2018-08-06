@@ -8,6 +8,7 @@ import com.msj.blog.entity.vo.Response;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
@@ -34,21 +35,18 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        WebAuthenticationDetails details = (WebAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
+        /*WebAuthenticationDetails details = (WebAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
         String sessionId = details.getSessionId();
         log.info("login--IP:" + details.getRemoteAddress() + ",sessionId: " + sessionId);
         SysUser user = (SysUser) authentication.getPrincipal();
         String name = authentication.getName();
-        log.info("login--name:" + name + "principal:" + user.getUsername());
-
-        HttpSession session = request.getSession();
-        session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
-
+        log.info("login--name:" + name + " principal:" + user.getUsername());*/
         try {
             response.setContentType("application/json;charset=UTF-8");
             @Cleanup PrintWriter out = response.getWriter();
             Response<List<String>> res = new Response<>();
-            List<String> roles = user.getRoles().stream().map(SysRole::getName).collect(Collectors.toList());
+//            List<String> roles = user.getRoles().stream().map(SysRole::getName).collect(Collectors.toList());
+            List<String> roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
             res.setMsg(MsgTable.LOGIN_SUCCESS);
             res.setData(roles);
             out.append(objectMapper.writeValueAsString(res));

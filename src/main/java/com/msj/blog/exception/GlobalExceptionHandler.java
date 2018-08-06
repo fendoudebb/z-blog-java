@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,19 +49,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Response handleException(Exception e) {
-        e.printStackTrace();
         log.error("ExceptionHandler -> {}", e);
         Response response = new Response();
-        if (e instanceof ServiceException) {
-            ServiceException se = (ServiceException) e;
-            response.setMsg(se.getMsg());
+        if (e instanceof MethodArgumentNotValidException) {
+            BindingResult bindingResult = ((MethodArgumentNotValidException) e).getBindingResult();
+            String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
+            response.setMsg(defaultMessage);
         } else if (e instanceof MissingServletRequestParameterException) {
             response.setMsg(MsgTable.MISSING_PARAMETERS);
         } else if (e instanceof TypeMismatchException) {
             response.setMsg(MsgTable.MISMATCH_TYPE);
         } else if (e instanceof HttpMessageNotReadableException){
             response.setMsg(MsgTable.MISSING_REQUEST_PARAM);
-        }else {
+        } else if (e instanceof HttpRequestMethodNotSupportedException){
+            response.setMsg(MsgTable.REQUEST_METHOD_NOT_SUPPORT);
+        } else {
             response.setMsg(MsgTable.INTERNAL_ERROR);
         }
         return response.fail();

@@ -6,23 +6,24 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * zbj: create on 2018/08/06 10:36
+ */
 @Data
-public class ArticleVo implements Serializable{
-    private static final long serialVersionUID = -4535144378381183641L;
+public class ArticleAdminPageVo implements Serializable{
+    private static final long serialVersionUID = -6378756504694367864L;
+
     private Long id;
     private String title;
     private String author;
     private String keywords;
     private String description;
     private boolean original;//是否原创
-    private String originalLink;//原文链接
-    private String content;
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    private LocalDateTime createTime;
+    private String originalLink;//原创链接
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime updateTime;
-    private Long articleModuleId;
-    private String articleModule;
-    private String articleModuleAlias;
+    private String category;
+
+    private Integer auditStatus;
 
 }

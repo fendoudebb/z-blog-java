@@ -18,7 +18,7 @@ import java.io.IOException;
 public class AuthEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        log.info("开始验证");
+        log.info("验证失败");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 }

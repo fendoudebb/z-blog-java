@@ -4,10 +4,9 @@ package com.msj.blog.service.article;
 import com.msj.blog.entity.domain.article.Article;
 import com.msj.blog.entity.domain.article.ArticleCategory;
 import com.msj.blog.entity.domain.article.ArticleModule;
-import com.msj.blog.entity.vo.article.ArticleCategoryVo;
-import com.msj.blog.entity.vo.article.ArticleModuleVo;
-import com.msj.blog.entity.vo.article.ArticlePageVo;
-import com.msj.blog.entity.vo.article.ArticleVo;
+import com.msj.blog.entity.domain.enu.AuditStatus;
+import com.msj.blog.entity.dto.article.ArticleDto;
+import com.msj.blog.entity.vo.article.*;
 import com.msj.blog.entity.vo.page.PageVo;
 import com.msj.blog.repository.article.ArticleCategoryRepository;
 import com.msj.blog.repository.article.ArticleModuleRepository;
@@ -46,31 +45,46 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Optional<Article> findByIdAndAuditStatus(AuditStatus auditStatus, Long id) {
+        return articleRepository.findByAuditStatusEqualsAndId(auditStatus, id);
+    }
+
+    @Override
+    public Page<Article> findByPage(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return articleRepository.findAllByOrderByUpdateTimeDesc(pageable);
+    }
+
+    @Override
+    public Page<Article> findByPageAndAuditStatus(AuditStatus auditStatus, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return articleRepository.findAllByAuditStatusEqualsOrderByUpdateTimeDesc(auditStatus, pageable);
+    }
+
+    @Override
     @Transactional
-    @CacheEvict(value = {"article-page"}, allEntries = true)
-    public boolean saveArticle(ArticleVo articleVo) {
-        if (articleVo == null) {
+    @CacheEvict(value = {"article-page-ui"}, allEntries = true)
+    public boolean saveArticle(ArticleDto articleDto) {
+        if (articleDto == null) {
             return false;
         }
         Article article = new Article();
-        ArticleModule articleModule = articleModuleRepository.findById(articleVo.getArticleModuleId()).orElse(null);
-        BeanUtils.copyProperties(articleVo, article);
+        ArticleModule articleModule = articleModuleRepository.findById(articleDto.getArticleModuleId()).orElse(null);
+        BeanUtils.copyProperties(articleDto, article);
         article.setArticleModule(articleModule);
         Article a = articleRepository.save(article);
         return a.getId() != null;
     }
 
     @Override
-    @Cacheable(key = "'article-' + #p0")
-    public Optional<ArticleVo> getById(Long id) {
-        return findById(id).map(article -> {
-            ArticleVo articleVo = new ArticleVo();
-            BeanUtils.copyProperties(article, articleVo);
-            articleVo.setContent(MarkdownUtil.parse(article.getContent()));
-            articleVo.setArticleModule(article.getArticleModule().getName());
-            articleVo.setArticleModuleAlias(article.getArticleModule().getAlias());
-            return articleVo;
-        });
+    public Optional<ArticleVo> getAdminArticleById(Long id) {
+        return findById(id).map(this::transferArticle2ArticleVo);
+    }
+
+    @Override
+    @Cacheable(key = "'article-ui-' + #p0")
+    public Optional<ArticleVo> getUIArticleById(Long id) {
+        return findByIdAndAuditStatus(AuditStatus.online, id).map(this::transferArticle2ArticleVo);
     }
 
     @Override
@@ -84,27 +98,48 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    @Cacheable(value = {"article-page"}, key = "'article-page-' + #p0 + '-' + #p1")
-    public PageVo<ArticlePageVo> findByPage(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Article> pages = articleRepository.findAllByOrderByUpdateTimeDesc(pageable);
-        PageVo<ArticlePageVo> pageVo = new PageVo<>();
+    public PageVo<ArticleAdminPageVo> findAdminArticleByPage(Integer page, Integer size) {
+        Page<Article> pages = findByPage(page, size);
+        PageVo<ArticleAdminPageVo> pageVo = new PageVo<>();
         pageVo.setTotalElements(pages.getTotalElements());
         pageVo.setTotalPages(pages.getTotalPages());
-        List<Article> content = pages.getContent();
-        List<ArticlePageVo> articlePageVos = new ArrayList<>();
-        ArticlePageVo articlePageVo;
-        for (Article article : content) {
-            articlePageVo = new ArticlePageVo();
+        List<ArticleAdminPageVo> articleAdminPageVos = new ArrayList<>();
+        pages.forEach(article -> {
+            ArticleAdminPageVo articleAdminPageVo = new ArticleAdminPageVo();
+            BeanUtils.copyProperties(article, articleAdminPageVo);
             ArticleModule articleModule = article.getArticleModule();
             if (articleModule != null) {
-                articlePageVo.setArticleModule(articleModule.getName());
-                articlePageVo.setArticleModuleAlias(articleModule.getAlias());
+                articleAdminPageVo.setCategory(articleModule.getName());
             }
-            BeanUtils.copyProperties(article, articlePageVo);
-            articlePageVos.add(articlePageVo);
-        }
-        pageVo.setContent(articlePageVos);
+            articleAdminPageVo.setAuditStatus(article.getAuditStatus().getType());
+            articleAdminPageVos.add(articleAdminPageVo);
+        });
+        pageVo.setContent(articleAdminPageVos);
+        pageVo.setNumber(pages.getNumber());
+        pageVo.setNumberOfElements(pages.getNumberOfElements());
+        pageVo.setSize(pages.getSize());
+        return pageVo;
+    }
+
+    @Override
+    @Cacheable(value = {"article-page-ui"}, key = "'article-page-ui-' + #p0 + '-' + #p1")
+    public PageVo<ArticleUIPageVo> findUIArticleByPage(Integer page, Integer size) {
+        Page<Article> pages = findByPageAndAuditStatus(AuditStatus.online, page, size);
+        PageVo<ArticleUIPageVo> pageVo = new PageVo<>();
+        pageVo.setTotalElements(pages.getTotalElements());
+        pageVo.setTotalPages(pages.getTotalPages());
+        List<ArticleUIPageVo> articleUIPageVos = new ArrayList<>();
+        pages.forEach(article -> {
+            ArticleUIPageVo articleUIPageVo = new ArticleUIPageVo();
+            ArticleModule articleModule = article.getArticleModule();
+            BeanUtils.copyProperties(article, articleUIPageVo);
+            if (articleModule != null) {
+                articleUIPageVo.setArticleModule(articleModule.getName());
+                articleUIPageVo.setArticleModuleAlias(articleModule.getAlias());
+            }
+            articleUIPageVos.add(articleUIPageVo);
+        });
+        pageVo.setContent(articleUIPageVos);
         pageVo.setNumber(pages.getNumber());
         pageVo.setNumberOfElements(pages.getNumberOfElements());
         pageVo.setSize(pages.getSize());
@@ -136,5 +171,14 @@ public class ArticleServiceImpl implements ArticleService {
             articleCategoryVos.add(articleCategoryVo);
         }
         return articleCategoryVos;
+    }
+
+    private ArticleVo transferArticle2ArticleVo(Article article) {
+        ArticleVo articleVo = new ArticleVo();
+        BeanUtils.copyProperties(article, articleVo);
+        articleVo.setContent(MarkdownUtil.parse(article.getContent()));
+        articleVo.setArticleModule(article.getArticleModule().getName());
+        articleVo.setArticleModuleAlias(article.getArticleModule().getAlias());
+        return articleVo;
     }
 }

@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 @DynamicUpdate
 @DynamicInsert
 @SelectBeforeUpdate
-@Where(clause = "audit_status=0")
 @Table(name = "article",indexes = {@Index(columnList = "title"),@Index(columnList = "author")})
 public class Article extends BaseEntity {
     private static final long serialVersionUID = 956501929140358804L;

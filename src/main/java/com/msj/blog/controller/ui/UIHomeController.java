@@ -1,7 +1,7 @@
 package com.msj.blog.controller.ui;
 
 import com.msj.blog.controller.BaseController;
-import com.msj.blog.entity.vo.article.ArticlePageVo;
+import com.msj.blog.entity.vo.article.ArticleUIPageVo;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.page.PageVo;
 import com.msj.blog.service.article.ArticleService;
@@ -28,11 +28,11 @@ public class UIHomeController extends BaseController {
 
     @GetMapping("/")
     public String index(WebRequest webRequest, Model model, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
-        PageVo<ArticlePageVo> articleVoPageVo = articleService.findByPage(page, size);
+        PageVo<ArticleUIPageVo> articleVoPageVo = articleService.findUIArticleByPage(page, size);
         if (webRequest.checkNotModified(articleVoPageVo.getLastModifyTime())) {
             return null;
         }
-        List<ArticlePageVo> content = articleVoPageVo.getContent();
+        List<ArticleUIPageVo> content = articleVoPageVo.getContent();
         if (content == null || content.isEmpty()) {
             return "error/404";
         }

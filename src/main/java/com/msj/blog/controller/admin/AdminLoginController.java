@@ -14,11 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminLoginController extends BaseController{
 
 
-    @RequestMapping(value = "/login")
-    public Response login() {
-        log.info("login...");
-        return getResponse("success");
-    }
+
 
 
 

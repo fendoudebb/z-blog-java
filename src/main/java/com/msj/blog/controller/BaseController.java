@@ -19,4 +19,10 @@ public class BaseController {
         return response;
     }
 
+    protected Response getResponse(String msg) {
+        Response response = new Response();
+        response.setMsg(msg);
+        return response;
+    }
+
 }

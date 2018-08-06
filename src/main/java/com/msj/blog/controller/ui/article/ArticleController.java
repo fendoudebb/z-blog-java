@@ -26,9 +26,9 @@ public class ArticleController extends BaseController {
     @Resource
     private ArticleService articleService;
 
-    @GetMapping(value = "/{module}/{id}")
+    @GetMapping(value = {"/{module}/{id}"})
     public String article(WebRequest webRequest, Model model, @PathVariable String module, @PathVariable Long id) {
-        ArticleVo articleVo = articleService.getById(id).orElse(null);
+        ArticleVo articleVo = articleService.getUIArticleById(id).orElse(null);
         if (articleVo == null || !Objects.equals(module, articleVo.getArticleModule())) {
             return "error/404";
         }
@@ -38,5 +38,6 @@ public class ArticleController extends BaseController {
         model.addAttribute("article", articleVo);
         return "article/article";
     }
+
 
 }
