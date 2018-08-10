@@ -22,7 +22,9 @@ public class SiteDetail extends BaseEntity {
 
     private static final long serialVersionUID = -7660383773690507443L;
     private Integer sort;//网址排序
+    @Column(name = "name", length = 16, nullable = false)
     private String name;
+    @Column(name = "url", length = 100, nullable = false)
     private String url;
 
     @ManyToOne

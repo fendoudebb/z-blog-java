@@ -15,13 +15,14 @@ import java.util.Set;
 @DynamicUpdate
 @DynamicInsert
 @Table(name = "article_category",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"category_name"})})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 public class ArticleCategory extends BaseEntity {
 
     private static final long serialVersionUID = -9123364858524160112L;
     private Integer sort;//分类排序
-    @Column(name = "category_name", length = 16, nullable = false)
+    @Column(name = "name", length = 16, nullable = false)
     private String name;
+    @Column(name = "alias", length = 16, nullable = false)
     private String alias;
 
     @OneToMany(mappedBy = "articleCategory")

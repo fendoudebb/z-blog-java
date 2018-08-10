@@ -9,7 +9,6 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
-import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -22,14 +21,14 @@ import java.time.LocalDateTime;
 @DynamicUpdate
 @DynamicInsert
 @SelectBeforeUpdate
-@Table(name = "article",indexes = {@Index(columnList = "article_title"),@Index(columnList = "article_author")})
+@Table(name = "article", indexes = {@Index(columnList = "title"), @Index(columnList = "author")})
 public class Article extends BaseEntity {
     private static final long serialVersionUID = 956501929140358804L;
 
-    @Column(name = "article_title",nullable = false)
+    @Column(name = "title", length = 50, nullable = false)
     private String title;
 
-    @Column(name = "article_author", columnDefinition = "varchar(20) not null default \"msj\"")
+    @Column(name = "author", columnDefinition = "varchar(20) not null default \"msj\"")
     private String author;
 
     @Column(columnDefinition = "bit(1) default 1")
@@ -37,8 +36,10 @@ public class Article extends BaseEntity {
 
     private String originalLink;//原文链接
 
+    @Column(name = "keywords", length = 30)
     private String keywords;
 
+    @Column(name = "description", length = 80)
     private String description;
 
     @Lob

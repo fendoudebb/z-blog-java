@@ -20,7 +20,9 @@ public class SiteModule extends BaseEntity {
 
     private static final long serialVersionUID = 3580741047829758549L;
     private Integer sort;//模块排序
+    @Column(name = "name", length = 16, nullable = false)
     private String name;//模块名字
+    @Column(name = "alias", length = 16, nullable = false)
     private String alias;//别名
 
     @ManyToMany(mappedBy = "siteModules")

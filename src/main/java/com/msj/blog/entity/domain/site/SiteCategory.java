@@ -23,6 +23,7 @@ public class SiteCategory extends BaseEntity {
 
     private static final long serialVersionUID = 4072846512022876087L;
     private Integer sort;//分类排序
+    @Column(name = "name", length = 16, nullable = false)
     private String name;
 
     @ManyToMany
