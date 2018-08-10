@@ -21,8 +21,8 @@ public class ArticleVo implements Serializable{
     private LocalDateTime createTime;
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime updateTime;
-    private Long articleModuleId;
-    private String articleModule;
-    private String articleModuleAlias;
+    private Long categoryId;
+    private String articleCategory;
+    private String articleCategoryAlias;
 
 }

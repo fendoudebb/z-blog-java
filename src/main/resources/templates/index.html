@@ -23,11 +23,11 @@
     <div class="col-md-3"></div>
     <div class="col-md-6" style="margin: 0 10px">
         <div class="index-article" th:each="content,contentStat : ${articleVoPageVo.getContent()}">
-            <a th:href="@{/article/{module}/{id}(module=${content.getArticleModule()},id=${content.getId()})}" target="_blank" class="index-title" th:text="${content.getTitle()}" th:alt-title="${content.getTitle()}"></a>
+            <a th:href="@{/article/{category}/{id}(category=${content.getArticleCategory()},id=${content.getId()})}" target="_blank" class="index-title" th:text="${content.getTitle()}" th:alt-title="${content.getTitle()}"></a>
             <div style="margin-top: 5px">
                 <span th:class="${content.isOriginal() ? 'label label-success' : 'label label-info'}" th:text="${content.isOriginal() ? '原创' : '转发'}"></span>
                 <i class="iconfont icon-author" style="margin-left: 5px"><span class="index-tag" th:text="${content.getAuthor()}"></span></i>
-                <i class="iconfont icon-category"><span class="index-tag" th:text="${content.getArticleModuleAlias()}"></span></i>
+                <i class="iconfont icon-category"><span class="index-tag" th:text="${content.getArticleCategoryAlias()}"></span></i>
                 <i class="iconfont icon-date"><span class="index-tag" th:text="${#temporals.format(content.getUpdateTime(),'yyy-MM-dd')}"></span></i>
             </div>
             <div style="margin-top: 5px">

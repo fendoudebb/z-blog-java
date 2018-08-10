@@ -20,6 +20,6 @@ public class ArticleUIPageVo implements Serializable{
     private boolean original;//是否原创
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime updateTime;
-    private String articleModule;
-    private String articleModuleAlias;
+    private String articleCategory;
+    private String articleCategoryAlias;
 }

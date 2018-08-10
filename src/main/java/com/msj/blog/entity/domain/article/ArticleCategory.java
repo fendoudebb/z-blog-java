@@ -26,7 +26,10 @@ public class ArticleCategory extends BaseEntity {
     private String alias;
 
     @OneToMany(mappedBy = "articleCategory")
-    @OrderBy(value = "sort asc")
-    private Set<ArticleModule> articleModules;
+    private Set<Article> articles;
+
+    @ManyToOne
+    @JoinColumn(name = "module_id")
+    private ArticleModule articleModule;
 
 }

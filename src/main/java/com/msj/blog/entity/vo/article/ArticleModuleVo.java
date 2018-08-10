@@ -3,6 +3,7 @@ package com.msj.blog.entity.vo.article;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * zbj: created on 2018/6/1 21:35.
@@ -15,6 +16,6 @@ public class ArticleModuleVo implements Serializable{
     private String name;//模块名字
     private String alias;//别名
 
-    private String categoryName;
+    private List<ArticleCategoryVo> articleCategoryVos;
 
 }

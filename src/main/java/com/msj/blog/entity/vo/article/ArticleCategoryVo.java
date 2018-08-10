@@ -16,5 +16,6 @@ public class ArticleCategoryVo implements Serializable {
     private String name;
     private String alias;
 
-    private List<ArticleModuleVo> articleModuleVos;
+    private String articleModule;
+
 }

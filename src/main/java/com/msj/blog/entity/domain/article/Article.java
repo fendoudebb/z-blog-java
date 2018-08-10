@@ -52,8 +52,8 @@ public class Article extends BaseEntity {
     private LocalDateTime updateTime;
 
     @ManyToOne
-    @JoinColumn(name = "module_id")
-    private ArticleModule articleModule;
+    @JoinColumn(name = "category_id")
+    private ArticleCategory articleCategory;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(columnDefinition = "int(11) not null default 0")

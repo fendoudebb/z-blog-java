@@ -1,8 +1,7 @@
 package com.msj.blog.service.article;
 
-
 import com.msj.blog.entity.domain.article.Article;
-import com.msj.blog.entity.domain.article.ArticleModule;
+import com.msj.blog.entity.domain.article.ArticleCategory;
 import com.msj.blog.entity.domain.enu.ArticleProperty;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.entity.dto.article.ArticleDto;
@@ -35,7 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Resource
     private ArticleRepository articleRepository;
     @Resource
-    private ArticleModuleService articleModuleService;
+    private ArticleCategoryService articleCategoryService;
 
     @Override
     public Article saveOrUpdate(Article article) {
@@ -77,9 +76,9 @@ public class ArticleServiceImpl implements ArticleService {
             return false;
         }
         Article article = new Article();
-        ArticleModule articleModule = articleModuleService.findById(articleDto.getArticleModuleId()).orElse(null);
+        ArticleCategory articleCategory = articleCategoryService.findById(articleDto.getCategoryId()).orElse(null);
         BeanUtils.copyProperties(articleDto, article);
-        article.setArticleModule(articleModule);
+        article.setArticleCategory(articleCategory);
         Article a = saveOrUpdate(article);
         return a.getId() != null;
     }
@@ -105,9 +104,9 @@ public class ArticleServiceImpl implements ArticleService {
         pages.forEach(article -> {
             ArticleAdminPageVo articleAdminPageVo = new ArticleAdminPageVo();
             BeanUtils.copyProperties(article, articleAdminPageVo);
-            ArticleModule articleModule = article.getArticleModule();
-            if (articleModule != null) {
-                articleAdminPageVo.setCategory(articleModule.getName());
+            ArticleCategory articleCategory = article.getArticleCategory();
+            if (articleCategory != null) {
+                articleAdminPageVo.setCategory(articleCategory.getName());
             }
             articleAdminPageVo.setAuditStatus(article.getAuditStatus().getType());
             articleAdminPageVos.add(articleAdminPageVo);
@@ -129,11 +128,11 @@ public class ArticleServiceImpl implements ArticleService {
         List<ArticleUIPageVo> articleUIPageVos = new ArrayList<>();
         pages.forEach(article -> {
             ArticleUIPageVo articleUIPageVo = new ArticleUIPageVo();
-            ArticleModule articleModule = article.getArticleModule();
+            ArticleCategory articleCategory = article.getArticleCategory();
             BeanUtils.copyProperties(article, articleUIPageVo);
-            if (articleModule != null) {
-                articleUIPageVo.setArticleModule(articleModule.getName());
-                articleUIPageVo.setArticleModuleAlias(articleModule.getAlias());
+            if (articleCategory != null) {
+                articleUIPageVo.setArticleCategory(articleCategory.getName());
+                articleUIPageVo.setArticleCategoryAlias(articleCategory.getAlias());
             }
             articleUIPageVos.add(articleUIPageVo);
         });
@@ -162,8 +161,11 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleVo articleVo = new ArticleVo();
         BeanUtils.copyProperties(article, articleVo);
         articleVo.setContent(MarkdownUtil.parse(article.getContent()));
-        articleVo.setArticleModule(article.getArticleModule().getName());
-        articleVo.setArticleModuleAlias(article.getArticleModule().getAlias());
+        ArticleCategory articleCategory = article.getArticleCategory();
+        if (articleCategory != null) {
+            articleVo.setArticleCategory(articleCategory.getName());
+            articleVo.setArticleCategoryAlias(articleCategory.getAlias());
+        }
         return articleVo;
     }
 }

@@ -22,7 +22,7 @@ public class ArticleDto {
     private String originalLink;//原文链接
     @NotBlank(message = "内容不为空")
     private String content;
-    @NotNull(message = "分类不能为空")
-    private Long articleModuleId;
+    @NotNull(message = "分类id不能为空")
+    private Long categoryId;
 
 }

@@ -26,10 +26,10 @@ public class ArticleController extends BaseController {
     @Resource
     private ArticleService articleService;
 
-    @GetMapping(value = {"/{module}/{id}"})
-    public String article(WebRequest webRequest, Model model, @PathVariable String module, @PathVariable Long id) {
+    @GetMapping(value = {"/{category}/{id}"})
+    public String article(WebRequest webRequest, Model model, @PathVariable String category, @PathVariable Long id) {
         ArticleVo articleVo = articleService.getUIArticleById(id).orElse(null);
-        if (articleVo == null || !Objects.equals(module, articleVo.getArticleModule())) {
+        if (articleVo == null || !Objects.equals(category, articleVo.getArticleCategory())) {
             return "error/404";
         }
         if (webRequest.checkNotModified(Timestamp.valueOf(articleVo.getUpdateTime()).getTime())) {
