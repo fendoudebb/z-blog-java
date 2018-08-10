@@ -7,9 +7,11 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/msg-admin?useUnicode=true&amp;characterEncoding=utf8mb4
+    url: jdbc:mysql://127.0.0.1:3306/msj?useUnicode=true&amp;characterEncoding=utf8mb4
     username: root
     password: root
+    hikari:
+      connection-init-sql: SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci
 
 management:
   endpoints:

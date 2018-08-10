@@ -1,16 +1,19 @@
 package com.msj.blog.entity.domain.enu;
 
-public enum AuditStatus {
+/**
+ * zbj: create on 2018/08/07 11:12
+ */
+public enum ArticleProperty {
     /**
-     * type = 0 待审核
-     * type = 1 审核拒绝
-     * type = 2 上线
-     * type = 3 下线
+     * type = 0 草稿
+     * type = 1 公开
+     * type = 2 个人
+     * ...
      */
-    UNDER_REVIEW(0, "待审核"),
-    REJECT(1, "审核拒绝"),
-    ONLINE(2, "上线"),
-    OFFLINE(3, "下线");
+    DRAFT(0, "草稿"),
+    PUBLIC(1, "公开"),
+    PRIVATE(2, "个人"),
+    ABOUT_US(3, "关于我们");
 
     private Integer type;
 
@@ -32,7 +35,7 @@ public enum AuditStatus {
         this.description = description;
     }
 
-    AuditStatus(Integer type, String description) {
+    ArticleProperty(Integer type, String description) {
         this.type = type;
         this.description = description;
     }

@@ -29,8 +29,6 @@ public class LogoutHandler implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
         log.info("登出成功");
 
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8082");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         @Cleanup PrintWriter writer = response.getWriter();
         Response<String> res = new Response<>();
         res.setMsg(MsgTable.LOGOUT_SUCCESS);

@@ -16,14 +16,14 @@ import javax.persistence.*;
 @DynamicUpdate
 @DynamicInsert
 @SelectBeforeUpdate
-@Table(name = "test",indexes = {@Index(columnList = "name")})
+@Table(name = "test",indexes = {@Index(columnList = "testName")})
 public class Test extends BaseEntity {
     private static final long serialVersionUID = 507207113720884370L;
 
     @Column(columnDefinition = "int(11) unsigned")
     private Integer num;
 
-    private String name;
+    private String testName;
 
 //    @Formula(value = "select count(*) from test")
 //    private Integer count;

@@ -32,14 +32,14 @@ public class DevMvcConfig implements WebMvcConfigurer {
         configurer.setTaskExecutor((AsyncTaskExecutor) appExecutor.getExecutor());
     }
 
-    /*@Override
+    @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedHeaders("*")
                 .allowedMethods("*")
                 .allowCredentials(true)
-                .allowedOrigins("http://localhost:8082");
-    }*/
+                .allowedOrigins("http://localhost:10000");
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

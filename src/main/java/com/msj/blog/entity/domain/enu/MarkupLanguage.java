@@ -34,17 +34,4 @@ public enum MarkupLanguage {
         this.type = type;
         this.description = description;
     }
-
-    public static MarkupLanguage getStatus(Integer type) {
-        if (type == null) {
-            return null;
-        }
-        MarkupLanguage[] res = MarkupLanguage.values();
-        for (MarkupLanguage re : res) {
-            if (type.equals(re.getType())) {
-                return re;
-            }
-        }
-        return null;
-    }
 }

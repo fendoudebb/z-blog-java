@@ -19,11 +19,12 @@ import java.util.Set;
 @DynamicUpdate
 @DynamicInsert
 @Table(name = "article_module",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"module_name"})})
 public class ArticleModule extends BaseEntity {
 
     private static final long serialVersionUID = 2205376374916451004L;
     private Integer sort;//模块排序
+    @Column(name = "module_name", length = 16, nullable = false)
     private String name;//模块名字
     private String alias;//别名
 
