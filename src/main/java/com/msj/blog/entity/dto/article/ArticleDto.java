@@ -1,6 +1,8 @@
 package com.msj.blog.entity.dto.article;
 
+import com.msj.blog.entity.FieldLength;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,13 +14,18 @@ import javax.validation.constraints.NotNull;
 public class ArticleDto {
 
     @NotBlank(message = "标题不为空")
+    @Length(max = FieldLength.ARTICLE_TITLE, message = "标题长度不能超出" + FieldLength.ARTICLE_TITLE + "个字符")
     private String title;
+    @Length(max = FieldLength.ARTICLE_AUTHOR, message = "作者长度不能超出" + FieldLength.ARTICLE_AUTHOR + "个字符")
     private String author;
     @NotBlank(message = "关键字不为空")
+    @Length(max = FieldLength.ARTICLE_KEYWORDS, message = "关键词长度不能超出" + FieldLength.ARTICLE_KEYWORDS + "个字符")
     private String keywords;
     @NotBlank(message = "描述不为空")
+    @Length(max = FieldLength.ARTICLE_DESCRIPTION, message = "描述长度不能超出" + FieldLength.ARTICLE_DESCRIPTION + "个字符")
     private String description;
     private boolean original;//是否原创
+    @Length(max = FieldLength.URL_LINK, message = "链接长度不能超出" + FieldLength.URL_LINK + "个字符")
     private String originalLink;//原文链接
     @NotBlank(message = "内容不为空")
     private String content;

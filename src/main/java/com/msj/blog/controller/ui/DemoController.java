@@ -1,7 +1,7 @@
 package com.msj.blog.controller.ui;
 
 import com.msj.blog.controller.BaseController;
-import com.msj.blog.entity.vo.Response;
+import com.msj.blog.response.Response;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.wechat.WechatCallback;
 import com.msj.blog.event.DemoEvent;

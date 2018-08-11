@@ -1,7 +1,7 @@
 package com.msj.blog.exception;
 
-import com.msj.blog.entity.vo.MsgTable;
-import com.msj.blog.entity.vo.Response;
+import com.msj.blog.response.MsgTable;
+import com.msj.blog.response.Response;
 import com.msj.blog.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;

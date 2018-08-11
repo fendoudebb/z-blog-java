@@ -1,7 +1,7 @@
 package com.msj.blog.controller;
 
 
-import com.msj.blog.entity.vo.Response;
+import com.msj.blog.response.Response;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

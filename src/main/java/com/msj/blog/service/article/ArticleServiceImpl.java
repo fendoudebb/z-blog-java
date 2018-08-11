@@ -1,7 +1,7 @@
 package com.msj.blog.service.article;
 
 import com.msj.blog.entity.domain.article.Article;
-import com.msj.blog.entity.domain.article.ArticleCategory;
+import com.msj.blog.entity.domain.category.SecondaryCategory;
 import com.msj.blog.entity.domain.enu.ArticleProperty;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.entity.dto.article.ArticleDto;
@@ -10,6 +10,7 @@ import com.msj.blog.entity.vo.article.ArticleUIPageVo;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.page.PageVo;
 import com.msj.blog.repository.article.ArticleRepository;
+import com.msj.blog.service.category.SecondaryCategoryService;
 import com.msj.blog.util.MarkdownUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheConfig;
@@ -34,7 +35,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Resource
     private ArticleRepository articleRepository;
     @Resource
-    private ArticleCategoryService articleCategoryService;
+    private SecondaryCategoryService secondaryCategoryService;
 
     @Override
     public Article saveOrUpdate(Article article) {
@@ -76,9 +77,9 @@ public class ArticleServiceImpl implements ArticleService {
             return false;
         }
         Article article = new Article();
-        ArticleCategory articleCategory = articleCategoryService.findById(articleDto.getCategoryId()).orElse(null);
+        SecondaryCategory secondaryCategory = secondaryCategoryService.findById(articleDto.getCategoryId()).orElse(null);
         BeanUtils.copyProperties(articleDto, article);
-        article.setArticleCategory(articleCategory);
+        article.setSecondaryCategory(secondaryCategory);
         Article a = saveOrUpdate(article);
         return a.getId() != null;
     }
@@ -104,9 +105,9 @@ public class ArticleServiceImpl implements ArticleService {
         pages.forEach(article -> {
             ArticleAdminPageVo articleAdminPageVo = new ArticleAdminPageVo();
             BeanUtils.copyProperties(article, articleAdminPageVo);
-            ArticleCategory articleCategory = article.getArticleCategory();
-            if (articleCategory != null) {
-                articleAdminPageVo.setCategory(articleCategory.getName());
+            SecondaryCategory secondaryCategory = article.getSecondaryCategory();
+            if (secondaryCategory != null) {
+                articleAdminPageVo.setCategory(secondaryCategory.getName());
             }
             articleAdminPageVo.setAuditStatus(article.getAuditStatus().getType());
             articleAdminPageVos.add(articleAdminPageVo);
@@ -128,11 +129,11 @@ public class ArticleServiceImpl implements ArticleService {
         List<ArticleUIPageVo> articleUIPageVos = new ArrayList<>();
         pages.forEach(article -> {
             ArticleUIPageVo articleUIPageVo = new ArticleUIPageVo();
-            ArticleCategory articleCategory = article.getArticleCategory();
+            SecondaryCategory secondaryCategory = article.getSecondaryCategory();
             BeanUtils.copyProperties(article, articleUIPageVo);
-            if (articleCategory != null) {
-                articleUIPageVo.setArticleCategory(articleCategory.getName());
-                articleUIPageVo.setArticleCategoryAlias(articleCategory.getAlias());
+            if (secondaryCategory != null) {
+                articleUIPageVo.setArticleCategory(secondaryCategory.getName());
+                articleUIPageVo.setArticleCategoryAlias(secondaryCategory.getAlias());
             }
             articleUIPageVos.add(articleUIPageVo);
         });
@@ -161,10 +162,10 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleVo articleVo = new ArticleVo();
         BeanUtils.copyProperties(article, articleVo);
         articleVo.setContent(MarkdownUtil.parse(article.getContent()));
-        ArticleCategory articleCategory = article.getArticleCategory();
-        if (articleCategory != null) {
-            articleVo.setArticleCategory(articleCategory.getName());
-            articleVo.setArticleCategoryAlias(articleCategory.getAlias());
+        SecondaryCategory secondaryCategory = article.getSecondaryCategory();
+        if (secondaryCategory != null) {
+            articleVo.setArticleCategory(secondaryCategory.getName());
+            articleVo.setArticleCategoryAlias(secondaryCategory.getAlias());
         }
         return articleVo;
     }

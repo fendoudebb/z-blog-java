@@ -1,6 +1,5 @@
-package com.msj.blog.entity.domain.article;
+package com.msj.blog.entity.domain;
 
-import com.msj.blog.entity.domain.BaseEntity;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import lombok.Getter;
 import lombok.Setter;

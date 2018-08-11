@@ -1,8 +1,6 @@
-package com.msj.blog.controller.admin;
+package com.msj.blog.controller.admin.user;
 
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,13 +24,5 @@ public class SysUserController {
     @ResponseBody
     public String test(@RequestParam(value = "aaa") String aaa) {
         return aaa;
-    }
-
-    @Async
-    public String get() {
-        for (int i = 1; i < 5; i++) {
-            System.out.println(Thread.currentThread().getName() + "********" + i);
-        }
-        return "ok";
     }
 }

@@ -1,5 +1,6 @@
-package com.msj.blog.entity.domain.article;
+package com.msj.blog.entity.domain.category;
 
+import com.msj.blog.entity.FieldLength;
 import com.msj.blog.entity.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,28 +11,28 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * 文章所属模块
- * 如IT模块,常识模块等
+ * 文章所属一级分类
+ * 如IT,常识等
  */
 @Setter
 @Getter
 @Entity
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "article_module",
+@Table(name = "primary_category",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
-public class ArticleModule extends BaseEntity {
+public class PrimaryCategory extends BaseEntity {
 
     private static final long serialVersionUID = 2205376374916451004L;
     private Integer sort;//模块排序
-    @Column(name = "name", length = 16, nullable = false)
+    @Column(name = "name", length = FieldLength.NORMAL, nullable = false)
     private String name;//模块名字
-    @Column(name = "alias", length = 16, nullable = false)
+    @Column(name = "alias", length = FieldLength.NORMAL, nullable = false)
     private String alias;//别名
 
-    @OneToMany(mappedBy = "articleModule")
+    @OneToMany(mappedBy = "primaryCategory")
     @OrderBy(value = "sort asc")
-    private Set<ArticleCategory> articleCategories;
+    private Set<SecondaryCategory> secondaryCategories;
 
 }
 

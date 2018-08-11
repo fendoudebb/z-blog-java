@@ -1,5 +1,6 @@
 package com.msj.blog.entity.domain.login;
 
+import com.msj.blog.entity.FieldLength;
 import com.msj.blog.entity.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,9 +26,9 @@ import java.util.Set;
 public class SysUser extends BaseEntity implements UserDetails {
     private static final long serialVersionUID = -5182214462141979431L;
 
-    @Column(name = "username", length = 16, nullable = false)
+    @Column(name = "username", length = FieldLength.NORMAL, nullable = false)
     private String username;
-    @Column(name = "password", length = 16, nullable = false)
+    @Column(name = "password", length = FieldLength.NORMAL, nullable = false)
     private String password;
 
     @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)

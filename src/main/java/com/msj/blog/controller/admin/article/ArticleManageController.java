@@ -1,10 +1,10 @@
-package com.msj.blog.controller.admin;
+package com.msj.blog.controller.admin.article;
 
 import com.msj.blog.controller.BaseController;
 import com.msj.blog.entity.dto.article.ArticleDto;
 import com.msj.blog.entity.dto.page.PageDto;
-import com.msj.blog.entity.vo.MsgTable;
-import com.msj.blog.entity.vo.Response;
+import com.msj.blog.response.MsgTable;
+import com.msj.blog.response.Response;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.service.article.ArticleService;
 import lombok.extern.slf4j.Slf4j;

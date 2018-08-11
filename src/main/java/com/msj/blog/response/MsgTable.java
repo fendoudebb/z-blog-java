@@ -1,4 +1,4 @@
-package com.msj.blog.entity.vo;
+package com.msj.blog.response;
 
 import java.io.Serializable;
 

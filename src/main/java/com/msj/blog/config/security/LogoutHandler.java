@@ -1,8 +1,8 @@
 package com.msj.blog.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.msj.blog.entity.vo.MsgTable;
-import com.msj.blog.entity.vo.Response;
+import com.msj.blog.response.MsgTable;
+import com.msj.blog.response.Response;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

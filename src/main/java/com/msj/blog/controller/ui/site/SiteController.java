@@ -1,7 +1,7 @@
 package com.msj.blog.controller.ui.site;
 
-import com.msj.blog.entity.vo.Response;
-import com.msj.blog.entity.vo.site.SiteCategoryVo;
+import com.msj.blog.controller.BaseController;
+import com.msj.blog.response.Response;
 import com.msj.blog.service.site.SiteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 @Slf4j
 @Controller
 @RequestMapping("/site")
-public class SiteController {
+public class SiteController extends BaseController{
 
     @Resource
     private SiteService siteService;
@@ -26,9 +26,6 @@ public class SiteController {
     @ResponseBody
     public Response getSite(@PathVariable String name) {
         log.info("get {} site", name);
-        Response<SiteCategoryVo> response = new Response<>();
-        SiteCategoryVo siteCategoryVo = siteService.getSiteCategoryVo(name);
-        response.setData(siteCategoryVo);
-        return response;
+        return getResponse(name);
     }
 }

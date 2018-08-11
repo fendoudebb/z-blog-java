@@ -1,6 +1,8 @@
 package com.msj.blog.entity.domain.article;
 
+import com.msj.blog.entity.FieldLength;
 import com.msj.blog.entity.domain.BaseEntity;
+import com.msj.blog.entity.domain.category.SecondaryCategory;
 import com.msj.blog.entity.domain.enu.ArticleProperty;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.entity.domain.enu.MarkupLanguage;
@@ -25,21 +27,22 @@ import java.time.LocalDateTime;
 public class Article extends BaseEntity {
     private static final long serialVersionUID = 956501929140358804L;
 
-    @Column(name = "title", length = 50, nullable = false)
+    @Column(name = "title", length = FieldLength.ARTICLE_TITLE, nullable = false)
     private String title;
 
-    @Column(name = "author", columnDefinition = "varchar(20) not null default \"msj\"")
+    @Column(name = "author", length = FieldLength.ARTICLE_AUTHOR, nullable = false, columnDefinition = "default \"msj\"")
     private String author;
 
     @Column(columnDefinition = "bit(1) default 1")
     private boolean original;//是否原创
 
+    @Column(name = "original_link", length = FieldLength.URL_LINK)
     private String originalLink;//原文链接
 
-    @Column(name = "keywords", length = 30)
+    @Column(name = "keywords", length = FieldLength.ARTICLE_KEYWORDS)
     private String keywords;
 
-    @Column(name = "description", length = 80)
+    @Column(name = "description", length = FieldLength.ARTICLE_DESCRIPTION)
     private String description;
 
     @Lob
@@ -52,8 +55,8 @@ public class Article extends BaseEntity {
     private LocalDateTime updateTime;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private ArticleCategory articleCategory;
+    @JoinColumn(name = "secondary_category_id")
+    private SecondaryCategory secondaryCategory;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(columnDefinition = "int(11) not null default 0")

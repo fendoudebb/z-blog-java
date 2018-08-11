@@ -1,23 +1,18 @@
 package com.msj.blog.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.msj.blog.entity.domain.login.SysRole;
-import com.msj.blog.entity.domain.login.SysUser;
-import com.msj.blog.entity.vo.MsgTable;
-import com.msj.blog.entity.vo.Response;
+import com.msj.blog.response.MsgTable;
+import com.msj.blog.response.Response;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
