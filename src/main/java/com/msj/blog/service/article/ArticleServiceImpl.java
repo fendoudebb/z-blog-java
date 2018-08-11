@@ -12,6 +12,7 @@ import com.msj.blog.entity.vo.page.PageVo;
 import com.msj.blog.repository.article.ArticleRepository;
 import com.msj.blog.service.category.SecondaryCategoryService;
 import com.msj.blog.util.MarkdownUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+@Slf4j
 @Service
 @CacheConfig(cacheNames = "article")
 public class ArticleServiceImpl implements ArticleService {
@@ -59,6 +61,18 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Page<Article> findByPageAndArticleProperty(ArticleProperty articleProperty, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return articleRepository.findAllByArticlePropertyEqualsOrderByUpdateTimeDesc(articleProperty, pageable);
+    }
+
+    @Override
+    public Page<Article> findByPageAndArticlePropertyExclude(ArticleProperty articleProperty, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return articleRepository.findAllByArticlePropertyIsNot(articleProperty, pageable);
+    }
+
+    @Override
     public Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByUpdateTimeDesc(auditStatus, articleProperty, pageable);
@@ -77,9 +91,19 @@ public class ArticleServiceImpl implements ArticleService {
             return false;
         }
         Article article = new Article();
-        SecondaryCategory secondaryCategory = secondaryCategoryService.findById(articleDto.getCategoryId()).orElse(null);
+        SecondaryCategory secondaryCategory = secondaryCategoryService.findByName(articleDto.getCategory()).orElse(null);
+        if (secondaryCategory == null) {
+            return false;
+        }
         BeanUtils.copyProperties(articleDto, article);
         article.setSecondaryCategory(secondaryCategory);
+        try {
+            ArticleProperty articleProperty = ArticleProperty.valueOf(articleDto.getArticleProperty());
+            article.setArticleProperty(articleProperty);
+        } catch (IllegalArgumentException e) {
+            log.info("enum error constant: {}", e.getMessage());
+            return false;
+        }
         Article a = saveOrUpdate(article);
         return a.getId() != null;
     }
@@ -96,8 +120,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageVo<ArticleAdminPageVo> findAdminArticleByPage(Integer page, Integer size) {
-        Page<Article> pages = findByPage(page, size);
+    public PageVo<ArticleAdminPageVo> findAdminArticleListByPage(Integer page, Integer size) {
+        Page<Article> pages = findByPageAndArticlePropertyExclude(ArticleProperty.DRAFT, page, size);
         PageVo<ArticleAdminPageVo> pageVo = new PageVo<>();
         pageVo.setTotalElements(pages.getTotalElements());
         pageVo.setTotalPages(pages.getTotalPages());
@@ -107,7 +131,7 @@ public class ArticleServiceImpl implements ArticleService {
             BeanUtils.copyProperties(article, articleAdminPageVo);
             SecondaryCategory secondaryCategory = article.getSecondaryCategory();
             if (secondaryCategory != null) {
-                articleAdminPageVo.setCategory(secondaryCategory.getName());
+                articleAdminPageVo.setCategory(secondaryCategory.getAlias());
             }
             articleAdminPageVo.setAuditStatus(article.getAuditStatus().getType());
             articleAdminPageVos.add(articleAdminPageVo);
@@ -121,7 +145,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Cacheable(value = {"article-page-ui"}, key = "'article-page-ui-' + #p0 + '-' + #p1")
-    public PageVo<ArticleUIPageVo> findUIArticleByPage(Integer page, Integer size) {
+    public PageVo<ArticleUIPageVo> findUIArticleListByPage(Integer page, Integer size) {
         Page<Article> pages = findByPageAndAuditStatusAndArticleProperty(AuditStatus.ONLINE, ArticleProperty.PUBLIC, page, size);
         PageVo<ArticleUIPageVo> pageVo = new PageVo<>();
         pageVo.setTotalElements(pages.getTotalElements());

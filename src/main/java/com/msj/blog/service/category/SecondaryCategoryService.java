@@ -11,5 +11,6 @@ public interface SecondaryCategoryService {
 
     Optional<SecondaryCategory> findById(Long id);
 
+    Optional<SecondaryCategory> findByName(String name);
 
 }

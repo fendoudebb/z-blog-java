@@ -3,9 +3,9 @@ package com.msj.blog.controller.admin.article;
 import com.msj.blog.controller.BaseController;
 import com.msj.blog.entity.dto.article.ArticleDto;
 import com.msj.blog.entity.dto.page.PageDto;
+import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.response.MsgTable;
 import com.msj.blog.response.Response;
-import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.service.article.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class ArticleManageController extends BaseController {
 
     @PostMapping(value = "/list")
     public Response page(@RequestBody @Valid PageDto pageDto) {
-        return getResponse(articleService.findAdminArticleByPage(pageDto.getPage(), pageDto.getSize()));
+        return getResponse(articleService.findAdminArticleListByPage(pageDto.getPage(), pageDto.getSize()));
     }
 
     @PostMapping(value = "/save")

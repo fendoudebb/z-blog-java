@@ -21,6 +21,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long>, PagingA
 
     Page<Article> findAllByOrderByUpdateTimeDesc(Pageable pageable);
 
+    Page<Article> findAllByArticlePropertyEqualsOrderByUpdateTimeDesc(ArticleProperty articleProperty, Pageable pageable);
+
+    Page<Article> findAllByArticlePropertyIsNot(ArticleProperty articleProperty, Pageable pageable);
+
     Page<Article> findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByUpdateTimeDesc(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 
     Stream<Article> findAllByAuditStatusEqualsAndArticlePropertyEquals(AuditStatus auditStatus, ArticleProperty articleProperty);

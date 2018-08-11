@@ -16,6 +16,6 @@ public class PrimaryCategoryVo implements Serializable{
     private String name;//模块名字
     private String alias;//别名
 
-    private List<SecondaryCategoryVo> secondaryCategoryVos;
+    private List<SecondaryCategoryVo> secondaryCategories;
 
 }

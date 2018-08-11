@@ -21,5 +21,9 @@ public class SecondaryCategoryServiceImpl implements SecondaryCategoryService {
         return secondaryCategoryRepository.findById(id);
     }
 
+    @Override
+    public Optional<SecondaryCategory> findByName(String name) {
+        return secondaryCategoryRepository.findByName(name);
+    }
 
 }

@@ -23,6 +23,10 @@ public interface ArticleService {
 
     Page<Article> findByPage(Integer page, Integer size);
 
+    Page<Article> findByPageAndArticleProperty(ArticleProperty articleProperty, Integer page, Integer size);
+
+    Page<Article> findByPageAndArticlePropertyExclude(ArticleProperty articleProperty, Integer page, Integer size);
+
     Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size);
 
     Stream<Article> findByAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty);
@@ -33,9 +37,9 @@ public interface ArticleService {
 
     Optional<ArticleVo> getUIArticleById(Long id);
 
-    PageVo<ArticleAdminPageVo> findAdminArticleByPage(Integer page, Integer size);
+    PageVo<ArticleAdminPageVo> findAdminArticleListByPage(Integer page, Integer size);
 
-    PageVo<ArticleUIPageVo> findUIArticleByPage(Integer page, Integer size);
+    PageVo<ArticleUIPageVo> findUIArticleListByPage(Integer page, Integer size);
 
     Optional<ArticleVo> findAboutUsArticle();
 

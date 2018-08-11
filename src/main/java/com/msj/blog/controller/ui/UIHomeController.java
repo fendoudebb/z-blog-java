@@ -28,7 +28,7 @@ public class UIHomeController extends BaseController {
 
     @GetMapping("/")
     public String index(WebRequest webRequest, Model model, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
-        PageVo<ArticleUIPageVo> articleVoPageVo = articleService.findUIArticleByPage(page, size);
+        PageVo<ArticleUIPageVo> articleVoPageVo = articleService.findUIArticleListByPage(page, size);
         if (webRequest.checkNotModified(articleVoPageVo.getLastModifyTime())) {
             return null;
         }

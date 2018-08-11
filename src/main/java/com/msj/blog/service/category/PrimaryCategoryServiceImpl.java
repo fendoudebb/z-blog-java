@@ -50,7 +50,7 @@ public class PrimaryCategoryServiceImpl implements PrimaryCategoryService {
                 BeanUtils.copyProperties(secondaryCategory, secondaryCategoryVo);
                 secondaryCategoryVos.add(secondaryCategoryVo);
             }
-            primaryCategoryVo.setSecondaryCategoryVos(secondaryCategoryVos);
+            primaryCategoryVo.setSecondaryCategories(secondaryCategoryVos);
             primaryCategoryVos.add(primaryCategoryVo);
         }
         return primaryCategoryVos;
