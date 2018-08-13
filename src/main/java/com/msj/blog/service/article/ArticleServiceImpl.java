@@ -69,7 +69,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Page<Article> findByPageAndArticlePropertyExclude(ArticleProperty articleProperty, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        return articleRepository.findAllByArticlePropertyIsNot(articleProperty, pageable);
+        return articleRepository.findAllByArticlePropertyIsNotOrderByUpdateTimeDesc(articleProperty, pageable);
     }
 
     @Override
@@ -120,27 +120,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public PageVo<ArticleAdminPageVo> findAdminArticleDraftByPage(Integer page, Integer size) {
+        Page<Article> pages = findByPageAndArticleProperty(ArticleProperty.DRAFT, page, size);
+        return transferArticlePage2ArticleAdminPage(pages);
+    }
+
+    @Override
     public PageVo<ArticleAdminPageVo> findAdminArticleListByPage(Integer page, Integer size) {
         Page<Article> pages = findByPageAndArticlePropertyExclude(ArticleProperty.DRAFT, page, size);
-        PageVo<ArticleAdminPageVo> pageVo = new PageVo<>();
-        pageVo.setTotalElements(pages.getTotalElements());
-        pageVo.setTotalPages(pages.getTotalPages());
-        List<ArticleAdminPageVo> articleAdminPageVos = new ArrayList<>();
-        pages.forEach(article -> {
-            ArticleAdminPageVo articleAdminPageVo = new ArticleAdminPageVo();
-            BeanUtils.copyProperties(article, articleAdminPageVo);
-            SecondaryCategory secondaryCategory = article.getSecondaryCategory();
-            if (secondaryCategory != null) {
-                articleAdminPageVo.setCategory(secondaryCategory.getAlias());
-            }
-            articleAdminPageVo.setAuditStatus(article.getAuditStatus().getType());
-            articleAdminPageVos.add(articleAdminPageVo);
-        });
-        pageVo.setContent(articleAdminPageVos);
-        pageVo.setNumber(pages.getNumber());
-        pageVo.setNumberOfElements(pages.getNumberOfElements());
-        pageVo.setSize(pages.getSize());
-        return pageVo;
+        return transferArticlePage2ArticleAdminPage(pages);
     }
 
     @Override
@@ -180,6 +168,28 @@ public class ArticleServiceImpl implements ArticleService {
                     articleVo.setContent(MarkdownUtil.parse(article.getContent()));
                     return articleVo;
                 });
+    }
+
+    private PageVo<ArticleAdminPageVo> transferArticlePage2ArticleAdminPage(Page<Article> pages) {
+        PageVo<ArticleAdminPageVo> pageVo = new PageVo<>();
+        pageVo.setTotalElements(pages.getTotalElements());
+        pageVo.setTotalPages(pages.getTotalPages());
+        List<ArticleAdminPageVo> articleAdminPageVos = new ArrayList<>();
+        pages.forEach(article -> {
+            ArticleAdminPageVo articleAdminPageVo = new ArticleAdminPageVo();
+            BeanUtils.copyProperties(article, articleAdminPageVo);
+            SecondaryCategory secondaryCategory = article.getSecondaryCategory();
+            if (secondaryCategory != null) {
+                articleAdminPageVo.setCategory(secondaryCategory.getAlias());
+            }
+            articleAdminPageVo.setAuditStatus(article.getAuditStatus().getType());
+            articleAdminPageVos.add(articleAdminPageVo);
+        });
+        pageVo.setContent(articleAdminPageVos);
+        pageVo.setNumber(pages.getNumber());
+        pageVo.setNumberOfElements(pages.getNumberOfElements());
+        pageVo.setSize(pages.getSize());
+        return pageVo;
     }
 
     private ArticleVo transferArticle2ArticleVo(Article article) {

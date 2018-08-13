@@ -23,12 +23,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long>, PagingA
 
     Page<Article> findAllByArticlePropertyEqualsOrderByUpdateTimeDesc(ArticleProperty articleProperty, Pageable pageable);
 
-    Page<Article> findAllByArticlePropertyIsNot(ArticleProperty articleProperty, Pageable pageable);
+    Page<Article> findAllByArticlePropertyIsNotOrderByUpdateTimeDesc(ArticleProperty articleProperty, Pageable pageable);
 
     Page<Article> findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByUpdateTimeDesc(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 
     Stream<Article> findAllByAuditStatusEqualsAndArticlePropertyEquals(AuditStatus auditStatus, ArticleProperty articleProperty);
 
-    @Query(value = "select * from article where title = '关于我们' and audit_status = 4",nativeQuery = true)
-    Article findAboutUs();
 }

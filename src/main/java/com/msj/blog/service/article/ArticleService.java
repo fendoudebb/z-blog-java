@@ -37,6 +37,8 @@ public interface ArticleService {
 
     Optional<ArticleVo> getUIArticleById(Long id);
 
+    PageVo<ArticleAdminPageVo> findAdminArticleDraftByPage(Integer page, Integer size);
+
     PageVo<ArticleAdminPageVo> findAdminArticleListByPage(Integer page, Integer size);
 
     PageVo<ArticleUIPageVo> findUIArticleListByPage(Integer page, Integer size);

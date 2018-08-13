@@ -2,6 +2,7 @@ package com.msj.blog.controller.admin.article;
 
 import com.msj.blog.controller.BaseController;
 import com.msj.blog.entity.dto.article.ArticleDto;
+import com.msj.blog.entity.dto.article.AuditStatusDto;
 import com.msj.blog.entity.dto.page.PageDto;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.response.MsgTable;
@@ -24,8 +25,13 @@ public class ArticleManageController extends BaseController {
     @Resource
     private ArticleService articleService;
 
+    @PostMapping(value = "/draft")
+    public Response draft(@RequestBody @Valid PageDto pageDto) {
+        return getResponse(articleService.findAdminArticleDraftByPage(pageDto.getPage(), pageDto.getSize()));
+    }
+
     @PostMapping(value = "/list")
-    public Response page(@RequestBody @Valid PageDto pageDto) {
+    public Response list(@RequestBody @Valid PageDto pageDto) {
         return getResponse(articleService.findAdminArticleListByPage(pageDto.getPage(), pageDto.getSize()));
     }
 
@@ -33,6 +39,11 @@ public class ArticleManageController extends BaseController {
     public Response save(@RequestBody @Valid ArticleDto articleDto) {
         boolean saveResult = articleService.saveArticle(articleDto);
         return saveResult ? getResponse(MsgTable.SAVE_ARTICLE_SUCCESS) : getResponse(MsgTable.SAVE_ARTICLE_FAILURE).fail();
+    }
+
+    @PostMapping(value = "/audit")
+    public Response audit(@RequestBody @Valid AuditStatusDto auditStatusDto) {
+        return getResponse("aaa");
     }
 
     @GetMapping(value = "/preview/audit/{id}")
