@@ -1,6 +1,8 @@
 package com.msj.blog.controller.admin.article;
 
 import com.msj.blog.controller.BaseController;
+import com.msj.blog.entity.domain.article.Article;
+import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.entity.dto.article.ArticleDto;
 import com.msj.blog.entity.dto.article.AuditStatusDto;
 import com.msj.blog.entity.dto.page.PageDto;
@@ -43,7 +45,19 @@ public class ArticleManageController extends BaseController {
 
     @PostMapping(value = "/audit")
     public Response audit(@RequestBody @Valid AuditStatusDto auditStatusDto) {
-        return getResponse("aaa");
+        Article article = articleService.findById(auditStatusDto.getArticleId()).orElse(null);
+        if (article == null) {
+            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+        }
+        AuditStatus auditStatus = null;
+        try {
+            auditStatus = AuditStatus.valueOf(auditStatusDto.getAuditStatus());
+        } catch (IllegalArgumentException e) {
+            log.info("audit enum error constant: {}", e.getMessage());
+        }
+        article.setAuditStatus(auditStatus);
+        articleService.saveOrUpdate(article);
+        return getResponse(MsgTable.MODIFY_AUDIT_STATUS_SUCCESS);
     }
 
     @GetMapping(value = "/preview/audit/{id}")

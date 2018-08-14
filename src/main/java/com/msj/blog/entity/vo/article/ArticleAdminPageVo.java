@@ -24,6 +24,6 @@ public class ArticleAdminPageVo implements Serializable{
     private LocalDateTime updateTime;
     private String category;
 
-    private Integer auditStatus;
+    private String auditStatus;
 
 }

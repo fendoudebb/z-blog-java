@@ -182,7 +182,7 @@ public class ArticleServiceImpl implements ArticleService {
             if (secondaryCategory != null) {
                 articleAdminPageVo.setCategory(secondaryCategory.getAlias());
             }
-            articleAdminPageVo.setAuditStatus(article.getAuditStatus().getType());
+            articleAdminPageVo.setAuditStatus(article.getAuditStatus().name());
             articleAdminPageVos.add(articleAdminPageVo);
         });
         pageVo.setContent(articleAdminPageVos);

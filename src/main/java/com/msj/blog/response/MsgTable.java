@@ -10,7 +10,7 @@ public class MsgTable implements Serializable{
 
     public static final String INTERNAL_ERROR = "内部错误";
 
-    public static final String NOT_LOGIN = "用户未登录";
+//    public static final String NOT_LOGIN = "用户未登录";
 
     public static final String LOGIN_SUCCESS = "登录成功";
 
@@ -29,6 +29,10 @@ public class MsgTable implements Serializable{
     public static final String SAVE_ARTICLE_SUCCESS = "保存成功";
 
     public static final String SAVE_ARTICLE_FAILURE = "保存失败";
+
+    public static final String ARTICLE_NOT_EXIST = "文章不存在";
+
+    public static final String MODIFY_AUDIT_STATUS_SUCCESS = "文章不存在";
 
 
 }

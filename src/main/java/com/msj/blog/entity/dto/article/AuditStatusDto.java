@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class AuditStatusDto {
 
     @NotNull(message = "文章id不能为空")
-    private Integer articleId;
+    private Long articleId;
 
     @NotBlank(message = "审核状态不能为空")
     private String auditStatus;

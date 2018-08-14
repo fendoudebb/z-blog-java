@@ -30,7 +30,7 @@ public class Article extends BaseEntity {
     @Column(name = "title", length = FieldLength.ARTICLE_TITLE, nullable = false)
     private String title;
 
-    @Column(name = "author", length = FieldLength.ARTICLE_AUTHOR, nullable = false, columnDefinition = "default \"msj\"")
+    @Column(name = "author", columnDefinition = "varchar(" + FieldLength.ARTICLE_AUTHOR + ") not null default \"msj\"")
     private String author;
 
     @Column(columnDefinition = "bit(1) default 1")
