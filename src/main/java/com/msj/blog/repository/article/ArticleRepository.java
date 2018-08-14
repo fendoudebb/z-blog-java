@@ -6,7 +6,6 @@ import com.msj.blog.entity.domain.enu.AuditStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,9 +20,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long>, PagingA
 
     Page<Article> findAllByOrderByUpdateTimeDesc(Pageable pageable);
 
-    Page<Article> findAllByArticlePropertyEqualsOrderByUpdateTimeDesc(ArticleProperty articleProperty, Pageable pageable);
+    Page<Article> findAllByArticlePropertyEqualsOrderByIdDesc(ArticleProperty articleProperty, Pageable pageable);
 
-    Page<Article> findAllByArticlePropertyIsNotOrderByUpdateTimeDesc(ArticleProperty articleProperty, Pageable pageable);
+    Page<Article> findAllByArticlePropertyIsNotOrderByIdDesc(ArticleProperty articleProperty, Pageable pageable);
 
     Page<Article> findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByUpdateTimeDesc(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 

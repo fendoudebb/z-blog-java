@@ -63,13 +63,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Page<Article> findByPageAndArticleProperty(ArticleProperty articleProperty, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        return articleRepository.findAllByArticlePropertyEqualsOrderByUpdateTimeDesc(articleProperty, pageable);
+        return articleRepository.findAllByArticlePropertyEqualsOrderByIdDesc(articleProperty, pageable);
     }
 
     @Override
     public Page<Article> findByPageAndArticlePropertyExclude(ArticleProperty articleProperty, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        return articleRepository.findAllByArticlePropertyIsNotOrderByUpdateTimeDesc(articleProperty, pageable);
+        return articleRepository.findAllByArticlePropertyIsNotOrderByIdDesc(articleProperty, pageable);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class MsgTable implements Serializable{
 
     public static final String ARTICLE_NOT_EXIST = "文章不存在";
 
-    public static final String MODIFY_AUDIT_STATUS_SUCCESS = "文章不存在";
+    public static final String MODIFY_AUDIT_STATUS_SUCCESS = "修改文章状态成功";
 
 
 }
