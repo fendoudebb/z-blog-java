@@ -29,7 +29,7 @@
             <span th:class="${article.isOriginal() ? 'label label-success' : 'label label-info'}"
                   th:text="${article.isOriginal() ? '原创' : '转发'}"></span>
             <span class="article-tag" th:text="${article.getAuthor()}"></span>
-            <span class="article-tag" th:text="${article.getArticleModuleAlias()}"></span>
+            <span class="article-tag" th:text="${article.getArticleCategoryAlias()}"></span>
             <span class="article-tag" th:text="${#temporals.format(article.getUpdateTime(),'yyy-MM-dd')}"></span>
         </div>
 

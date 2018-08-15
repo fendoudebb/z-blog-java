@@ -35,8 +35,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static void main(String[] args) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         //加密"0"
-        String encode = bCryptPasswordEncoder.encode("root");
+        String encode = bCryptPasswordEncoder.encode("MR`&D=+UP*?9");
         System.out.println(encode);
+//        boolean matches = bCryptPasswordEncoder.matches("111111", "$2a$10$zsIgQVyHTUU9pE.gplXxduCNyZPpLiuOm1RDSZyShOYX3TMj9X8Ay");
+        boolean matches = bCryptPasswordEncoder.matches("MR`&D=+UP*?9", "$2a$10$4ZB0aMz5zVZ9TDF14OMmNup4WXEXTuKIuDL0o2zwT0p2cEYWxfoj6");
+        System.out.println(matches);
         //结果：$2a$10$TYuFYHUe/EoyMnNeyHZDG.93Py6C/PmKlTjg8Lvpuf5eRDxeJA1v2
     }
 

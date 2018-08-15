@@ -43,6 +43,12 @@ public class ArticleManageController extends BaseController {
         return saveResult ? getResponse(MsgTable.SAVE_ARTICLE_SUCCESS) : getResponse(MsgTable.SAVE_ARTICLE_FAILURE).fail();
     }
 
+    @PostMapping(value = "/edit/{articleId}")
+    public Response edit(@PathVariable Long articleId,@RequestBody @Valid ArticleDto articleDto) {
+        log.info("id: " + articleId);
+        return getResponse(articleId);
+    }
+
     @PostMapping(value = "/audit")
     public Response audit(@RequestBody @Valid AuditStatusDto auditStatusDto) {
         Article article = articleService.findById(auditStatusDto.getArticleId()).orElse(null);
@@ -76,10 +82,5 @@ public class ArticleManageController extends BaseController {
         return mv;
     }
 
-    @GetMapping(value = "/preview/edit")
-    public ModelAndView articlePreviewEdit(WebRequest webRequest) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("article/article");
-        return mv;
-    }
+
 }
