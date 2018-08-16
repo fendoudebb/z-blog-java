@@ -33,6 +33,8 @@ public interface ArticleService {
 
     boolean saveArticle(ArticleDto articleDto);
 
+    boolean editArticle(ArticleDto articleDto, Article article);
+
     Optional<ArticleVo> getAdminArticleById(Long id);
 
     Optional<ArticleVo> getUIArticleById(Long id);
@@ -44,5 +46,7 @@ public interface ArticleService {
     PageVo<ArticleUIPageVo> findUIArticleListByPage(Integer page, Integer size);
 
     Optional<ArticleVo> findAboutUsArticle();
+
+    ArticleDto findArticleDto(Article article);
 
 }

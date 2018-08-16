@@ -4,6 +4,7 @@ import com.msj.blog.controller.BaseController;
 import com.msj.blog.entity.domain.article.Article;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.entity.dto.article.ArticleDto;
+import com.msj.blog.entity.dto.article.ArticleIdDto;
 import com.msj.blog.entity.dto.article.AuditStatusDto;
 import com.msj.blog.entity.dto.page.PageDto;
 import com.msj.blog.entity.vo.article.ArticleVo;
@@ -27,6 +28,16 @@ public class ArticleManageController extends BaseController {
     @Resource
     private ArticleService articleService;
 
+    @PostMapping(value = "/info")
+    public Response info(@RequestBody @Valid ArticleIdDto articleIdDto) {
+        Article article = articleService.findById(articleIdDto.getArticleId()).orElse(null);
+        if (article == null) {
+            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+        }
+        ArticleDto articleDto = articleService.findArticleDto(article);
+        return getResponse(articleDto);
+    }
+
     @PostMapping(value = "/draft")
     public Response draft(@RequestBody @Valid PageDto pageDto) {
         return getResponse(articleService.findAdminArticleDraftByPage(pageDto.getPage(), pageDto.getSize()));
@@ -44,9 +55,14 @@ public class ArticleManageController extends BaseController {
     }
 
     @PostMapping(value = "/edit/{articleId}")
-    public Response edit(@PathVariable Long articleId,@RequestBody @Valid ArticleDto articleDto) {
+    public Response edit(@PathVariable Long articleId, @RequestBody @Valid ArticleDto articleDto) {
         log.info("id: " + articleId);
-        return getResponse(articleId);
+        Article article = articleService.findById(articleId).orElse(null);
+        if (article == null) {
+            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+        }
+        boolean editResult = articleService.editArticle(articleDto, article);
+        return editResult ? getResponse(MsgTable.EDIT_ARTICLE_SUCCESS) : getResponse(MsgTable.EDIT_ARTICLE_FAILURE).fail();
     }
 
     @PostMapping(value = "/audit")

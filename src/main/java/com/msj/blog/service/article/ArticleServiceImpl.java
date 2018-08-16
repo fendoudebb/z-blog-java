@@ -90,18 +90,24 @@ public class ArticleServiceImpl implements ArticleService {
         if (articleDto == null) {
             return false;
         }
-        Article article = new Article();
-        SecondaryCategory secondaryCategory = secondaryCategoryService.findByName(articleDto.getCategory()).orElse(null);
-        if (secondaryCategory == null) {
+        Article article = transferArticleDto2Article(articleDto, null);
+        if (article == null) {
             return false;
         }
-        BeanUtils.copyProperties(articleDto, article);
-        article.setSecondaryCategory(secondaryCategory);
-        try {
-            ArticleProperty articleProperty = ArticleProperty.valueOf(articleDto.getArticleProperty());
-            article.setArticleProperty(articleProperty);
-        } catch (IllegalArgumentException e) {
-            log.info("enum error constant: {}", e.getMessage());
+        Article a = saveOrUpdate(article);
+        return a.getId() != null;
+    }
+
+    @Override
+    public boolean editArticle(ArticleDto articleDto, Article article) {
+        if (articleDto == null) {
+            return false;
+        }
+        if (article == null) {
+            return false;
+        }
+        article = transferArticleDto2Article(articleDto, article);
+        if (article == null) {
             return false;
         }
         Article a = saveOrUpdate(article);
@@ -170,6 +176,11 @@ public class ArticleServiceImpl implements ArticleService {
                 });
     }
 
+    @Override
+    public ArticleDto findArticleDto(Article article) {
+        return transferArticle2ArticleDto(article);
+    }
+
     private PageVo<ArticleAdminPageVo> transferArticlePage2ArticleAdminPage(Page<Article> pages) {
         PageVo<ArticleAdminPageVo> pageVo = new PageVo<>();
         pageVo.setTotalElements(pages.getTotalElements());
@@ -202,5 +213,33 @@ public class ArticleServiceImpl implements ArticleService {
             articleVo.setArticleCategoryAlias(secondaryCategory.getAlias());
         }
         return articleVo;
+    }
+
+    private Article transferArticleDto2Article(ArticleDto articleDto, Article article) {
+        if (article == null) {
+            article = new Article();
+        }
+        SecondaryCategory secondaryCategory = secondaryCategoryService.findByName(articleDto.getCategory()).orElse(null);
+        if (secondaryCategory == null) {
+            return null;
+        }
+        BeanUtils.copyProperties(articleDto, article);
+        article.setSecondaryCategory(secondaryCategory);
+        try {
+            ArticleProperty articleProperty = ArticleProperty.valueOf(articleDto.getArticleProperty());
+            article.setArticleProperty(articleProperty);
+        } catch (IllegalArgumentException e) {
+            log.info("enum error constant: {}", e.getMessage());
+            return null;
+        }
+        return article;
+    }
+
+    private ArticleDto transferArticle2ArticleDto(Article article) {
+        ArticleDto articleDto = new ArticleDto();
+        BeanUtils.copyProperties(article, articleDto);
+        articleDto.setCategory(article.getSecondaryCategory().getAlias());
+        articleDto.setArticleProperty(article.getArticleProperty().name());
+        return articleDto;
     }
 }
