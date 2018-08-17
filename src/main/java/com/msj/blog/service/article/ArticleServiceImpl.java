@@ -11,37 +11,50 @@ import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.page.PageVo;
 import com.msj.blog.repository.article.ArticleRepository;
 import com.msj.blog.service.category.SecondaryCategoryService;
+import com.msj.blog.service.redis.RedisService;
 import com.msj.blog.util.MarkdownUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
-@CacheConfig(cacheNames = "article")
 public class ArticleServiceImpl implements ArticleService {
+
+    private static final String KEY_PREFIX_ARTICLE_VO = "article-vo:";
+    private static final String KEY_PREFIX_ARTICLE_PAGE = "article-page:";
+    private static final String KEY_PREFIX_ARTICLE_ABOUT_US = KEY_PREFIX_ARTICLE_VO.concat("about_us");
+    private static final String KEY_PREFIX_ARTICLE_DISCLAIMER = KEY_PREFIX_ARTICLE_VO.concat("disclaimer");
 
     @Resource
     private ArticleRepository articleRepository;
     @Resource
     private SecondaryCategoryService secondaryCategoryService;
+    @Resource
+    private RedisService redisService;
 
     @Override
     public Article saveOrUpdate(Article article) {
-        return articleRepository.save(article);
+        Article saveArticle = articleRepository.save(article);
+        if (Objects.equals(article.getArticleProperty(), ArticleProperty.PUBLIC)) {
+            redisService.del(KEY_PREFIX_ARTICLE_VO + article.getId());
+            redisService.delAll(KEY_PREFIX_ARTICLE_PAGE);
+        } else if (Objects.equals(article.getArticleProperty(), ArticleProperty.ABOUT_US)) {
+            redisService.del(KEY_PREFIX_ARTICLE_ABOUT_US);
+        } else if (Objects.equals(article.getArticleProperty(), ArticleProperty.DISCLAIMER)) {
+            redisService.del(KEY_PREFIX_ARTICLE_DISCLAIMER);
+        }
+        return saveArticle;
     }
 
     @Override
@@ -79,13 +92,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Stream<Article> findByAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty) {
+    public List<Article> findByAuditStatusAndSecondaryCategory(AuditStatus auditStatus, ArticleProperty articleProperty) {
         return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEquals(auditStatus, articleProperty);
     }
 
     @Override
-    @Transactional
-    @CacheEvict(value = {"article-page-ui"}, allEntries = true)
     public boolean saveArticle(ArticleDto articleDto) {
         if (articleDto == null) {
             return false;
@@ -120,9 +131,16 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    @Cacheable(key = "'article-ui-' + #p0")
-    public Optional<ArticleVo> getUIArticleById(Long id) {
-        return findByIdAndAuditStatusAndArticleProperty(id, AuditStatus.ONLINE, ArticleProperty.PUBLIC).map(this::transferArticle2ArticleVo);
+    public ArticleVo getUIArticleById(Long id) {
+        Serializable cacheArticleVo = redisService.get(KEY_PREFIX_ARTICLE_VO + id);
+        if (cacheArticleVo != null && cacheArticleVo instanceof ArticleVo) {
+            return (ArticleVo)cacheArticleVo;
+        }
+        ArticleVo articleVo = findByIdAndAuditStatusAndArticleProperty(id, AuditStatus.ONLINE, ArticleProperty.PUBLIC).map(this::transferArticle2ArticleVo).orElse(null);
+        if (articleVo != null) {
+            redisService.set(KEY_PREFIX_ARTICLE_VO + id, articleVo);
+        }
+        return articleVo;
     }
 
     @Override
@@ -138,8 +156,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    @Cacheable(value = {"article-page-ui"}, key = "'article-page-ui-' + #p0 + '-' + #p1")
     public PageVo<ArticleUIPageVo> findUIArticleListByPage(Integer page, Integer size) {
+        Serializable cachePageVo = redisService.get(KEY_PREFIX_ARTICLE_PAGE + page + "-" + size);
+        if (cachePageVo != null && cachePageVo instanceof PageVo) {
+            return (PageVo<ArticleUIPageVo>)cachePageVo;
+        }
         Page<Article> pages = findByPageAndAuditStatusAndArticleProperty(AuditStatus.ONLINE, ArticleProperty.PUBLIC, page, size);
         PageVo<ArticleUIPageVo> pageVo = new PageVo<>();
         pageVo.setTotalElements(pages.getTotalElements());
@@ -160,20 +181,46 @@ public class ArticleServiceImpl implements ArticleService {
         pageVo.setNumberOfElements(pages.getNumberOfElements());
         pageVo.setSize(pages.getSize());
         pageVo.setLastModifyTime(System.currentTimeMillis());
+        redisService.set(KEY_PREFIX_ARTICLE_PAGE + page + "-" + size, pageVo);
         return pageVo;
     }
 
     @Override
-    @Cacheable(key = "'article-about-us'")
-    public Optional<ArticleVo> findAboutUsArticle() {
-        return findByAuditStatusAndArticleProperty(AuditStatus.ONLINE, ArticleProperty.ABOUT_US)
+    public ArticleVo findAboutUsArticle() {
+        Serializable cacheAboutUsArticleVo = redisService.get(KEY_PREFIX_ARTICLE_ABOUT_US);
+        if (cacheAboutUsArticleVo != null && cacheAboutUsArticleVo instanceof ArticleVo) {
+            return (ArticleVo)cacheAboutUsArticleVo;
+        }
+        ArticleVo aboutUsArticleVo = findByAuditStatusAndSecondaryCategory(AuditStatus.ONLINE, ArticleProperty.ABOUT_US)
+                .stream()
                 .findFirst()
                 .map(article -> {
                     ArticleVo articleVo = new ArticleVo();
                     BeanUtils.copyProperties(article, articleVo);
                     articleVo.setContent(MarkdownUtil.parse(article.getContent()));
                     return articleVo;
-                });
+                }).orElse(null);
+        redisService.set(KEY_PREFIX_ARTICLE_ABOUT_US, aboutUsArticleVo);
+        return aboutUsArticleVo;
+    }
+
+    @Override
+    public ArticleVo findDisclaimerArticle() {
+        Serializable cacheDisclaimerArticleVo = redisService.get(KEY_PREFIX_ARTICLE_DISCLAIMER);
+        if (cacheDisclaimerArticleVo != null && cacheDisclaimerArticleVo instanceof ArticleVo) {
+            return (ArticleVo)cacheDisclaimerArticleVo;
+        }
+        ArticleVo disclaimerArticleVo = findByAuditStatusAndSecondaryCategory(AuditStatus.ONLINE, ArticleProperty.DISCLAIMER)
+                .stream()
+                .findFirst()
+                .map(article -> {
+                    ArticleVo articleVo = new ArticleVo();
+                    BeanUtils.copyProperties(article, articleVo);
+                    articleVo.setContent(MarkdownUtil.parse(article.getContent()));
+                    return articleVo;
+                }).orElse(null);
+        redisService.set(KEY_PREFIX_ARTICLE_DISCLAIMER, disclaimerArticleVo);
+        return disclaimerArticleVo;
     }
 
     @Override
@@ -191,7 +238,8 @@ public class ArticleServiceImpl implements ArticleService {
             BeanUtils.copyProperties(article, articleAdminPageVo);
             SecondaryCategory secondaryCategory = article.getSecondaryCategory();
             if (secondaryCategory != null) {
-                articleAdminPageVo.setCategory(secondaryCategory.getAlias());
+                articleAdminPageVo.setCategory(secondaryCategory.getName());
+                articleAdminPageVo.setCategoryAlias(secondaryCategory.getAlias());
             }
             articleAdminPageVo.setAuditStatus(article.getAuditStatus().name());
             articleAdminPageVos.add(articleAdminPageVo);

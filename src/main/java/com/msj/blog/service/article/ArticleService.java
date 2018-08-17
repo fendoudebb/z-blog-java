@@ -10,8 +10,8 @@ import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.page.PageVo;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public interface ArticleService {
 
@@ -29,7 +29,7 @@ public interface ArticleService {
 
     Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size);
 
-    Stream<Article> findByAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty);
+    List<Article> findByAuditStatusAndSecondaryCategory(AuditStatus auditStatus, ArticleProperty articleProperty);
 
     boolean saveArticle(ArticleDto articleDto);
 
@@ -37,7 +37,7 @@ public interface ArticleService {
 
     Optional<ArticleVo> getAdminArticleById(Long id);
 
-    Optional<ArticleVo> getUIArticleById(Long id);
+    ArticleVo getUIArticleById(Long id);
 
     PageVo<ArticleAdminPageVo> findAdminArticleDraftByPage(Integer page, Integer size);
 
@@ -45,7 +45,9 @@ public interface ArticleService {
 
     PageVo<ArticleUIPageVo> findUIArticleListByPage(Integer page, Integer size);
 
-    Optional<ArticleVo> findAboutUsArticle();
+    ArticleVo findAboutUsArticle();
+
+    ArticleVo findDisclaimerArticle();
 
     ArticleDto findArticleDto(Article article);
 

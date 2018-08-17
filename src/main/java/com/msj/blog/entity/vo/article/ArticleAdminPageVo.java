@@ -23,6 +23,7 @@ public class ArticleAdminPageVo implements Serializable{
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime updateTime;
     private String category;
+    private String categoryAlias;
 
     private String auditStatus;
 

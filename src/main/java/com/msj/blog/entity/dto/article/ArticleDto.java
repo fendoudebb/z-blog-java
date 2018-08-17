@@ -15,6 +15,7 @@ public class ArticleDto {
     @NotBlank(message = "标题不能为空")
     @Length(max = FieldLength.ARTICLE_TITLE, message = "标题长度不能超出" + FieldLength.ARTICLE_TITLE + "个字符")
     private String title;
+    @NotBlank(message = "作者不能为空")
     @Length(max = FieldLength.ARTICLE_AUTHOR, message = "作者长度不能超出" + FieldLength.ARTICLE_AUTHOR + "个字符")
     private String author;
     @NotBlank(message = "关键字不能为空")

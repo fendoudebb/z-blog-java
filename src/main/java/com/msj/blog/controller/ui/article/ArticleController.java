@@ -28,7 +28,7 @@ public class ArticleController extends BaseController {
 
     @GetMapping(value = {"/{category}/{id}"})
     public String article(WebRequest webRequest, Model model, @PathVariable String category, @PathVariable Long id) {
-        ArticleVo articleVo = articleService.getUIArticleById(id).orElse(null);
+        ArticleVo articleVo = articleService.getUIArticleById(id);
         if (articleVo == null || !Objects.equals(category, articleVo.getArticleCategory())) {
             return "error/404";
         }

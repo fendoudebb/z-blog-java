@@ -42,7 +42,21 @@ public class UIHomeController extends BaseController {
 
     @GetMapping("/about")
     public String about(WebRequest webRequest, Model model) {
-        ArticleVo articleVo = articleService.findAboutUsArticle().orElse(null);
+        ArticleVo articleVo = articleService.findAboutUsArticle();
+        if (articleVo == null) {
+            return "error/404";
+        }
+        if (webRequest.checkNotModified(Timestamp.valueOf(articleVo.getUpdateTime()).getTime())) {
+            return null;
+        }
+        model.addAttribute("article", articleVo);
+        model.addAttribute("showDetailInfo", true);
+        return "article/article";
+    }
+
+    @GetMapping("/disclaimer")
+    public String disclaimer(WebRequest webRequest, Model model) {
+        ArticleVo articleVo = articleService.findDisclaimerArticle();
         if (articleVo == null) {
             return "error/404";
         }

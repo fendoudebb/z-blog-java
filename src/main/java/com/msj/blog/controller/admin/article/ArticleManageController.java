@@ -12,6 +12,7 @@ import com.msj.blog.response.MsgTable;
 import com.msj.blog.response.Response;
 import com.msj.blog.service.article.ArticleService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -98,5 +99,14 @@ public class ArticleManageController extends BaseController {
         return mv;
     }
 
+    @PostMapping(value = "/preview/edit")
+    public ModelAndView articlePreviewEdit(@RequestBody @Valid ArticleDto articleDto) {
+        ModelAndView mv = new ModelAndView();
+        ArticleVo articleVo = new ArticleVo();
+        BeanUtils.copyProperties(articleDto, articleVo);
+        mv.setViewName("article/article");
+        mv.addObject("article", articleVo);
+        return mv;
+    }
 
 }
