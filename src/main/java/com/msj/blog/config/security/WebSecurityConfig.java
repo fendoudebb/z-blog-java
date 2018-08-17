@@ -82,8 +82,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
 
                 .authorizeRequests()
-//                .antMatchers("/admin/**").authenticated()
-                .antMatchers("/aaaaaa/**").authenticated()
+                .antMatchers("/admin/**").authenticated()
+//                .antMatchers("/aaaaaa/**").authenticated()
                 //任何访问都必须授权
                 //.anyRequest().authenticated()
 
