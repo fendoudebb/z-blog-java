@@ -20,7 +20,7 @@
     <link th:href="@{/css/tool/format_json.css}" rel="stylesheet">
 </head>
 <body>
-<div th:replace="/base/navbar :: navbar"></div>
+<div th:replace="base/navbar :: navbar"></div>
 <div class="row format-json-area">
     <div class="col-md-5 col-md-offset-1">
         <textarea class="form-control" id="json-textarea" rows="20" placeholder="请输入JSON字符串" title="格式化JSON"></textarea>
@@ -55,7 +55,7 @@
     <i class="iconfont icon-up"></i>
 </div>
 
-<span th:replace="/base/js :: js"></span>
+<span th:replace="base/js :: js"></span>
 <script src="https://s.maisiji.cn/lib/jquery-jsonview/1.2.3/jquery.jsonview.min.js"></script>
 <script src="https://s.maisiji.cn/lib/toastr/2.1.4/toastr.min.js"></script>
 <script src="https://s.maisiji.cn/lib/clipboard/2.0.1/clipboard.min.js"></script>
