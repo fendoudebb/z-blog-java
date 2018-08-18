@@ -15,7 +15,7 @@ import javax.persistence.*;
 @DynamicUpdate
 @DynamicInsert
 @SelectBeforeUpdate
-@Table(name = "test",indexes = {@Index(columnList = "testName")})
+@Table(name = "test")
 public class Test extends BaseEntity {
     private static final long serialVersionUID = 507207113720884370L;
 

@@ -3,6 +3,12 @@ spring:
     cache: true
   jpa:
     show-sql: false
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/msj?useUnicode=true&amp;characterEncoding=utf8mb4
+    username: root
+    password:
+    hikari:
+      connection-init-sql: SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci
   resources:
     chain:
       # 启用缓存
