@@ -10,6 +10,7 @@
     <meta name="description" content="IT Blog,软件,技术,博客,麦司机">
     <meta name="copyright" content="maisiji.cn">
     <meta name="google-site-verification" content="fmc_T5F0D4mqFYid4LrpOiVOEA4p8l_R5xjQCveieDE" />
+    <meta name="baidu-site-verification" content="ntadyLojR3" />
     <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
     <link href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" rel="stylesheet">
     <link href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" rel="stylesheet">
@@ -55,5 +56,19 @@
 <div th:replace="base/footer :: footer"></div>
 
 <span th:replace="base/js :: js"></span>
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
 </body>
 </html>

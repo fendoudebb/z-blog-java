@@ -10,6 +10,7 @@
     <meta name="description" content="格式化json,解析json,压缩json,格式化,解析,压缩">
     <meta name="copyright" content="maisiji.cn">
     <meta name="google-site-verification" content="fmc_T5F0D4mqFYid4LrpOiVOEA4p8l_R5xjQCveieDE" />
+    <meta name="baidu-site-verification" content="ntadyLojR3" />
     <meta name="revisit-after" content="7 days"><!--搜索引擎爬虫重访时间-->
     <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
     <link href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" rel="stylesheet">
@@ -68,5 +69,19 @@
 <script src="https://s.maisiji.cn/lib/toastr/2.1.4/toastr.min.js"></script>
 <script src="https://s.maisiji.cn/lib/clipboard/2.0.1/clipboard.min.js"></script>
 <script th:src="@{/js/tool/format_json.js}"></script>
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
 </body>
 </html>
