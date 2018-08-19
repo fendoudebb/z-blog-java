@@ -29,7 +29,7 @@ public interface ArticleService {
 
     Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size);
 
-    List<Article> findByAuditStatusAndSecondaryCategory(AuditStatus auditStatus, ArticleProperty articleProperty);
+    List<Article> findByAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty);
 
     boolean saveArticle(ArticleDto articleDto);
 

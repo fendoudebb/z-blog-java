@@ -92,7 +92,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> findByAuditStatusAndSecondaryCategory(AuditStatus auditStatus, ArticleProperty articleProperty) {
+    public List<Article> findByAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty) {
         return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEquals(auditStatus, articleProperty);
     }
 
@@ -191,15 +191,7 @@ public class ArticleServiceImpl implements ArticleService {
         if (cacheAboutUsArticleVo != null && cacheAboutUsArticleVo instanceof ArticleVo) {
             return (ArticleVo)cacheAboutUsArticleVo;
         }
-        ArticleVo aboutUsArticleVo = findByAuditStatusAndSecondaryCategory(AuditStatus.ONLINE, ArticleProperty.ABOUT_US)
-                .stream()
-                .findFirst()
-                .map(article -> {
-                    ArticleVo articleVo = new ArticleVo();
-                    BeanUtils.copyProperties(article, articleVo);
-                    articleVo.setContent(MarkdownUtil.parse(article.getContent()));
-                    return articleVo;
-                }).orElse(null);
+        ArticleVo aboutUsArticleVo = transfer2SystemArticleVo(ArticleProperty.ABOUT_US);
         redisService.set(KEY_PREFIX_ARTICLE_ABOUT_US, aboutUsArticleVo);
         return aboutUsArticleVo;
     }
@@ -210,15 +202,7 @@ public class ArticleServiceImpl implements ArticleService {
         if (cacheDisclaimerArticleVo != null && cacheDisclaimerArticleVo instanceof ArticleVo) {
             return (ArticleVo)cacheDisclaimerArticleVo;
         }
-        ArticleVo disclaimerArticleVo = findByAuditStatusAndSecondaryCategory(AuditStatus.ONLINE, ArticleProperty.DISCLAIMER)
-                .stream()
-                .findFirst()
-                .map(article -> {
-                    ArticleVo articleVo = new ArticleVo();
-                    BeanUtils.copyProperties(article, articleVo);
-                    articleVo.setContent(MarkdownUtil.parse(article.getContent()));
-                    return articleVo;
-                }).orElse(null);
+        ArticleVo disclaimerArticleVo = transfer2SystemArticleVo(ArticleProperty.DISCLAIMER);
         redisService.set(KEY_PREFIX_ARTICLE_DISCLAIMER, disclaimerArticleVo);
         return disclaimerArticleVo;
     }
@@ -249,6 +233,19 @@ public class ArticleServiceImpl implements ArticleService {
         pageVo.setNumberOfElements(pages.getNumberOfElements());
         pageVo.setSize(pages.getSize());
         return pageVo;
+    }
+
+    private ArticleVo transfer2SystemArticleVo(ArticleProperty articleProperty) {
+        return findByAuditStatusAndArticleProperty(AuditStatus.ONLINE, articleProperty)
+                .stream()
+                .findFirst()
+                .map(article -> {
+                    ArticleVo articleVo = new ArticleVo();
+                    BeanUtils.copyProperties(article, articleVo);
+                    articleVo.setContent(MarkdownUtil.parse(article.getContent()));
+                    articleVo.setArticleCategoryAlias(article.getSecondaryCategory().getAlias());
+                    return articleVo;
+                }).orElse(null);
     }
 
     private ArticleVo transferArticle2ArticleVo(Article article) {
