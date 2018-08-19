@@ -29,7 +29,7 @@ import javax.annotation.Resource;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)// 控制权限注解
+@EnableGlobalMethodSecurity(prePostEnabled = true)// 控制权限注解
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static void main(String[] args) {

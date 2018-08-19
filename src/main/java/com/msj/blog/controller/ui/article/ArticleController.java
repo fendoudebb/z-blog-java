@@ -32,6 +32,25 @@ public class ArticleController extends BaseController {
         if (articleVo == null || !Objects.equals(category, articleVo.getArticleCategory())) {
             return "error/404";
         }
+        return view(articleVo, webRequest, model);
+    }
+
+    @GetMapping("/about")
+    public String about(WebRequest webRequest, Model model) {
+        ArticleVo articleVo = articleService.findAboutUsArticle();
+        return view(articleVo, webRequest, model);
+    }
+
+    @GetMapping("/disclaimer")
+    public String disclaimer(WebRequest webRequest, Model model) {
+        ArticleVo articleVo = articleService.findDisclaimerArticle();
+        return view(articleVo, webRequest, model);
+    }
+
+    private String view(ArticleVo articleVo, WebRequest webRequest, Model model) {
+        if (articleVo == null) {
+            return "error/404";
+        }
         if (webRequest.checkNotModified(Timestamp.valueOf(articleVo.getUpdateTime()).getTime())) {
             return null;
         }

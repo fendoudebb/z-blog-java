@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,8 +21,9 @@ import java.util.List;
  * zbj: create on 2018/08/08 16:26
  */
 @Slf4j
-@RequestMapping("/admin")
 @RestController
+@RequestMapping("/admin")
+@PreAuthorize(value = "hasRole('ADMIN')")
 public class ExcelController extends BaseController {
 
     @Resource

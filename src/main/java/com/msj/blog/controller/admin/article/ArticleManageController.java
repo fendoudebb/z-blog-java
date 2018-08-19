@@ -13,6 +13,7 @@ import com.msj.blog.response.Response;
 import com.msj.blog.service.article.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +25,7 @@ import java.sql.Timestamp;
 @Slf4j
 @RestController
 @RequestMapping("/admin/article")
+@PreAuthorize(value = "hasAnyRole('ADMIN','USER')")
 public class ArticleManageController extends BaseController {
 
     @Resource
@@ -67,6 +69,7 @@ public class ArticleManageController extends BaseController {
     }
 
     @PostMapping(value = "/audit")
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public Response audit(@RequestBody @Valid AuditStatusDto auditStatusDto) {
         Article article = articleService.findById(auditStatusDto.getArticleId()).orElse(null);
         if (article == null) {

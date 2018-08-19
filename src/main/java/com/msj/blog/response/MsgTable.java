@@ -22,6 +22,8 @@ public class MsgTable implements Serializable{
 
     public static final String MISSING_PARAMETERS = "请求参数不完整";
 
+    public static final String ACCESS_DENY = "权限不足";
+
     public static final String MISMATCH_TYPE = "请求参数类型不匹配";
 
     public static final String MISSING_REQUEST_PARAM = "缺少请求体参数";

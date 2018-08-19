@@ -2,7 +2,6 @@ package com.msj.blog.controller.ui;
 
 import com.msj.blog.controller.BaseController;
 import com.msj.blog.entity.vo.article.ArticleUIPageVo;
-import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.page.PageVo;
 import com.msj.blog.service.article.ArticleService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -38,34 +36,6 @@ public class UIHomeController extends BaseController {
         }
         model.addAttribute("articleVoPageVo", articleVoPageVo);
         return "index";
-    }
-
-    @GetMapping("/about")
-    public String about(WebRequest webRequest, Model model) {
-        ArticleVo articleVo = articleService.findAboutUsArticle();
-        if (articleVo == null) {
-            return "error/404";
-        }
-        if (webRequest.checkNotModified(Timestamp.valueOf(articleVo.getUpdateTime()).getTime())) {
-            return null;
-        }
-        model.addAttribute("article", articleVo);
-        model.addAttribute("showDetailInfo", true);
-        return "article/article";
-    }
-
-    @GetMapping("/disclaimer")
-    public String disclaimer(WebRequest webRequest, Model model) {
-        ArticleVo articleVo = articleService.findDisclaimerArticle();
-        if (articleVo == null) {
-            return "error/404";
-        }
-        if (webRequest.checkNotModified(Timestamp.valueOf(articleVo.getUpdateTime()).getTime())) {
-            return null;
-        }
-        model.addAttribute("article", articleVo);
-        model.addAttribute("showDetailInfo", true);
-        return "article/article";
     }
 
 }
