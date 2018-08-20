@@ -2,7 +2,6 @@ package com.msj.blog.config.mvc;
 
 import com.msj.blog.config.executor.AppExecutor;
 import com.msj.blog.interceptor.LogInterceptor;
-import com.msj.blog.interceptor.RefererInterceptorDev;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.task.AsyncTaskExecutor;
@@ -23,8 +22,6 @@ public class DevMvcConfig implements WebMvcConfigurer {
     @Resource
     private LogInterceptor logInterceptor;
     @Resource
-    private RefererInterceptorDev refererInterceptorDev;
-    @Resource
     private AppExecutor appExecutor;
 
     @Override
@@ -43,7 +40,8 @@ public class DevMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(logInterceptor).addPathPatterns("/**").excludePathPatterns("/css/**", "/js/**", "/images/**");
-        registry.addInterceptor(refererInterceptorDev).addPathPatterns("/css/**", "/js/**", "/images/**");
+        /*registry.addInterceptor(logInterceptor).addPathPatterns("/**").excludePathPatterns("/css/**", "/js/**", "/images/**");
+        registry.addInterceptor(refererInterceptorDev).addPathPatterns("/css/**", "/js/**", "/images/**");*/
+        registry.addInterceptor(logInterceptor).addPathPatterns("/**");
     }
 }

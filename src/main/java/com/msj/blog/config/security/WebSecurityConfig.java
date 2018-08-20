@@ -70,9 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         //解决静态资源被拦截的问题
-        web.ignoring()
+        /*web.ignoring()
                 .antMatchers("/js/**")
-                .antMatchers("/css/**");
+                .antMatchers("/css/**");*/
     }
 
     @Override

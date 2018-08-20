@@ -22,8 +22,6 @@ public class ProMvcConfig implements WebMvcConfigurer {
     @Resource
     private LogInterceptor logInterceptor;
     @Resource
-    private RefererInterceptor refererInterceptor;
-    @Resource
     private AppExecutor appExecutor;
 
     @Override
@@ -41,7 +39,6 @@ public class ProMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(logInterceptor).addPathPatterns("/**").excludePathPatterns("/css/**", "/js/**", "/images/**");
-        registry.addInterceptor(refererInterceptor).addPathPatterns("/css/**", "/js/**", "/images/**");
+        registry.addInterceptor(logInterceptor).addPathPatterns("/**");
     }
 }

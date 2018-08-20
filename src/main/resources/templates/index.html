@@ -11,18 +11,121 @@
     <meta name="copyright" content="maisiji.cn">
     <meta name="google-site-verification" content="fmc_T5F0D4mqFYid4LrpOiVOEA4p8l_R5xjQCveieDE" />
     <meta name="baidu-site-verification" content="ntadyLojR3" />
-    <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
-    <link href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" rel="stylesheet">
-    <link href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" rel="stylesheet">
-    <link th:href="@{/css/common.css}" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/index.css}">
-    <link rel="stylesheet" th:href="@{/css/iconfont.css}">
+    <link rel="shortcut icon" href="https://s.maisiji.cn/pic/ico/favicon.ico">
+    <!--<link href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css"></noscript>
+    <!--<link href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css"></noscript>
+    <style>
+        ::-webkit-scrollbar {
+            width: .5rem;
+            height: .5rem;
+            background: hsla(0, 0%, 100%, 0.6);
+        }
+
+        ::-webkit-scrollbar-track {
+            border-radius: 0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(95,95,95,.4);
+            transition: all .2s;
+            border-radius: .5rem;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(95,95,95, .7);
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        :root {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        :root body {
+            position: absolute;
+        }
+
+        body {
+            width: 100vw;
+            overflow: hidden;
+            background-color: #F6F8F9;
+        }
+
+        .bs-docs-nav {
+            margin-bottom: 0;
+            background-color: #fff;
+            border-bottom: 0;
+        }
+
+        .bs-docs-nav .navbar-brand,
+        .bs-docs-nav .navbar-nav > li > a {
+            font-weight: 500;
+            color: #563d7c;
+        }
+        .bs-docs-nav .navbar-nav > li > a:hover,
+        .bs-docs-nav .navbar-nav > .active > a,
+        .bs-docs-nav .navbar-nav > .active > a:hover {
+            color: #463265;
+            background-color: #f9f9f9;
+        }
+        .bs-docs-nav .navbar-toggle .icon-bar {
+            background-color: #563d7c;
+        }
+        .bs-docs-nav .navbar-header .navbar-toggle {
+            border-color: #fff;
+        }
+        .bs-docs-nav .navbar-header .navbar-toggle:hover,
+        .bs-docs-nav .navbar-header .navbar-toggle:focus {
+            background-color: #f9f9f9;
+            border-color: #f9f9f9;
+        }
+        .label {
+            padding: .3em .5em;
+        }
+
+        .index-article {
+            /*border: 1px solid red;*/
+            border-radius: 5px;
+            -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+            -moz-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+            background-color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .index-title {
+            color: #563d7c;
+            font-size: 20px;
+        }
+
+        .index-tag {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+    </style>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({
             google_ad_client: "ca-pub-4671741323231057",
             enable_page_level_ads: true
         });
+    </script>
+    <script defer="defer">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d6a6afb0ede1dc335c85c4fe16c9c8d6";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
     </script>
 </head>
 <body>
@@ -35,9 +138,9 @@
             <a th:href="@{/article/{category}/{id}(category=${content.getArticleCategory()},id=${content.getId()})}" target="_blank" class="index-title" th:text="${content.getTitle()}" th:alt-title="${content.getTitle()}"></a>
             <div style="margin-top: 5px">
                 <span th:class="${content.isOriginal() ? 'label label-success' : 'label label-info'}" th:text="${content.isOriginal() ? '原创' : '转发'}"></span>
-                <i class="iconfont icon-author" style="margin-left: 5px"><span class="index-tag" th:text="${content.getAuthor()}"></span></i>
-                <i class="iconfont icon-category"><span class="index-tag" th:text="${content.getArticleCategoryAlias()}"></span></i>
-                <i class="iconfont icon-date"><span class="index-tag" th:text="${#temporals.format(content.getUpdateTime(),'yyy-MM-dd')}"></span></i>
+                <span th:text="${content.getAuthor()}" style="margin-left: 5px"></span> ·
+                <span th:text="${content.getArticleCategoryAlias()}"></span> ·
+                <span th:text="${#temporals.format(content.getUpdateTime(),'yyy-MM-dd')}"></span>
             </div>
             <div style="margin-top: 5px">
                 <span th:text="${content.getDescription()}"></span>

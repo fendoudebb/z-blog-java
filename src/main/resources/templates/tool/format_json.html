@@ -12,20 +12,213 @@
     <meta name="google-site-verification" content="fmc_T5F0D4mqFYid4LrpOiVOEA4p8l_R5xjQCveieDE" />
     <meta name="baidu-site-verification" content="ntadyLojR3" />
     <meta name="revisit-after" content="7 days"><!--搜索引擎爬虫重访时间-->
-    <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
-    <link href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" rel="stylesheet">
-    <link href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://s.maisiji.cn/lib/jquery-jsonview/1.2.3/jquery.jsonview.min.css" rel="stylesheet">
-    <link href="https://s.maisiji.cn/lib/toastr/2.1.4/toastr.min.css" rel="stylesheet">
-    <link th:href="@{/css/common.css}" rel="stylesheet">
-    <link th:href="@{/css/iconfont.css}" rel="stylesheet">
-    <link th:href="@{/css/tool/format_json.css}" rel="stylesheet">
+    <link rel="shortcut icon" href="https://s.maisiji.cn/pic/ico/favicon.ico">
+    <!--<link href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css"></noscript>
+    <!--<link href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css"></noscript>
+    <!--<link href="https://s.maisiji.cn/lib/jquery-jsonview/1.2.3/jquery.jsonview.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://s.maisiji.cn/lib/jquery-jsonview/1.2.3/jquery.jsonview.min.css" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="https://s.maisiji.cn/lib/jquery-jsonview/1.2.3/jquery.jsonview.min.css"></noscript>
+    <!--<link href="https://s.maisiji.cn/lib/toastr/2.1.4/toastr.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://s.maisiji.cn/lib/toastr/2.1.4/toastr.min.css" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="https://s.maisiji.cn/lib/toastr/2.1.4/toastr.min.css"></noscript>
+    <style>
+        ::-webkit-scrollbar {
+            width: .5rem;
+            height: .5rem;
+            background: hsla(0, 0%, 100%, 0.6);
+        }
+
+        ::-webkit-scrollbar-track {
+            border-radius: 0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(95,95,95,.4);
+            transition: all .2s;
+            border-radius: .5rem;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(95,95,95, .7);
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        :root {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        :root body {
+            position: absolute;
+        }
+
+        body {
+            width: 100vw;
+            overflow: hidden;
+            background-color: #F6F8F9;
+        }
+
+        .bs-docs-nav {
+            margin-bottom: 0;
+            background-color: #fff;
+            border-bottom: 0;
+        }
+
+        .bs-docs-nav .navbar-brand,
+        .bs-docs-nav .navbar-nav > li > a {
+            font-weight: 500;
+            color: #563d7c;
+        }
+        .bs-docs-nav .navbar-nav > li > a:hover,
+        .bs-docs-nav .navbar-nav > .active > a,
+        .bs-docs-nav .navbar-nav > .active > a:hover {
+            color: #463265;
+            background-color: #f9f9f9;
+        }
+        .bs-docs-nav .navbar-toggle .icon-bar {
+            background-color: #563d7c;
+        }
+        .bs-docs-nav .navbar-header .navbar-toggle {
+            border-color: #fff;
+        }
+        .bs-docs-nav .navbar-header .navbar-toggle:hover,
+        .bs-docs-nav .navbar-header .navbar-toggle:focus {
+            background-color: #f9f9f9;
+            border-color: #f9f9f9;
+        }
+
+        .format-json-area {
+            height: 100%;
+            margin-top: 50px;
+        }
+
+        #json-textarea {
+            min-width: 100%;
+            max-width: 100%;
+            min-height: 50vh;
+            max-height: 50vh;
+        }
+
+        #json {
+            border: 1px solid #563d7c;
+            border-radius: 2px;
+            background-color: #ffffffff;
+            overflow-y: auto;
+            overflow-x: hidden;
+            word-break: break-all;
+            min-height: 50vh;
+            max-height: 50vh;
+            min-width: 100%;
+            max-width: 100%
+        }
+
+        #format-json-result-btn-group {
+            margin-top: 20px;
+        }
+
+        #format-json-result:-moz-full-screen {
+            background: white;
+            min-height: 100vh;
+            max-height: 100vh;
+            min-width: 100%;
+            max-width: 100%
+        }
+        #format-json-result:-webkit-full-screen {
+            background: white;
+            min-height: 100vh;
+            max-height: 100vh;
+            min-width: 100%;
+            max-width: 100%
+        }
+        #format-json-result:fullscreen {
+            background: white;
+            min-height: 100vh;
+            max-height: 100vh;
+            min-width: 100%;
+            max-width: 100%
+        }
+
+        #format-json-result:-moz-full-screen > #json {
+            min-height: 80vh;
+            max-height: 80vh;
+        }
+        #format-json-result:-webkit-full-screen > #json {
+            min-height: 80vh;
+            max-height: 80vh;
+        }
+        #format-json-result:fullscreen > #json {
+            min-height: 80vh;
+            max-height: 80vh;
+        }
+
+        #format-json-result:-moz-full-screen > #format-json-result-btn-group {
+            margin-top: 5vh;
+        }
+        #format-json-result:-webkit-full-screen > #format-json-result-btn-group {
+            margin-top: 5vh;
+        }
+        #format-json-result:fullscreen > #format-json-result-btn-group {
+            margin-top: 5vh;
+        }
+
+        /*html:-moz-full-screen {
+            background: red;
+        }
+
+        html:-webkit-full-screen {
+            background: red;
+        }
+
+        body:-ms-fullscreen {
+            overflow: auto; !* fix for IE11 scrollbar *!
+        }
+
+        html:fullscreen {
+            background: red;
+        }*/
+
+        #go-top {
+            cursor: pointer;
+            display: none;
+            width: 40px;
+            height: 40px;
+            position: fixed;
+            right: 50px;
+            bottom: 50px;
+            /*background:url(../../images/favicon.ico) no-repeat -70px 0px;*/
+            background-color: white;
+            border: 1px solid #DCDCDC;
+            text-align: center;
+        }
+
+        .icon-up {
+            line-height: 35px;
+            color: #5BC0DE;
+            font-size: 20px
+        }
+    </style>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({
             google_ad_client: "ca-pub-4671741323231057",
             enable_page_level_ads: true
         });
+    </script>
+    <script defer="defer">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d6a6afb0ede1dc335c85c4fe16c9c8d6";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
     </script>
 </head>
 <body>
@@ -60,15 +253,215 @@
 </div>
 
 <div id="go-top" title="回到顶部">
-    <!--<i class="glyphicon glyphicon-menu-up go-top-icon"></i>-->
-    <i class="iconfont icon-up"></i>
+    <i class="glyphicon glyphicon-arrow-up icon-up"></i>
 </div>
 
 <span th:replace="base/js :: js"></span>
 <script src="https://s.maisiji.cn/lib/jquery-jsonview/1.2.3/jquery.jsonview.min.js"></script>
 <script src="https://s.maisiji.cn/lib/toastr/2.1.4/toastr.min.js"></script>
 <script src="https://s.maisiji.cn/lib/clipboard/2.0.1/clipboard.min.js"></script>
-<script th:src="@{/js/tool/format_json.js}"></script>
+<script>
+    $(function () {
+        $(window).scroll(function () {
+            //若滚动条离顶部大于100元素
+            if ($(window).scrollTop() > 100)
+                $("#go-top").fadeIn(1000);
+            // $("#go-top").show();
+            else
+                $("#go-top").fadeOut(1000);
+            // $("#go-top").hide();
+        });
+
+        $("#go-top").click(function (e) {
+            e.preventDefault();
+            $('body,html').animate({scrollTop: 0}, 1000);
+        });
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "2000",
+            "hideDuration": "2000",
+            "timeOut": "2000",
+            "extendedTimeOut": "2000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        let clipboard = new ClipboardJS('.btn-success');
+        //优雅降级:safari 版本号>=10,提示复制成功;否则提示需在文字选中后，手动选择“拷贝”进行复制
+        clipboard.on('success', function (e) {
+            e.clearSelection();
+            if ($("#json-textarea").val()) {
+                toastr.success("复制成功！");
+            } else {
+                toastr.info("json字符串为空!");
+            }
+            console.info('Action:', e.action);
+            console.info('Text:', e.text);
+            console.info('Trigger:', e.trigger);
+        });
+        clipboard.on('error', function (e) {
+            toastr.info('请选择"拷贝"进行复制!');
+            console.error('Action:', e.action);
+            console.error('Trigger:', e.trigger);
+        });
+
+        $('#format-btn').on('click', function () {
+            formatJson($('#json-textarea').val());
+        });
+        $('#compress-btn').on('click', function () {
+            compressJson($('#json-textarea').val())
+        });
+        $('#save-btn').on('click', function () {
+            let text = $("#json-textarea").val();
+            if (text) {
+                saveFile(text);
+            } else {
+                toastr.info("文本为空!");
+            }
+        });
+        $('#clear-btn').on('click', function () {
+            clearJson();
+        });
+
+        let collapseExpandBtn = $('#collapse-expand-btn');
+        collapseExpandBtn.html("折叠");
+        collapseExpandBtn.on('click', function () {
+            let btnText = $(this).html();
+            if (btnText === "折叠") {
+                $('#json').JSONView('collapse');
+                $(this).html("展开");
+            } else {
+                $('#json').JSONView('expand');
+                $(this).html("折叠");
+            }
+        });
+
+        let fullScreenBtn = $("#full-screen-btn");
+        fullScreenBtn.html("全屏");
+        fullScreenBtn.on('click', function () {
+            let btnText = $(this).html();
+            if (btnText === "全屏") {
+                fullScreen();
+            } else {
+                exitFullScreen();
+            }
+        });
+
+        let fullscreenState = document.getElementById("full-screen-btn");
+        document.addEventListener("fullscreenchange", function () {
+                fullscreenState.innerHTML = (document.fullscreen) ? "退出" : "全屏";
+            }, false
+        );
+
+        document.addEventListener("mozfullscreenchange", function () {
+                fullscreenState.innerHTML = (document.mozFullScreen) ? "退出" : "全屏";
+            }, false
+        );
+
+        document.addEventListener("webkitfullscreenchange", function () {
+                fullscreenState.innerHTML = (document.webkitIsFullScreen) ? "退出" : "全屏";
+            }, false
+        );
+        document.addEventListener("msfullscreenchange", function () {
+                fullscreenState.innerHTML = (document.msFullscreenElement) ? "退出" : "全屏";
+            }, false
+        );
+    });
+
+    let result;
+
+    function clearJson() {
+        $("#json-textarea").val("");
+    }
+
+    function compressJson(jsonString) {
+        try {
+            eval("(" + jsonString + ")");
+            let compressJson = JSON.stringify(JSON.parse(jsonString));
+            $("#json-textarea").val(compressJson);
+        } catch (e) {
+            toastr.error("json字符串格式不正确!");
+        }
+    }
+
+    function formatJson(jsonString) {
+        try {
+            if (!jsonString) {
+                toastr.info("json字符串为空!");
+                return;
+            }
+            let jsonObject = eval("(" + jsonString + ")");
+            let json = JSON.stringify(jsonObject, undefined, 4);
+            $("#json-textarea").val(json);
+            result = json;
+            $("#json").JSONView(jsonObject);
+
+        } catch (e) {
+            toastr.error("json字符串格式不正确!");
+        }
+    }
+
+    //全屏
+    function fullScreen() {
+        // let el = document.documentElement;
+        let el = document.getElementById("format-json-result");
+        let rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+        if (typeof rfs !== "undefined" && rfs) {
+            rfs.call(el);
+            // $("#json").css({"min-width":$(document.body).width(),"max-width":$(document.body).width()});
+            // $("#json").css({"min-height":$(document.body).height(),"max-height":$(document.body).height()});
+            console.log($(window).height()); //浏览器当前窗口可视区域高度
+            console.log($(document).height()); //浏览器当前窗口文档的高度
+        }
+    }
+
+    //退出全屏
+    function exitFullScreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+        else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        }
+        else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        }
+        else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+        if (typeof cfs !== "undefined" && cfs) {
+            cfs.call(el);
+        }
+    }
+
+    function fakeClick(obj) {
+        let ev = document.createEvent("MouseEvents");
+        ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        obj.dispatchEvent(ev);
+    }
+
+    function exportRaw(name, data) {
+        let urlObject = window.URL || window.webkitURL || window;
+        let export_blob = new Blob([data]);
+        let save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+        save_link.href = urlObject.createObjectURL(export_blob);
+        save_link.download = name;
+        fakeClick(save_link);
+    }
+
+    function saveFile(text){
+        exportRaw('json-msj.txt', text);
+    }
+</script>
 <script>
     (function(){
         var bp = document.createElement('script');
