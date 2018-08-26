@@ -24,7 +24,7 @@ public class ArticleUIPageVo implements Serializable{
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 //    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    private LocalDateTime updateTime;
+    private LocalDateTime createTime;
     private String articleCategory;
     private String articleCategoryAlias;
 }

@@ -149,7 +149,7 @@
                 <span th:class="${content.isOriginal() ? 'label label-success' : 'label label-info'}" th:text="${content.isOriginal() ? '原创' : '转发'}"></span>
                 <span th:text="${content.getAuthor()}" style="margin-left: 5px"></span> ·
                 <span th:text="${content.getArticleCategoryAlias()}"></span> ·
-                <span th:text="${#temporals.format(content.getUpdateTime(),'yyy-MM-dd')}"></span>
+                <span th:text="${#temporals.format(content.getCreateTime(),'yyy-MM-dd')}"></span>
             </div>
             <div style="margin-top: 5px">
                 <span th:text="${content.getDescription()}"></span>
