@@ -37,8 +37,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
         String name = authentication.getName();
         log.info("login--name:" + name + " principal:" + user.getUsername());*/
         try {
-//            response.setHeader("Access-Control-Allow-Origin", "http://localhost:10000");
-//            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:10000");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
             response.setContentType("application/json;charset=UTF-8");
             @Cleanup PrintWriter out = response.getWriter();
             Response<List<String>> res = new Response<>();

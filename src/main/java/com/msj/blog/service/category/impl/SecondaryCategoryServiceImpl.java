@@ -1,7 +1,8 @@
-package com.msj.blog.service.category;
+package com.msj.blog.service.category.impl;
 
 import com.msj.blog.entity.domain.category.SecondaryCategory;
 import com.msj.blog.repository.article.SecondaryCategoryRepository;
+import com.msj.blog.service.category.SecondaryCategoryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

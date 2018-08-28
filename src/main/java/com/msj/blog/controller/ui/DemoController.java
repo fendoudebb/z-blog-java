@@ -52,7 +52,7 @@ public class DemoController extends BaseController {
     @GetMapping("/aaa")
     public ResponseEntity<ArticleVo> a() {
         System.out.println("11111111111");
-        ArticleVo articleVo = articleService.getUIArticleById(1L);
+        ArticleVo articleVo = articleService.getArticleById(1L);
 
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))

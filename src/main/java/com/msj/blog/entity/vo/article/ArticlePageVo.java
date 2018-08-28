@@ -6,15 +6,13 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * zbj: created on 2018/6/18 20:05.
  */
 @Data
-public class ArticleUIPageVo implements Serializable{
-    private static final long serialVersionUID = 6836629346278301150L;
+public class ArticlePageVo {
 
     private Long id;
     private String title;
@@ -25,6 +23,6 @@ public class ArticleUIPageVo implements Serializable{
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 //    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime createTime;
-    private String articleCategory;
-    private String articleCategoryAlias;
+    private String category;
+    private String categoryAlias;
 }

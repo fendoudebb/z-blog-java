@@ -1,10 +1,11 @@
-package com.msj.blog.service.category;
+package com.msj.blog.service.category.impl;
 
 import com.msj.blog.entity.domain.category.SecondaryCategory;
 import com.msj.blog.entity.domain.category.PrimaryCategory;
 import com.msj.blog.entity.vo.category.SecondaryCategoryVo;
 import com.msj.blog.entity.vo.category.PrimaryCategoryVo;
 import com.msj.blog.repository.article.PrimaryCategoryRepository;
+import com.msj.blog.service.category.PrimaryCategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
