@@ -1,5 +1,6 @@
-package com.msj.blog.service.redis;
+package com.msj.blog.service.redis.impl;
 
+import com.msj.blog.service.redis.RedisService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
