@@ -1,6 +1,7 @@
 package com.msj.blog.service.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,15 +15,37 @@ import java.util.Set;
 public class RedisServiceImpl implements RedisService {
 
     @Resource
+    private StringRedisTemplate stringRedisTemplate;
+    @Resource
     private RedisTemplate<String, Serializable> redisTemplate;
 
     @Override
-    public boolean del(String key) {
+    public String getValue(String key) {
+        return stringRedisTemplate.opsForValue().get(key);
+    }
+
+    @Override
+    public void setValue(String key, String value) {
+        stringRedisTemplate.opsForValue().set(key, value);
+    }
+
+    @Override
+    public Long zCard(String key) {
+        return redisTemplate.opsForZSet().zCard(key);
+    }
+
+    @Override
+    public Double zScore(String key, String member) {
+        return redisTemplate.opsForZSet().score(key, member);
+    }
+
+    @Override
+    public Boolean del(String key) {
         return redisTemplate.delete(key);
     }
 
     @Override
-    public long delAll(String keyPattern) {
+    public Long delAll(String keyPattern) {
         Set<String> keys = redisTemplate.keys(keyPattern + "*");
         return redisTemplate.delete(keys);
     }
