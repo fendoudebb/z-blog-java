@@ -4,12 +4,12 @@ import com.msj.blog.entity.domain.article.Article;
 import com.msj.blog.entity.domain.category.SecondaryCategory;
 import com.msj.blog.entity.domain.enu.ArticleProperty;
 import com.msj.blog.entity.domain.enu.AuditStatus;
-import com.msj.blog.entity.dto.article.ArticleDto;
 import com.msj.blog.entity.vo.article.ArticlePageVo;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.page.PageVo;
 import com.msj.blog.service.article.ArticleBaseService;
 import com.msj.blog.service.article.ArticleService;
+import com.msj.blog.service.cache.redis.RedisCacheService;
 import com.msj.blog.util.MarkdownUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -26,9 +26,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Resource
     private ArticleBaseService articleBaseService;
+    @Resource
+    private RedisCacheService redisCacheService;
 
     @Override
-    public ArticleVo getArticleById(Long id) {
+    public ArticleVo findArticleById(Long id) {
         return articleBaseService.findByIdAndAuditStatusAndArticleProperty(id, AuditStatus.ONLINE, ArticleProperty.PUBLIC).map(this::transferArticle2ArticleVo).orElse(null);
     }
 
@@ -67,10 +69,6 @@ public class ArticleServiceImpl implements ArticleService {
         return transfer2SystemArticleVo(ArticleProperty.DISCLAIMER);
     }
 
-    @Override
-    public ArticleDto findArticleDto(Article article) {
-        return transferArticle2ArticleDto(article);
-    }
 
     private ArticleVo transfer2SystemArticleVo(ArticleProperty articleProperty) {
         return articleBaseService.findByAuditStatusAndArticleProperty(AuditStatus.ONLINE, articleProperty)
@@ -80,7 +78,7 @@ public class ArticleServiceImpl implements ArticleService {
                     ArticleVo articleVo = new ArticleVo();
                     BeanUtils.copyProperties(article, articleVo);
                     articleVo.setContent(MarkdownUtil.parse(article.getContent()));
-                    articleVo.setArticleCategoryAlias(article.getSecondaryCategory().getAlias());
+                    articleVo.setCategoryAlias(article.getSecondaryCategory().getAlias());
                     return articleVo;
                 }).orElse(null);
     }
@@ -91,17 +89,10 @@ public class ArticleServiceImpl implements ArticleService {
         articleVo.setContent(MarkdownUtil.parse(article.getContent()));
         SecondaryCategory secondaryCategory = article.getSecondaryCategory();
         if (secondaryCategory != null) {
-            articleVo.setArticleCategory(secondaryCategory.getName());
-            articleVo.setArticleCategoryAlias(secondaryCategory.getAlias());
+            articleVo.setCategory(secondaryCategory.getName());
+            articleVo.setCategoryAlias(secondaryCategory.getAlias());
         }
         return articleVo;
     }
 
-    private ArticleDto transferArticle2ArticleDto(Article article) {
-        ArticleDto articleDto = new ArticleDto();
-        BeanUtils.copyProperties(article, articleDto);
-        articleDto.setCategory(article.getSecondaryCategory().getAlias());
-        articleDto.setArticleProperty(article.getArticleProperty().name());
-        return articleDto;
-    }
 }

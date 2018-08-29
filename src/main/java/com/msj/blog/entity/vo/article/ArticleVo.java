@@ -1,6 +1,5 @@
 package com.msj.blog.entity.vo.article;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -30,7 +29,7 @@ public class ArticleVo implements Serializable{
 //    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime updateTime;
     private Long categoryId;
-    private String articleCategory;
-    private String articleCategoryAlias;
+    private String category;
+    private String categoryAlias;
 
 }

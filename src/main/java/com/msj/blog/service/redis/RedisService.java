@@ -1,6 +1,8 @@
 package com.msj.blog.service.redis;
 
-import java.io.Serializable;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
+
+import java.util.Set;
 
 /**
  * operate redis
@@ -25,6 +27,55 @@ public interface RedisService {
     void setValue(String key, String value);
 
     /**
+     * set zSet member's score
+     *
+     * @param key    redis zSet key
+     * @param member redis zSet key's member
+     * @param score  redis zSet member's score
+     * @return operate success or not
+     */
+    Boolean zAdd(String key, String member, double score);
+
+    /**
+     * increment zSet member's delta score
+     *
+     * @param key    redis zSet key
+     * @param member redis zSet key's member
+     * @param delta  redis zSet member's delta score
+     * @return current zSet member's score
+     */
+    Double zIncrBy(String key, String member, double delta);
+
+    /**
+     * reverse range zSet
+     *
+     * @param key   redis zSet key
+     * @param start range start index
+     * @param end   range end index
+     * @return range key's member set
+     */
+    Set<String> zRevRange(String key, long start, long end);
+
+    /**
+     * reverse range zSet with scores
+     *
+     * @param key   redis zSet key
+     * @param start range start index
+     * @param end   range end index
+     * @return range key' member set with scores
+     */
+    Set<TypedTuple<String>> zRevRangeWithScores(String key, long start, long end);
+
+    /**
+     * get zSet score
+     *
+     * @param key    redis zSet key
+     * @param member redis zSet key's member
+     * @return redis zSet score
+     */
+    Double zScore(String key, String member);
+
+    /**
      * get zSet length
      *
      * @param key redis zSet key
@@ -33,31 +84,19 @@ public interface RedisService {
     Long zCard(String key);
 
     /**
-     * get zSet score
-     *
-     * @param key    redis zSet key
-     * @param member redis zSet member
-     * @return redis zSet score
-     */
-    Double zScore(String key, String member);
-
-    /**
      * delete redis key
      *
      * @param key redis key
-     * @return success or not
+     * @return operate success or not
      */
     Boolean del(String key);
 
     /**
      * delete all key in pattern
+     *
      * @param keyPattern redis key pattern
-     * @return number of success delete
+     * @return success delete numbers
      */
     Long delAll(String keyPattern);
-
-    void set(String key, Serializable value);
-
-    Serializable get(String key);
 
 }

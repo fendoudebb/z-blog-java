@@ -5,6 +5,7 @@ import com.msj.blog.response.Response;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * zbj: created on 2018/6/2 8:59.
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 public class BaseController {
     @Resource
     protected HttpServletRequest request;
+    @Resource
+    protected HttpServletResponse response;
 
     protected <T> Response<T> getResponse(T data) {
         Response<T> response = new Response<>();

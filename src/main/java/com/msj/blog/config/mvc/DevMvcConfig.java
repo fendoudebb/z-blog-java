@@ -35,7 +35,7 @@ public class DevMvcConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowedMethods("*")
                 .allowCredentials(true)
-                .allowedOrigins("http://localhost:10000");
+                .allowedOrigins("http://localhost:10000", "http://localhost:20000");
     }
 
     @Override

@@ -1,12 +1,11 @@
 package com.msj.blog.service.redis.impl;
 
 import com.msj.blog.service.redis.RedisService;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -17,8 +16,6 @@ public class RedisServiceImpl implements RedisService {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
-    @Resource
-    private RedisTemplate<String, Serializable> redisTemplate;
 
     @Override
     public String getValue(String key) {
@@ -31,34 +28,44 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public Long zCard(String key) {
-        return redisTemplate.opsForZSet().zCard(key);
+    public Boolean zAdd(String key, String member, double score) {
+        return stringRedisTemplate.opsForZSet().add(key, member, score);
+    }
+
+    @Override
+    public Double zIncrBy(String key, String member, double delta) {
+        return stringRedisTemplate.opsForZSet().incrementScore(key, member, delta);
+    }
+
+    @Override
+    public Set<String> zRevRange(String key, long start, long end) {
+        return stringRedisTemplate.opsForZSet().reverseRange(key, start, end);
+    }
+
+    @Override
+    public Set<TypedTuple<String>> zRevRangeWithScores(String key, long start, long end) {
+        return stringRedisTemplate.opsForZSet().reverseRangeWithScores(key, start, end);
     }
 
     @Override
     public Double zScore(String key, String member) {
-        return redisTemplate.opsForZSet().score(key, member);
+        return stringRedisTemplate.opsForZSet().score(key, member);
+    }
+
+    @Override
+    public Long zCard(String key) {
+        return stringRedisTemplate.opsForZSet().zCard(key);
     }
 
     @Override
     public Boolean del(String key) {
-        return redisTemplate.delete(key);
+        return stringRedisTemplate.delete(key);
     }
 
     @Override
     public Long delAll(String keyPattern) {
-        Set<String> keys = redisTemplate.keys(keyPattern + "*");
-        return redisTemplate.delete(keys);
-    }
-
-    @Override
-    public void set(String key, Serializable value) {
-        redisTemplate.opsForValue().set(key, value);
-    }
-
-    @Override
-    public Serializable get(String key) {
-       return redisTemplate.opsForValue().get(key);
+        Set<String> keys = stringRedisTemplate.keys(keyPattern + "*");
+        return stringRedisTemplate.delete(keys);
     }
 
 }

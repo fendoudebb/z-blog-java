@@ -36,10 +36,10 @@ public class ArticleController extends BaseController {
         String article;
         article = cacheService.getArticleFromRedis(id);
         if (StringUtils.isEmpty(article)) {
-
+            ArticleVo articleVo = articleService.findArticleById(id);
         }
-//        ArticleVo articleVo = articleService.getArticleById(id);
-        return getResponse("");
+//        ArticleVo articleVo = articleService.findArticleById(id);
+        return getResponse(article);
     }
 
     @GetMapping("/about")

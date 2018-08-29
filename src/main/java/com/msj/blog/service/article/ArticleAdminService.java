@@ -18,4 +18,5 @@ public interface ArticleAdminService {
 
     PageVo<ArticleAdminPageVo> findAdminArticleListByPage(Integer page, Integer size);
 
+    ArticleDto findArticleDto(Article article);
 }

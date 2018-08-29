@@ -25,5 +25,8 @@ wechat:
   app-secret: e
   token: f
 
+logging:
+    path: ./logs/
+
 
 

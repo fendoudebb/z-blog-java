@@ -2,11 +2,9 @@ package com.msj.blog.exception;
 
 import com.msj.blog.response.MsgTable;
 import com.msj.blog.response.Response;
-import com.msj.blog.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,37 +12,28 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.NoHandlerFoundException;
-import org.thymeleaf.exceptions.TemplateInputException;
 
-@ControllerAdvice
 @Slf4j
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * 权限不足异常
-     * @return 返回403页面
-     */
-    @ExceptionHandler(AccessDeniedException.class)
+    //权限不足异常
+    /*@ExceptionHandler(AccessDeniedException.class)
     public ModelAndView handlerAccessDeniedException() {
         return new ModelAndView("error/403");
-    }
+    }*/
 
-    /**
-     * 路径不存在异常
-     * @return 返回404页面
-     */
-    @ExceptionHandler(NoHandlerFoundException.class)
+    //路径不存在异常
+    /*@ExceptionHandler(NoHandlerFoundException.class)
     public ModelAndView handlerNoHandlerFoundException() {
         return new ModelAndView("error/404");
-    }
+    }*/
 
-    @ExceptionHandler(TemplateInputException.class)
+  /*  @ExceptionHandler(TemplateInputException.class)
     public ModelAndView handlerTemplateInputException(TemplateInputException e) {
         log.error("ip: {}, {} template not found", IpUtil.getIpAddress() ,e.getTemplateName());
         return new ModelAndView("error/404");
-    }
+    }*/
 
     @ExceptionHandler(Exception.class)
     @ResponseBody

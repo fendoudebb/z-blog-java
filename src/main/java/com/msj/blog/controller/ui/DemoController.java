@@ -1,10 +1,10 @@
 package com.msj.blog.controller.ui;
 
 import com.msj.blog.controller.BaseController;
-import com.msj.blog.response.Response;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.wechat.WechatCallback;
 import com.msj.blog.event.DemoEvent;
+import com.msj.blog.response.Response;
 import com.msj.blog.service.article.ArticleService;
 import com.msj.blog.task.DemoAsyncTask;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.annotation.Resource;
-import java.time.temporal.ChronoField;
 import java.util.Locale;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -46,24 +45,25 @@ public class DemoController extends BaseController {
 
     private static final Long time = System.currentTimeMillis();
 
-    /**
-     * 304返回,json字符串缓存
-     */
+    //304返回,json字符串缓存
     @GetMapping("/aaa")
-    public ResponseEntity<ArticleVo> a() {
+    @ResponseBody
+    public ResponseEntity<ArticleVo> a(WebRequest webRequest) {
         System.out.println("11111111111");
-        ArticleVo articleVo = articleService.getArticleById(1L);
+        ArticleVo articleVo = articleService.findArticleById(1L);
+
+        if (webRequest.checkNotModified(articleVo.getUpdateTime().toString())) {
+            return null;
+        }
 
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
-                .lastModified(articleVo.getUpdateTime().getLong(ChronoField.NANO_OF_SECOND))
-//                .eTag(String.valueOf(articleVo.getUpdateTime().getTime()))
+//                .lastModified(articleVo.getUpdateTime().getLong(ChronoField.NANO_OF_SECOND))
+                .eTag(String.valueOf(articleVo.getUpdateTime()))
                 .body(articleVo);
     }
 
-    /**
-     * 304返回,页面缓存
-     */
+    //304返回,页面缓存
     @GetMapping("/aaa/page")
     public String aPage(WebRequest webRequest) {
         System.out.println("11111111111");
@@ -82,9 +82,7 @@ public class DemoController extends BaseController {
         return "tool/format_json";
     }
 
-    /**
-     * Async 线程池
-     */
+    //Async 线程池
     @GetMapping("/bbb")
     @ResponseBody
     public Callable<Response> bbb() throws InterruptedException {
@@ -98,11 +96,7 @@ public class DemoController extends BaseController {
         };
     }
 
-    /**
-     * 解析XmlRootElement注解
-     *
-     * @param xml
-     */
+    //解析XmlRootElement注解
     @RequestMapping(value = "/bbb/rest", consumes = MediaType.APPLICATION_XML_VALUE, produces = {MediaType.APPLICATION_XML_VALUE})
     @ResponseBody
     public WechatCallback rest(@RequestBody WechatCallback xml) {
@@ -111,9 +105,8 @@ public class DemoController extends BaseController {
         return xml;
     }
 
-    /**
-     * DeferredResult,NIO
-     */
+
+    //DeferredResult,NIO
     @RequestMapping("/ccc")
     @ResponseBody
     public DeferredResult<String> ccc() {
@@ -134,9 +127,8 @@ public class DemoController extends BaseController {
         return deferredResult;
     }
 
-    /**
-     * redis 作为mq
-     */
+
+    //redis 作为mq
     @RequestMapping("/mq")
     @ResponseBody
     public String mq(@RequestParam String text) {

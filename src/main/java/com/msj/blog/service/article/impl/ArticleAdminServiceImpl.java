@@ -71,6 +71,11 @@ public class ArticleAdminServiceImpl implements ArticleAdminService {
         return transferArticlePage2ArticleAdminPage(pages);
     }
 
+    @Override
+    public ArticleDto findArticleDto(Article article) {
+        return transferArticle2ArticleDto(article);
+    }
+
     private PageVo<ArticleAdminPageVo> transferArticlePage2ArticleAdminPage(Page<Article> pages) {
         PageVo<ArticleAdminPageVo> pageVo = new PageVo<>();
         pageVo.setTotalElements(pages.getTotalElements());
@@ -114,6 +119,12 @@ public class ArticleAdminServiceImpl implements ArticleAdminService {
         return article;
     }
 
+    private ArticleDto transferArticle2ArticleDto(Article article) {
+        ArticleDto articleDto = new ArticleDto();
+        BeanUtils.copyProperties(article, articleDto);
+        articleDto.setCategory(article.getSecondaryCategory().getAlias());
+        articleDto.setArticleProperty(article.getArticleProperty().name());
+        return articleDto;
+    }
 
-    
 }
