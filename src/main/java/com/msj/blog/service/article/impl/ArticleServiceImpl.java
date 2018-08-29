@@ -9,7 +9,7 @@ import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.page.PageVo;
 import com.msj.blog.service.article.ArticleBaseService;
 import com.msj.blog.service.article.ArticleService;
-import com.msj.blog.service.cache.redis.RedisCacheService;
+import com.msj.blog.service.cache.CacheService;
 import com.msj.blog.util.MarkdownUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -27,7 +27,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Resource
     private ArticleBaseService articleBaseService;
     @Resource
-    private RedisCacheService redisCacheService;
+    private CacheService cacheService;
 
     @Override
     public ArticleVo findArticleById(Long id) {
@@ -68,7 +68,6 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleVo findDisclaimerArticle() {
         return transfer2SystemArticleVo(ArticleProperty.DISCLAIMER);
     }
-
 
     private ArticleVo transfer2SystemArticleVo(ArticleProperty articleProperty) {
         return articleBaseService.findByAuditStatusAndArticleProperty(AuditStatus.ONLINE, articleProperty)
