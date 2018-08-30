@@ -24,5 +24,4 @@ public class ArticlePageVo {
 //    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime createTime;
     private String category;
-    private String categoryAlias;
 }

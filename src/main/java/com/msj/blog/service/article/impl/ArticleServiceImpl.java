@@ -26,8 +26,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Resource
     private ArticleBaseService articleBaseService;
-    @Resource
-    private CacheService cacheService;
 
     @Override
     public ArticleVo findArticleById(Long id) {
@@ -47,7 +45,6 @@ public class ArticleServiceImpl implements ArticleService {
             BeanUtils.copyProperties(article, articlePageVo);
             if (secondaryCategory != null) {
                 articlePageVo.setCategory(secondaryCategory.getName());
-                articlePageVo.setCategoryAlias(secondaryCategory.getAlias());
             }
             articlePageVos.add(articlePageVo);
         });
@@ -77,7 +74,6 @@ public class ArticleServiceImpl implements ArticleService {
                     ArticleVo articleVo = new ArticleVo();
                     BeanUtils.copyProperties(article, articleVo);
                     articleVo.setContent(MarkdownUtil.parse(article.getContent()));
-                    articleVo.setCategoryAlias(article.getSecondaryCategory().getAlias());
                     return articleVo;
                 }).orElse(null);
     }
@@ -89,7 +85,6 @@ public class ArticleServiceImpl implements ArticleService {
         SecondaryCategory secondaryCategory = article.getSecondaryCategory();
         if (secondaryCategory != null) {
             articleVo.setCategory(secondaryCategory.getName());
-            articleVo.setCategoryAlias(secondaryCategory.getAlias());
         }
         return articleVo;
     }

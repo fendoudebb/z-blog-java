@@ -87,7 +87,6 @@ public class ArticleAdminServiceImpl implements ArticleAdminService {
             SecondaryCategory secondaryCategory = article.getSecondaryCategory();
             if (secondaryCategory != null) {
                 articleAdminPageVo.setCategory(secondaryCategory.getName());
-                articleAdminPageVo.setCategoryAlias(secondaryCategory.getAlias());
             }
             articleAdminPageVo.setAuditStatus(article.getAuditStatus().name());
             articleAdminPageVos.add(articleAdminPageVo);
@@ -122,7 +121,7 @@ public class ArticleAdminServiceImpl implements ArticleAdminService {
     private ArticleDto transferArticle2ArticleDto(Article article) {
         ArticleDto articleDto = new ArticleDto();
         BeanUtils.copyProperties(article, articleDto);
-        articleDto.setCategory(article.getSecondaryCategory().getAlias());
+        articleDto.setCategory(article.getSecondaryCategory().getName());
         articleDto.setArticleProperty(article.getArticleProperty().name());
         return articleDto;
     }

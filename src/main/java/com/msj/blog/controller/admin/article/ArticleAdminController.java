@@ -4,6 +4,7 @@ import com.msj.blog.controller.BaseController;
 import com.msj.blog.entity.domain.article.Article;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.entity.dto.article.ArticleDto;
+import com.msj.blog.entity.dto.article.ArticleIdDto;
 import com.msj.blog.entity.dto.article.AuditStatusDto;
 import com.msj.blog.entity.dto.page.PageDto;
 import com.msj.blog.response.MsgTable;
@@ -21,12 +22,22 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/admin/article")
 @PreAuthorize(value = "hasAnyRole('ADMIN','USER')")
-public class ArticleManageController extends BaseController {
+public class ArticleAdminController extends BaseController {
 
     @Resource
     private ArticleBaseService articleBaseService;
     @Resource
     private ArticleAdminService articleAdminService;
+
+    @PostMapping(value = "/info")
+    public Response info(@RequestBody @Valid ArticleIdDto articleIdDto) {
+        Article article = articleBaseService.findById(articleIdDto.getArticleId()).orElse(null);
+        if (article == null) {
+            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+        }
+        ArticleDto articleDto = articleAdminService.findArticleDto(article);
+        return getResponse(articleDto);
+    }
 
     @PostMapping(value = "/draft")
     public Response draft(@RequestBody @Valid PageDto pageDto) {

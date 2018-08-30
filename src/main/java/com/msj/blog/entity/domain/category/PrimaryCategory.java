@@ -27,8 +27,6 @@ public class PrimaryCategory extends BaseEntity {
     private Integer sort;//模块排序
     @Column(name = "name", length = FieldLength.NORMAL, nullable = false)
     private String name;//模块名字
-    @Column(name = "alias", length = FieldLength.NORMAL, nullable = false)
-    private String alias;//别名
 
     @OneToMany(mappedBy = "primaryCategory")
     @OrderBy(value = "sort asc")

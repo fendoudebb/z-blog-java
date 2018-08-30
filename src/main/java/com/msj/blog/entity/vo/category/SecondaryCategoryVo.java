@@ -13,7 +13,6 @@ public class SecondaryCategoryVo implements Serializable {
     private Integer id;
     private Integer sort;
     private String name;
-    private String alias;
 
     private String primaryCategory;
 

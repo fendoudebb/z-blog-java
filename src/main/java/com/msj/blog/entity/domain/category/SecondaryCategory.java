@@ -29,8 +29,6 @@ public class SecondaryCategory extends BaseEntity {
     private Integer sort;//分类排序
     @Column(name = "name", length = FieldLength.NORMAL, nullable = false)
     private String name;
-    @Column(name = "alias", length = FieldLength.NORMAL, nullable = false)
-    private String alias;
 
     @ManyToOne
     @JoinColumn(name = "primary_category_id")

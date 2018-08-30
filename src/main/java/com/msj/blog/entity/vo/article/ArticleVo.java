@@ -28,8 +28,6 @@ public class ArticleVo implements Serializable{
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 //    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime updateTime;
-    private Long categoryId;
     private String category;
-    private String categoryAlias;
 
 }
