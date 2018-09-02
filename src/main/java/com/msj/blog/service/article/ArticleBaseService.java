@@ -19,8 +19,6 @@ public interface ArticleBaseService {
 
     Optional<Article> findByIdAndAuditStatusAndArticleProperty(Long id, AuditStatus auditStatus, ArticleProperty articleProperty);
 
-    Page<Article> findByPage(Integer page, Integer size);
-
     Page<Article> findByPageAndArticleProperty(ArticleProperty articleProperty, Integer page, Integer size);
 
     Page<Article> findByPageAndArticlePropertyExclude(ArticleProperty articleProperty, Integer page, Integer size);

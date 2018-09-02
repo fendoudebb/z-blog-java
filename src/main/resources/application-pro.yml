@@ -4,7 +4,7 @@ spring:
   jpa:
     show-sql: false
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/msj?useUnicode=true&amp;characterEncoding=utf8mb4
+    url: jdbc:mysql://127.0.0.1:3306/msjuseSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8mb4
     username: root
     password:
     hikari:

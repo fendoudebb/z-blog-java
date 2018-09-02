@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Response handleException(Exception e) {
-        log.error("ExceptionHandler -> {}", e);
+        log.error("ExceptionHandler -> {}", e.getMessage());
         Response response = new Response();
         if (e instanceof MethodArgumentNotValidException) {
             BindingResult bindingResult = ((MethodArgumentNotValidException) e).getBindingResult();

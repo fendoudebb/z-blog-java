@@ -53,12 +53,6 @@ public class ArticleBaseServiceImpl implements ArticleBaseService {
     }
 
     @Override
-    public Page<Article> findByPage(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return articleRepository.findAllByOrderByUpdateTimeDesc(pageable);
-    }
-
-    @Override
     public Page<Article> findByPageAndArticleProperty(ArticleProperty articleProperty, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return articleRepository.findAllByArticlePropertyEqualsOrderByIdDesc(articleProperty, pageable);
@@ -73,7 +67,7 @@ public class ArticleBaseServiceImpl implements ArticleBaseService {
     @Override
     public Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByUpdateTimeDesc(auditStatus, articleProperty, pageable);
+        return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByIdDesc(auditStatus, articleProperty, pageable);
     }
 
     @Override

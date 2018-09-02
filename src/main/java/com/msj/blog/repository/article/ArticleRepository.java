@@ -1,6 +1,7 @@
 package com.msj.blog.repository.article;
 
 import com.msj.blog.entity.domain.article.Article;
+import com.msj.blog.entity.domain.category.SecondaryCategory;
 import com.msj.blog.entity.domain.enu.ArticleProperty;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import org.springframework.data.domain.Page;
@@ -18,13 +19,13 @@ public interface ArticleRepository extends JpaRepository<Article, Long>, PagingA
 
     Optional<Article> findByIdAndAuditStatusEqualsAndArticlePropertyEquals(Long id, AuditStatus auditStatus, ArticleProperty articleProperty);
 
-    Page<Article> findAllByOrderByUpdateTimeDesc(Pageable pageable);
-
     Page<Article> findAllByArticlePropertyEqualsOrderByIdDesc(ArticleProperty articleProperty, Pageable pageable);
 
     Page<Article> findAllByArticlePropertyIsNotOrderByIdDesc(ArticleProperty articleProperty, Pageable pageable);
 
-    Page<Article> findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByUpdateTimeDesc(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
+    Page<Article> findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByIdDesc(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
+
+    Page<Article> findBySecondaryCategoryAndAuditStatusEqualsAndArticlePropertyEqualsOrderByIdDesc(SecondaryCategory secondaryCategory, AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 
     List<Article> findAllByAuditStatusEqualsAndArticlePropertyEquals(AuditStatus auditStatus, ArticleProperty articleProperty);
 
