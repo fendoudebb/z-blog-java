@@ -26,6 +26,6 @@ public class SiteController extends BaseController{
     @ResponseBody
     public Response getSite(@PathVariable String name) {
         log.info("get {} site", name);
-        return getResponse(name);
+        return getResponse().data(name);
     }
 }

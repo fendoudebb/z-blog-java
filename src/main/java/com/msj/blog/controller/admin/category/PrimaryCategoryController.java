@@ -25,7 +25,7 @@ public class PrimaryCategoryController extends BaseController{
 
     @PostMapping("/category")
     public Response categoryList() {
-        return getResponse(primaryCategoryService.findAllPrimaryCategories());
+        return getResponse().data(primaryCategoryService.findAllPrimaryCategories());
     }
 
 }

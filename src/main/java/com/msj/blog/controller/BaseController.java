@@ -16,15 +16,8 @@ public class BaseController {
     @Resource
     protected HttpServletResponse response;
 
-    protected <T> Response<T> getResponse(T data) {
+    protected <T> Response<T> getResponse() {
         Response<T> response = new Response<>();
-        response.setData(data);
-        return response;
-    }
-
-    protected Response getResponse(String msg) {
-        Response response = new Response();
-        response.setMsg(msg);
         return response;
     }
 

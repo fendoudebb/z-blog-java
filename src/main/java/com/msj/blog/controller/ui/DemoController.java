@@ -92,7 +92,7 @@ public class DemoController extends BaseController {
             System.out.println("bbbbbb:" + Thread.currentThread().getName() + ":" + Thread.currentThread().getId());
             Thread.sleep(Long.parseLong("2000"));
             System.out.println("cccccccccc:" + Thread.currentThread().getName() + ":" + Thread.currentThread().getId());
-            return getResponse("aaa");
+            return getResponse().data("aaa");
         };
     }
 

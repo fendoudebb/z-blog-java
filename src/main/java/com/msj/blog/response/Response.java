@@ -15,6 +15,16 @@ public class Response<T> implements Serializable{
     private String msg = MsgTable.SUCCESS;
     private T data;
 
+    public Response<T> data(T data) {
+        this.data = data;
+        return this;
+    }
+
+    public Response<T> msg(String msg) {
+        this.msg = msg;
+        return this;
+    }
+
     public Response<T> fail() {
         this.code = -1;
         return this;

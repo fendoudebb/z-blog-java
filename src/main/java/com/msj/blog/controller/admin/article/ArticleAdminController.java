@@ -33,26 +33,26 @@ public class ArticleAdminController extends BaseController {
     public Response info(@RequestBody @Valid ArticleIdDto articleIdDto) {
         Article article = articleBaseService.findById(articleIdDto.getArticleId()).orElse(null);
         if (article == null) {
-            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+            return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         }
         ArticleDto articleDto = articleAdminService.findArticleDto(article);
-        return getResponse(articleDto);
+        return getResponse().data(articleDto);
     }
 
     @PostMapping(value = "/draft")
     public Response draft(@RequestBody @Valid PageDto pageDto) {
-        return getResponse(articleAdminService.findAdminArticleDraftByPage(pageDto.getPage(), pageDto.getSize()));
+        return getResponse().data(articleAdminService.findAdminArticleDraftByPage(pageDto.getPage(), pageDto.getSize()));
     }
 
     @PostMapping(value = "/list")
     public Response list(@RequestBody @Valid PageDto pageDto) {
-        return getResponse(articleAdminService.findAdminArticleListByPage(pageDto.getPage(), pageDto.getSize()));
+        return getResponse().data(articleAdminService.findAdminArticleListByPage(pageDto.getPage(), pageDto.getSize()));
     }
 
     @PostMapping(value = "/save")
     public Response save(@RequestBody @Valid ArticleDto articleDto) {
         boolean saveResult = articleAdminService.saveArticle(articleDto);
-        return saveResult ? getResponse(MsgTable.SAVE_ARTICLE_SUCCESS) : getResponse(MsgTable.SAVE_ARTICLE_FAILURE).fail();
+        return saveResult ? getResponse().msg(MsgTable.SAVE_ARTICLE_SUCCESS) : getResponse().msg(MsgTable.SAVE_ARTICLE_FAILURE).fail();
     }
 
     @PostMapping(value = "/edit/{articleId}")
@@ -60,10 +60,10 @@ public class ArticleAdminController extends BaseController {
         log.info("id: " + articleId);
         Article article = articleBaseService.findById(articleId).orElse(null);
         if (article == null) {
-            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+            return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         }
         boolean editResult = articleAdminService.editArticle(articleDto, article);
-        return editResult ? getResponse(MsgTable.EDIT_ARTICLE_SUCCESS) : getResponse(MsgTable.EDIT_ARTICLE_FAILURE).fail();
+        return editResult ? getResponse().msg(MsgTable.EDIT_ARTICLE_SUCCESS) : getResponse().msg(MsgTable.EDIT_ARTICLE_FAILURE).fail();
     }
 
     @PostMapping(value = "/audit")
@@ -71,7 +71,7 @@ public class ArticleAdminController extends BaseController {
     public Response audit(@RequestBody @Valid AuditStatusDto auditStatusDto) {
         Article article = articleBaseService.findById(auditStatusDto.getArticleId()).orElse(null);
         if (article == null) {
-            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+            return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         }
         AuditStatus auditStatus = null;
         try {
@@ -81,7 +81,7 @@ public class ArticleAdminController extends BaseController {
         }
         article.setAuditStatus(auditStatus);
         articleBaseService.saveOrUpdate(article);
-        return getResponse(MsgTable.MODIFY_AUDIT_STATUS_SUCCESS);
+        return getResponse().msg(MsgTable.MODIFY_AUDIT_STATUS_SUCCESS);
     }
 
 }

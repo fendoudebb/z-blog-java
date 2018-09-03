@@ -52,7 +52,6 @@ public class ArticleServiceImpl implements ArticleService {
         pageVo.setNumber(pages.getNumber());
         pageVo.setNumberOfElements(pages.getNumberOfElements());
         pageVo.setSize(pages.getSize());
-        pageVo.setLastModifyTime(System.currentTimeMillis());
         return pageVo;
     }
 

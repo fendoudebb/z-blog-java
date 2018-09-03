@@ -21,6 +21,4 @@ public class PageVo<T> implements Serializable{
 
     private List<T> content;
 
-    private Long lastModifyTime;
-
 }

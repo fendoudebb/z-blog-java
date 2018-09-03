@@ -37,16 +37,16 @@ public class ArticleController extends BaseController {
         if (StringUtils.isEmpty(article)) {
             ArticleVo articleVo = articleService.findArticleById(id);
             if (articleVo != null) {
-                article = JSON.parse(articleVo);
+                article = JSON.write(articleVo);
                 if (!StringUtils.isEmpty(article)) {
                     cacheService.setArticle(articleVo.getId(), article);
                 }
             }
         }
         if (StringUtils.isEmpty(article)) {
-            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+            return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         } else {
-            return getResponse(article);
+            return getResponse().data(article);
         }
     }
 
@@ -58,17 +58,17 @@ public class ArticleController extends BaseController {
         articlePage = cacheService.getArticlePage(page, size);
         if (StringUtils.isEmpty(articlePage)) {
             PageVo<ArticlePageVo> articlePageVo = articleService.findArticleListByPage(page, size);
-            if (articlePage != null) {
-                articlePage = JSON.parse(articlePageVo);
+            if (articlePageVo != null) {
+                articlePage = JSON.write(articlePageVo);
                 if (!StringUtils.isEmpty(articlePage)) {
                     cacheService.setArticlePage(page, size, articlePage);
                 }
             }
         }
         if (StringUtils.isEmpty(articlePage)) {
-            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+            return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         } else {
-            return getResponse(articlePage);
+            return getResponse().data(articlePage);
         }
     }
 
@@ -79,16 +79,16 @@ public class ArticleController extends BaseController {
         if (StringUtils.isEmpty(aboutArticle)) {
             ArticleVo articleVo = articleService.findAboutUsArticle();
             if (articleVo != null) {
-                aboutArticle = JSON.parse(articleVo);
+                aboutArticle = JSON.write(articleVo);
                 if (!StringUtils.isEmpty(aboutArticle)) {
                     cacheService.setArticle(articleVo.getId(), aboutArticle);
                 }
             }
         }
         if (StringUtils.isEmpty(aboutArticle)) {
-            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+            return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         } else {
-            return getResponse(aboutArticle);
+            return getResponse().data(aboutArticle);
         }
     }
 
@@ -99,16 +99,16 @@ public class ArticleController extends BaseController {
         if (StringUtils.isEmpty(disclaimerArticle)) {
             ArticleVo articleVo = articleService.findDisclaimerArticle();
             if (articleVo != null) {
-                disclaimerArticle = JSON.parse(articleVo);
+                disclaimerArticle = JSON.write(articleVo);
                 if (!StringUtils.isEmpty(disclaimerArticle)) {
                     cacheService.setArticle(articleVo.getId(), disclaimerArticle);
                 }
             }
         }
         if (StringUtils.isEmpty(disclaimerArticle)) {
-            return getResponse(MsgTable.ARTICLE_NOT_EXIST).fail();
+            return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         } else {
-            return getResponse(disclaimerArticle);
+            return getResponse().data(disclaimerArticle);
         }
     }
 
