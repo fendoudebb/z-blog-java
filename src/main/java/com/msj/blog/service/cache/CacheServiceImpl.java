@@ -24,7 +24,7 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public void setArticle(Long id, String article) {
-        redisService.setValue(CacheKey.KEY_PREFIX_ARTICLE_VO, article);
+        redisService.setValue(CacheKey.KEY_PREFIX_ARTICLE_VO + id, article);
     }
 
     @Override

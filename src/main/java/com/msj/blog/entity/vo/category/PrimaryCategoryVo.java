@@ -9,8 +9,7 @@ import java.util.List;
  * zbj: created on 2018/6/1 21:35.
  */
 @Data
-public class PrimaryCategoryVo implements Serializable{
-    private static final long serialVersionUID = -4170283708297346795L;
+public class PrimaryCategoryVo {
     private Long id;
     private Integer sort;//模块排序
     private String name;//模块名字

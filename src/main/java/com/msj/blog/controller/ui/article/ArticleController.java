@@ -46,7 +46,7 @@ public class ArticleController extends BaseController {
         if (StringUtils.isEmpty(article)) {
             return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         } else {
-            return getResponse().data(article);
+            return getResponse().data(JSON.parse(article, ArticleVo.class));
         }
     }
 
@@ -68,7 +68,7 @@ public class ArticleController extends BaseController {
         if (StringUtils.isEmpty(articlePage)) {
             return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         } else {
-            return getResponse().data(articlePage);
+            return getResponse().data(JSON.parse(articlePage, PageVo.class));
         }
     }
 
@@ -88,7 +88,7 @@ public class ArticleController extends BaseController {
         if (StringUtils.isEmpty(aboutArticle)) {
             return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         } else {
-            return getResponse().data(aboutArticle);
+            return getResponse().data(JSON.parse(aboutArticle, ArticleVo.class));
         }
     }
 
@@ -108,7 +108,7 @@ public class ArticleController extends BaseController {
         if (StringUtils.isEmpty(disclaimerArticle)) {
             return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         } else {
-            return getResponse().data(disclaimerArticle);
+            return getResponse().data(JSON.parse(disclaimerArticle, ArticleVo.class));
         }
     }
 

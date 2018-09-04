@@ -14,8 +14,7 @@ import java.io.Serializable;
 @Data
 @XmlRootElement(name = "xml")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class WechatCallback implements Serializable{
-    private static final long serialVersionUID = -83377628655185947L;
+public class WechatCallback {
     @XmlElement(name = "ToUserName")
     private String ToUserName;
     @XmlElement(name = "FromUserName")

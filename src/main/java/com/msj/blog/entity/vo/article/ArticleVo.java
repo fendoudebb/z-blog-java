@@ -1,18 +1,15 @@
 package com.msj.blog.entity.vo.article;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.msj.blog.util.LocalDateTime2StringDeserializer;
+import com.msj.blog.util.LocalDateTime2StringSerializer;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class ArticleVo implements Serializable{
-    private static final long serialVersionUID = -4535144378381183641L;
+public class ArticleVo {
     private Long id;
     private String title;
     private String author;
@@ -21,13 +18,11 @@ public class ArticleVo implements Serializable{
     private boolean original;//是否原创
     private String originalLink;//原文链接
     private String content;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-//    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonSerialize(using = LocalDateTime2StringSerializer.class)
+    @JsonDeserialize(using = LocalDateTime2StringDeserializer.class)
     private LocalDateTime createTime;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @JsonSerialize(using = LocalDateTime2StringSerializer.class)
+    @JsonDeserialize(using = LocalDateTime2StringDeserializer.class)
     private LocalDateTime updateTime;
     private String category;
 

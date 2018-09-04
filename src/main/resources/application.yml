@@ -35,7 +35,8 @@ spring:
       database: mysql
       hibernate:
         ddl-auto: update
-      database-platform: org.hibernate.dialect.MySQL5Dialect
+#      database-platform: org.hibernate.dialect.MySQL5Dialect
+      database-platform: org.hibernate.dialect.MySQLMyISAMDialect
       open-in-view: true
   mail:
     default-encoding: UTF-8
