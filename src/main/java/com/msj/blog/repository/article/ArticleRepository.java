@@ -6,6 +6,7 @@ import com.msj.blog.entity.domain.enu.ArticleProperty;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long>, PagingA
     Page<Article> findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByIdDesc(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 
     Page<Article> findBySecondaryCategoryAndAuditStatusEqualsAndArticlePropertyEqualsOrderByIdDesc(SecondaryCategory secondaryCategory, AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
+
+    Slice<Article> findAllByAuditStatusEqualsAndArticlePropertyEquals(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 
     List<Article> findAllByAuditStatusEqualsAndArticlePropertyEquals(AuditStatus auditStatus, ArticleProperty articleProperty);
 

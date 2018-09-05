@@ -4,6 +4,7 @@ import com.msj.blog.entity.domain.article.Article;
 import com.msj.blog.entity.domain.enu.ArticleProperty;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,8 @@ public interface ArticleBaseService {
     Page<Article> findByPageAndArticlePropertyExclude(ArticleProperty articleProperty, Integer page, Integer size);
 
     Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size);
+
+    Slice<Article> findBySliceAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size);
 
     List<Article> findByAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty);
 

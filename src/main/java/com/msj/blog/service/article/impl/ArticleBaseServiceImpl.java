@@ -10,6 +10,7 @@ import com.msj.blog.service.redis.RedisService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -68,6 +69,12 @@ public class ArticleBaseServiceImpl implements ArticleBaseService {
     public Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByIdDesc(auditStatus, articleProperty, pageable);
+    }
+
+    @Override
+    public Slice<Article> findBySliceAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEquals(auditStatus, articleProperty, pageable);
     }
 
     @Override
