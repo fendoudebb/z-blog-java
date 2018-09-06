@@ -4,7 +4,7 @@ import com.msj.blog.controller.BaseController;
 import com.msj.blog.entity.dto.page.PageDto;
 import com.msj.blog.entity.vo.article.ArticlePageVo;
 import com.msj.blog.entity.vo.article.ArticleVo;
-import com.msj.blog.entity.vo.page.PageVo;
+import com.msj.blog.entity.vo.page.SliceVo;
 import com.msj.blog.response.MsgTable;
 import com.msj.blog.response.Response;
 import com.msj.blog.service.article.ArticleService;
@@ -57,7 +57,7 @@ public class ArticleController extends BaseController {
         Integer size = pageDto.getSize();
         articlePage = cacheService.getArticlePage(page, size);
         if (StringUtils.isEmpty(articlePage)) {
-            PageVo<ArticlePageVo> articlePageVo = articleService.findArticleListByPage(page, size);
+            SliceVo<ArticlePageVo> articlePageVo = articleService.findArticleListBySlice(page, size);
             if (articlePageVo != null) {
                 articlePage = JSON.write(articlePageVo);
                 if (!StringUtils.isEmpty(articlePage)) {
@@ -68,7 +68,7 @@ public class ArticleController extends BaseController {
         if (StringUtils.isEmpty(articlePage)) {
             return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         } else {
-            return getResponse().data(JSON.parse(articlePage, PageVo.class));
+            return getResponse().data(JSON.parse(articlePage, SliceVo.class));
         }
     }
 

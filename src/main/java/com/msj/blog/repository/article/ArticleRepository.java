@@ -20,13 +20,13 @@ public interface ArticleRepository extends JpaRepository<Article, Long>, PagingA
 
     Optional<Article> findByIdAndAuditStatusEqualsAndArticlePropertyEquals(Long id, AuditStatus auditStatus, ArticleProperty articleProperty);
 
-    Page<Article> findAllByArticlePropertyEqualsOrderByIdDesc(ArticleProperty articleProperty, Pageable pageable);
+    Page<Article> findAllByArticlePropertyEquals(ArticleProperty articleProperty, Pageable pageable);
 
-    Page<Article> findAllByArticlePropertyIsNotOrderByIdDesc(ArticleProperty articleProperty, Pageable pageable);
+    Page<Article> findAllByArticlePropertyIsNot(ArticleProperty articleProperty, Pageable pageable);
 
     Page<Article> findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByIdDesc(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 
-    Page<Article> findBySecondaryCategoryAndAuditStatusEqualsAndArticlePropertyEqualsOrderByIdDesc(SecondaryCategory secondaryCategory, AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
+    Page<Article> findBySecondaryCategoryAndAuditStatusEqualsAndArticlePropertyEquals(SecondaryCategory secondaryCategory, AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 
     Slice<Article> findAllByAuditStatusEqualsAndArticlePropertyEquals(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 

@@ -7,10 +7,7 @@ import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.repository.article.ArticleRepository;
 import com.msj.blog.service.article.ArticleBaseService;
 import com.msj.blog.service.redis.RedisService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -55,14 +52,14 @@ public class ArticleBaseServiceImpl implements ArticleBaseService {
 
     @Override
     public Page<Article> findByPageAndArticleProperty(ArticleProperty articleProperty, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return articleRepository.findAllByArticlePropertyEqualsOrderByIdDesc(articleProperty, pageable);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
+        return articleRepository.findAllByArticlePropertyEquals(articleProperty, pageable);
     }
 
     @Override
     public Page<Article> findByPageAndArticlePropertyExclude(ArticleProperty articleProperty, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return articleRepository.findAllByArticlePropertyIsNotOrderByIdDesc(articleProperty, pageable);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
+        return articleRepository.findAllByArticlePropertyIsNot(articleProperty, pageable);
     }
 
     @Override
@@ -73,7 +70,7 @@ public class ArticleBaseServiceImpl implements ArticleBaseService {
 
     @Override
     public Slice<Article> findBySliceAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
         return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEquals(auditStatus, articleProperty, pageable);
     }
 

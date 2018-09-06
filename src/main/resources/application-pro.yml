@@ -26,7 +26,7 @@ wechat:
   token: f
 
 logging:
-    path: ./logs/
+  path: ./logs/
 
 
 

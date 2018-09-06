@@ -1,20 +1,15 @@
 package com.msj.blog.controller.ui;
 
 import com.msj.blog.controller.BaseController;
-import com.msj.blog.entity.domain.article.Article;
-import com.msj.blog.entity.domain.enu.ArticleProperty;
-import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.wechat.WechatCallback;
 import com.msj.blog.event.DemoEvent;
-import com.msj.blog.repository.article.ArticleRepository;
 import com.msj.blog.response.Response;
 import com.msj.blog.service.article.ArticleBaseService;
 import com.msj.blog.service.article.ArticleService;
 import com.msj.blog.task.DemoAsyncTask;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
@@ -153,15 +148,4 @@ public class DemoController extends BaseController {
         applicationContext.publishEvent(new DemoEvent(this));
     }
 
-    @GetMapping("/slice")
-    @ResponseBody
-    public String restDocs() {
-        Slice<Article> bySliceAndAuditStatusAndArticleProperty = articleBaseService.findBySliceAndAuditStatusAndArticleProperty(AuditStatus.ONLINE, ArticleProperty.PUBLIC, 1, 10);
-
-        return "rest docs ok";
-    }
-
-    public static void main(String[] args) {
-
-    }
 }

@@ -7,6 +7,7 @@ import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.entity.vo.article.ArticlePageVo;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.page.PageVo;
+import com.msj.blog.entity.vo.page.SliceVo;
 import com.msj.blog.service.article.ArticleBaseService;
 import com.msj.blog.service.article.ArticleService;
 import com.msj.blog.service.cache.CacheService;
@@ -14,11 +15,13 @@ import com.msj.blog.util.MarkdownUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -53,6 +56,31 @@ public class ArticleServiceImpl implements ArticleService {
         pageVo.setNumberOfElements(pages.getNumberOfElements());
         pageVo.setSize(pages.getSize());
         return pageVo;
+    }
+
+    @Override
+    public SliceVo<ArticlePageVo> findArticleListBySlice(Integer page, Integer size) {
+        Slice<Article> slice = articleBaseService.findBySliceAndAuditStatusAndArticleProperty(AuditStatus.ONLINE, ArticleProperty.PUBLIC, page, size);
+        SliceVo<ArticlePageVo> sliceVo = new SliceVo<>();
+        sliceVo.setNumber(slice.getNumber());
+        sliceVo.setNumberOfElements(slice.getNumberOfElements());
+        sliceVo.setSize(slice.getSize());
+        sliceVo.setHasContent(slice.hasContent());
+        sliceVo.setHasNext(slice.hasNext());
+        sliceVo.setHasPrevious(slice.hasPrevious());
+        sliceVo.setIsFirst(slice.isFirst());
+        sliceVo.setIsLast(slice.isLast());
+        List<ArticlePageVo> articlePageVos = slice.stream().map(article -> {
+            ArticlePageVo articlePageVo = new ArticlePageVo();
+            SecondaryCategory secondaryCategory = article.getSecondaryCategory();
+            BeanUtils.copyProperties(article, articlePageVo);
+            if (secondaryCategory != null) {
+                articlePageVo.setCategory(secondaryCategory.getName());
+            }
+            return articlePageVo;
+        }).collect(Collectors.toList());
+        sliceVo.setContent(articlePageVos);
+        return sliceVo;
     }
 
     @Override
