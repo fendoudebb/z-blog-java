@@ -6,7 +6,7 @@ package com.msj.blog.config.cache;
 public class CacheKey {
 
     public static final String KEY_PREFIX_ARTICLE_VO = "article-vo:";
-    public static final String KEY_PREFIX_ARTICLE_PAGE = "article-page:";
+    public static final String KEY_PREFIX_ARTICLE_PAGE = "article-slice:";
     public static final String KEY_PREFIX_ARTICLE_ABOUT_US = KEY_PREFIX_ARTICLE_VO.concat("about_us");
     public static final String KEY_PREFIX_ARTICLE_DISCLAIMER = KEY_PREFIX_ARTICLE_VO.concat("disclaimer");
 
