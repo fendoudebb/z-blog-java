@@ -12,9 +12,7 @@ public enum ArticleProperty {
      */
     DRAFT(0, "草稿"),
     PUBLIC(1, "公开"),
-    PRIVATE(2, "个人"),
-    ABOUT_US(3, "关于我们"),
-    DISCLAIMER(4, "免责声明");
+    PRIVATE(2, "个人");
 
     private Integer type;
 

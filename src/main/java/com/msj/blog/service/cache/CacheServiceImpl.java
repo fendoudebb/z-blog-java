@@ -28,33 +28,23 @@ public class CacheServiceImpl implements CacheService {
     }
 
     @Override
-    public String getArticlePage(Integer page, Integer count) {
-        return redisService.getValue(CacheKey.KEY_PREFIX_ARTICLE_PAGE + page + "-" + count);
+    public String getArticlePage(String secondaryCategoryName, Integer page, Integer count) {
+        return redisService.getValue(CacheKey.KEY_PREFIX_ARTICLE_SLICE + secondaryCategoryName + "-" + page + "-" + count);
     }
 
     @Override
-    public void setArticlePage(Integer page, Integer count, String articlePage) {
-        redisService.setValue(CacheKey.KEY_PREFIX_ARTICLE_PAGE + page + "-" + count, articlePage);
+    public void setArticlePage(String secondaryCategoryName, Integer page, Integer count, String articlePage) {
+        redisService.setValue(CacheKey.KEY_PREFIX_ARTICLE_SLICE + secondaryCategoryName + "-" + page + "-" + count, articlePage);
     }
 
     @Override
-    public String getAboutUsArticle() {
-        return redisService.getValue(CacheKey.KEY_PREFIX_ARTICLE_ABOUT_US);
+    public String getSecondaryCategoryNames(String primaryCategoryName) {
+        return redisService.getValue(CacheKey.KEY_PREFIX_SECONDARY_CATEGORY_NAMES + primaryCategoryName);
     }
 
     @Override
-    public void setAboutUsArticle(String aboutUsArticle) {
-        redisService.setValue(CacheKey.KEY_PREFIX_ARTICLE_ABOUT_US, aboutUsArticle);
-    }
-
-    @Override
-    public String getDisclaimerArticle() {
-        return redisService.getValue(CacheKey.KEY_PREFIX_ARTICLE_DISCLAIMER);
-    }
-
-    @Override
-    public void setDisclaimerArticle(String disclaimerArticle) {
-        redisService.setValue(CacheKey.KEY_PREFIX_ARTICLE_DISCLAIMER, disclaimerArticle);
+    public void setSecondaryCategoryNames(String primaryCategoryName, String secondaryCategoryNames) {
+        redisService.setValue(CacheKey.KEY_PREFIX_ARTICLE_SLICE + primaryCategoryName, secondaryCategoryNames);
     }
 
 }

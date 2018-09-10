@@ -40,5 +40,7 @@ public class MsgTable implements Serializable{
 
     public static final String MODIFY_AUDIT_STATUS_SUCCESS = "修改文章状态成功";
 
+    public static final String SECONDARY_CATEGORY_NOT_EXIST = "二级分类不存在";
+
 
 }

@@ -11,10 +11,6 @@ public interface ArticleService {
 
     PageVo<ArticlePageVo> findArticleListByPage(Integer page, Integer size);
 
-    SliceVo<ArticlePageVo> findArticleListBySlice(Integer page, Integer size);
-
-    ArticleVo findAboutUsArticle();
-
-    ArticleVo findDisclaimerArticle();
+    SliceVo<ArticlePageVo> findArticleListBySlice(String secondaryCategoryName, Integer page, Integer size);
 
 }

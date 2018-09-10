@@ -30,6 +30,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long>, PagingA
 
     Slice<Article> findAllByAuditStatusEqualsAndArticlePropertyEquals(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 
-    List<Article> findAllByAuditStatusEqualsAndArticlePropertyEquals(AuditStatus auditStatus, ArticleProperty articleProperty);
+    Slice<Article> findAllByAuditStatusEqualsAndArticlePropertyEqualsAndSecondaryCategory_NameEquals(AuditStatus auditStatus, ArticleProperty articleProperty, String secondaryCategoryName, Pageable pageable);
 
 }

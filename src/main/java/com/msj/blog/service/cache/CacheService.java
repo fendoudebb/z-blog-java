@@ -9,16 +9,12 @@ public interface CacheService {
 
     void setArticle(Long id, String article);
 
-    String getArticlePage(Integer page, Integer count);
+    String getArticlePage(String secondaryCategoryName, Integer page, Integer count);
 
-    void setArticlePage(Integer page, Integer count, String articlePage);
+    void setArticlePage(String secondaryCategoryName, Integer page, Integer count, String articlePage);
 
-    String getAboutUsArticle();
+    String getSecondaryCategoryNames(String primaryCategoryName);
 
-    void setAboutUsArticle(String aboutUsArticle);
-
-    String getDisclaimerArticle();
-
-    void setDisclaimerArticle(String disclaimerArticle);
+    void setSecondaryCategoryNames(String primaryCategoryName, String secondaryCategoryNames);
 
 }

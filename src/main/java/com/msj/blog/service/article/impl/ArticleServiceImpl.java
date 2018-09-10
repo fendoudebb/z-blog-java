@@ -59,8 +59,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public SliceVo<ArticlePageVo> findArticleListBySlice(Integer page, Integer size) {
-        Slice<Article> slice = articleBaseService.findBySliceAndAuditStatusAndArticleProperty(AuditStatus.ONLINE, ArticleProperty.PUBLIC, page, size);
+    public SliceVo<ArticlePageVo> findArticleListBySlice(String secondaryCategoryName, Integer page, Integer size) {
+        Slice<Article> slice = articleBaseService.findBySliceAndAuditStatusAndArticleProperty(AuditStatus.ONLINE, ArticleProperty.PUBLIC, secondaryCategoryName, page, size);
         SliceVo<ArticlePageVo> sliceVo = new SliceVo<>();
         sliceVo.setNumber(slice.getNumber());
         sliceVo.setNumberOfElements(slice.getNumberOfElements());
@@ -81,28 +81,6 @@ public class ArticleServiceImpl implements ArticleService {
         }).collect(Collectors.toList());
         sliceVo.setContent(articlePageVos);
         return sliceVo;
-    }
-
-    @Override
-    public ArticleVo findAboutUsArticle() {
-        return transfer2SystemArticleVo(ArticleProperty.ABOUT_US);
-    }
-
-    @Override
-    public ArticleVo findDisclaimerArticle() {
-        return transfer2SystemArticleVo(ArticleProperty.DISCLAIMER);
-    }
-
-    private ArticleVo transfer2SystemArticleVo(ArticleProperty articleProperty) {
-        return articleBaseService.findByAuditStatusAndArticleProperty(AuditStatus.ONLINE, articleProperty)
-                .stream()
-                .findFirst()
-                .map(article -> {
-                    ArticleVo articleVo = new ArticleVo();
-                    BeanUtils.copyProperties(article, articleVo);
-                    articleVo.setContent(MarkdownUtil.parse(article.getContent()));
-                    return articleVo;
-                }).orElse(null);
     }
 
     private ArticleVo transferArticle2ArticleVo(Article article) {

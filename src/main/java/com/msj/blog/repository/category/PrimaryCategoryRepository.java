@@ -1,4 +1,4 @@
-package com.msj.blog.repository.article;
+package com.msj.blog.repository.category;
 
 import com.msj.blog.entity.domain.category.PrimaryCategory;
 import org.springframework.data.jpa.repository.JpaRepository;

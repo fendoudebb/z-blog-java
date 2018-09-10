@@ -53,15 +53,19 @@ public class ArticleController extends BaseController {
     @PostMapping("/list")
     public Response list(@RequestBody @Valid PageDto pageDto) {
         String articlePage;
+        String secondaryCategoryName = pageDto.getSecondaryCategoryName();
+        if (secondaryCategoryName.isEmpty()) {
+            secondaryCategoryName = "all";
+        }
         Integer page = pageDto.getPage();
         Integer size = pageDto.getSize();
-        articlePage = cacheService.getArticlePage(page, size);
+        articlePage = cacheService.getArticlePage(secondaryCategoryName, page, size);
         if (StringUtils.isEmpty(articlePage)) {
-            SliceVo<ArticlePageVo> articlePageVo = articleService.findArticleListBySlice(page, size);
+            SliceVo<ArticlePageVo> articlePageVo = articleService.findArticleListBySlice(secondaryCategoryName, page, size);
             if (articlePageVo != null) {
                 articlePage = JSON.write(articlePageVo);
                 if (!StringUtils.isEmpty(articlePage)) {
-                    cacheService.setArticlePage(page, size, articlePage);
+                    cacheService.setArticlePage(secondaryCategoryName, page, size, articlePage);
                 }
             }
         }
@@ -69,46 +73,6 @@ public class ArticleController extends BaseController {
             return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         } else {
             return getResponse().data(JSON.parse(articlePage, SliceVo.class));
-        }
-    }
-
-    @PostMapping("/about")
-    public Response about() {
-        String aboutArticle;
-        aboutArticle = cacheService.getAboutUsArticle();
-        if (StringUtils.isEmpty(aboutArticle)) {
-            ArticleVo articleVo = articleService.findAboutUsArticle();
-            if (articleVo != null) {
-                aboutArticle = JSON.write(articleVo);
-                if (!StringUtils.isEmpty(aboutArticle)) {
-                    cacheService.setArticle(articleVo.getId(), aboutArticle);
-                }
-            }
-        }
-        if (StringUtils.isEmpty(aboutArticle)) {
-            return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
-        } else {
-            return getResponse().data(JSON.parse(aboutArticle, ArticleVo.class));
-        }
-    }
-
-    @PostMapping("/disclaimer")
-    public Response disclaimer() {
-        String disclaimerArticle;
-        disclaimerArticle = cacheService.getDisclaimerArticle();
-        if (StringUtils.isEmpty(disclaimerArticle)) {
-            ArticleVo articleVo = articleService.findDisclaimerArticle();
-            if (articleVo != null) {
-                disclaimerArticle = JSON.write(articleVo);
-                if (!StringUtils.isEmpty(disclaimerArticle)) {
-                    cacheService.setArticle(articleVo.getId(), disclaimerArticle);
-                }
-            }
-        }
-        if (StringUtils.isEmpty(disclaimerArticle)) {
-            return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
-        } else {
-            return getResponse().data(JSON.parse(disclaimerArticle, ArticleVo.class));
         }
     }
 

@@ -11,7 +11,6 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -31,11 +30,7 @@ public class ArticleBaseServiceImpl implements ArticleBaseService {
         Article saveArticle = articleRepository.save(article);
         if (Objects.equals(article.getArticleProperty(), ArticleProperty.PUBLIC)) {
             redisService.del(CacheKey.KEY_PREFIX_ARTICLE_VO + article.getId());
-            redisService.delAll(CacheKey.KEY_PREFIX_ARTICLE_PAGE);
-        } else if (Objects.equals(article.getArticleProperty(), ArticleProperty.ABOUT_US)) {
-            redisService.del(CacheKey.KEY_PREFIX_ARTICLE_ABOUT_US);
-        } else if (Objects.equals(article.getArticleProperty(), ArticleProperty.DISCLAIMER)) {
-            redisService.del(CacheKey.KEY_PREFIX_ARTICLE_DISCLAIMER);
+            redisService.delAll(CacheKey.KEY_PREFIX_ARTICLE_SLICE);
         }
         return saveArticle;
     }
@@ -69,15 +64,13 @@ public class ArticleBaseServiceImpl implements ArticleBaseService {
     }
 
     @Override
-    public Slice<Article> findBySliceAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size) {
+    public Slice<Article> findBySliceAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, String secondaryCategoryName, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
-        return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEquals(auditStatus, articleProperty, pageable);
+        if (Objects.equals("all", secondaryCategoryName)) {
+            return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEquals(auditStatus, articleProperty, pageable);
+        } else {
+            return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEqualsAndSecondaryCategory_NameEquals(auditStatus, articleProperty, secondaryCategoryName, pageable);
+        }
     }
 
-    @Override
-    public List<Article> findByAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty) {
-        return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEquals(auditStatus, articleProperty);
-    }
-
-    
 }
