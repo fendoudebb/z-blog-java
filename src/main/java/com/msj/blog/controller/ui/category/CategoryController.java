@@ -2,7 +2,6 @@ package com.msj.blog.controller.ui.category;
 
 import com.msj.blog.controller.BaseController;
 import com.msj.blog.entity.dto.category.PrimaryCategoryNameDto;
-import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.response.MsgTable;
 import com.msj.blog.response.Response;
 import com.msj.blog.service.cache.CacheService;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Slf4j
