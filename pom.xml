@@ -24,8 +24,8 @@
 		<java.version>1.8</java.version>
 		<commonmark.version>0.11.0</commonmark.version>
 		<!--以下两项需要如果不配置，解析themleaft 会有问题-->
-		<!--<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>-->
-		<!--<thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>-->
+		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+		<thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>
 	</properties>
 
 	<dependencies>
@@ -82,15 +82,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>-->
-		<!--<dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
-		</dependency>-->
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style th:fragment="index">
+
+
+        .index-article-item {
+            padding: 18px 24px;
+            border-bottom: 1px solid #f4f4f4;
+        }
+
+        .index-article-item:hover {
+            background-color: #FAFAFA;
+        }
+
+        .index-article-item a {
+            word-wrap: break-word;
+            text-decoration: none;
+            font-weight: bold;
+            color: black;
+        }
+
+        .index-article-item a:hover {
+            color: #5BC0DE;
+        }
+
+        .index-article-item a:active {
+            color: #999;
+        }
+
+        /*CSS实现内容超过长度后以省略号显示*/
+        .ellipsis {
+            margin: 10px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .index-article-title {
+            font-size: 20px;
+        }
+
+        ul.pagination {
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.pagination li {
+            display: inline;
+        }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        ul.pagination li a.active {
+            background-color: #5BC0DE;
+            color: white;
+            border-radius: 5px;
+        }
+
+        ul.pagination li a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        .disabled {
+            cursor: not-allowed;
+
+        }
+    </style>
+</head>
+<body>
+
+</body>
+</html>

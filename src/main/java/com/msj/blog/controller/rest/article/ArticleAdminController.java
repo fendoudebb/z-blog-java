@@ -1,6 +1,6 @@
-package com.msj.blog.controller.admin.article;
+package com.msj.blog.controller.rest.article;
 
-import com.msj.blog.controller.BaseController;
+import com.msj.blog.controller.rest.BaseController;
 import com.msj.blog.entity.domain.article.Article;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.entity.dto.article.ArticleDto;
@@ -31,7 +31,7 @@ public class ArticleAdminController extends BaseController {
 
     @PostMapping(value = "/info")
     public Response info(@RequestBody @Valid ArticleIdDto articleIdDto) {
-        Article article = articleBaseService.findById(articleIdDto.getArticleId()).orElse(null);
+        Article article = articleBaseService.findById(articleIdDto.getArticleId());
         if (article == null) {
             return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         }
@@ -58,7 +58,7 @@ public class ArticleAdminController extends BaseController {
     @PostMapping(value = "/edit/{articleId}")
     public Response edit(@PathVariable Long articleId, @RequestBody @Valid ArticleDto articleDto) {
         log.info("id: " + articleId);
-        Article article = articleBaseService.findById(articleId).orElse(null);
+        Article article = articleBaseService.findById(articleId);
         if (article == null) {
             return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         }
@@ -69,7 +69,7 @@ public class ArticleAdminController extends BaseController {
     @PostMapping(value = "/audit")
     @PreAuthorize(value = "hasRole('ADMIN')")
     public Response audit(@RequestBody @Valid AuditStatusDto auditStatusDto) {
-        Article article = articleBaseService.findById(auditStatusDto.getArticleId()).orElse(null);
+        Article article = articleBaseService.findById(auditStatusDto.getArticleId());
         if (article == null) {
             return getResponse().msg(MsgTable.ARTICLE_NOT_EXIST).fail();
         }

@@ -32,30 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleVo findArticleById(Long id) {
-        return articleBaseService.findByIdAndAuditStatusAndArticleProperty(id, AuditStatus.ONLINE, ArticleProperty.PUBLIC).map(this::transferArticle2ArticleVo).orElse(null);
-    }
-
-    @Override
-    public PageVo<ArticlePageVo> findArticleListByPage(Integer page, Integer size) {
-        Page<Article> pages = articleBaseService.findByPageAndAuditStatusAndArticleProperty(AuditStatus.ONLINE, ArticleProperty.PUBLIC, page, size);
-        PageVo<ArticlePageVo> pageVo = new PageVo<>();
-        pageVo.setTotalElements(pages.getTotalElements());
-        pageVo.setTotalPages(pages.getTotalPages());
-        List<ArticlePageVo> articlePageVos = new ArrayList<>();
-        pages.forEach(article -> {
-            ArticlePageVo articlePageVo = new ArticlePageVo();
-            SecondaryCategory secondaryCategory = article.getSecondaryCategory();
-            BeanUtils.copyProperties(article, articlePageVo);
-            if (secondaryCategory != null) {
-                articlePageVo.setCategory(secondaryCategory.getName());
-            }
-            articlePageVos.add(articlePageVo);
-        });
-        pageVo.setContent(articlePageVos);
-        pageVo.setNumber(pages.getNumber());
-        pageVo.setNumberOfElements(pages.getNumberOfElements());
-        pageVo.setSize(pages.getSize());
-        return pageVo;
+        return transferArticle2ArticleVo(articleBaseService.findByIdAndAuditStatusAndArticleProperty(id, AuditStatus.ONLINE, ArticleProperty.PUBLIC));
     }
 
     @Override

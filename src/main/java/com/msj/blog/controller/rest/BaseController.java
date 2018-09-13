@@ -1,4 +1,4 @@
-package com.msj.blog.controller;
+package com.msj.blog.controller.rest;
 
 
 import com.msj.blog.response.Response;

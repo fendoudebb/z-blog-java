@@ -1,6 +1,5 @@
-package com.msj.blog.controller.admin;
+package com.msj.blog.controller.rest;
 
-import com.msj.blog.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 

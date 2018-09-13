@@ -36,12 +36,12 @@ public class ArticleBaseServiceImpl implements ArticleBaseService {
     }
 
     @Override
-    public Optional<Article> findById(Long id) {
-        return articleRepository.findById(id);
+    public Article findById(Long id) {
+        return articleRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Optional<Article> findByIdAndAuditStatusAndArticleProperty(Long id, AuditStatus auditStatus, ArticleProperty articleProperty) {
+    public Article findByIdAndAuditStatusAndArticleProperty(Long id, AuditStatus auditStatus, ArticleProperty articleProperty) {
         return articleRepository.findByIdAndAuditStatusEqualsAndArticlePropertyEquals(id, auditStatus, articleProperty);
     }
 
@@ -58,9 +58,14 @@ public class ArticleBaseServiceImpl implements ArticleBaseService {
     }
 
     @Override
-    public Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return articleRepository.findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByIdDesc(auditStatus, articleProperty, pageable);
+    public Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, String secondaryCategoryName, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
+        if (Objects.equals("all", secondaryCategoryName)) {
+            return articleRepository.findByAuditStatusEqualsAndArticlePropertyEquals(auditStatus, articleProperty, pageable);
+        } else {
+            return articleRepository.findByAuditStatusEqualsAndArticlePropertyEqualsAndSecondaryCategory_NameEquals(auditStatus, articleProperty, secondaryCategoryName, pageable);
+        }
+
     }
 
     @Override

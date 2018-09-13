@@ -1,4 +1,4 @@
-package com.msj.blog.controller;
+package com.msj.blog.controller.ui;
 
 import com.msj.blog.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;

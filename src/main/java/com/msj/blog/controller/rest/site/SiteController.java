@@ -1,6 +1,6 @@
-package com.msj.blog.controller.ui.site;
+package com.msj.blog.controller.rest.site;
 
-import com.msj.blog.controller.BaseController;
+import com.msj.blog.controller.rest.BaseController;
 import com.msj.blog.response.Response;
 import com.msj.blog.service.site.SiteService;
 import lombok.extern.slf4j.Slf4j;

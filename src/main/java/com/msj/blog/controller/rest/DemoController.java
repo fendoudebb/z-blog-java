@@ -1,6 +1,5 @@
-package com.msj.blog.controller.ui;
+package com.msj.blog.controller.rest;
 
-import com.msj.blog.controller.BaseController;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.wechat.WechatCallback;
 import com.msj.blog.event.DemoEvent;

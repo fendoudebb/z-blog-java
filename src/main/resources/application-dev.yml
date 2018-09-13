@@ -1,4 +1,6 @@
 spring:
+  thymeleaf:
+    cache: false
   jpa:
     show-sql: false
     properties:

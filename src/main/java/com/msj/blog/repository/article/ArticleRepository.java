@@ -18,13 +18,15 @@ import java.util.Optional;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long>, PagingAndSortingRepository<Article, Long> {
 
-    Optional<Article> findByIdAndAuditStatusEqualsAndArticlePropertyEquals(Long id, AuditStatus auditStatus, ArticleProperty articleProperty);
+    Article findByIdAndAuditStatusEqualsAndArticlePropertyEquals(Long id, AuditStatus auditStatus, ArticleProperty articleProperty);
 
     Page<Article> findAllByArticlePropertyEquals(ArticleProperty articleProperty, Pageable pageable);
 
     Page<Article> findAllByArticlePropertyIsNot(ArticleProperty articleProperty, Pageable pageable);
 
-    Page<Article> findAllByAuditStatusEqualsAndArticlePropertyEqualsOrderByIdDesc(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
+    Page<Article> findByAuditStatusEqualsAndArticlePropertyEquals(AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
+
+    Page<Article> findByAuditStatusEqualsAndArticlePropertyEqualsAndSecondaryCategory_NameEquals(AuditStatus auditStatus, ArticleProperty articleProperty, String secondaryCategoryName, Pageable pageable);
 
     Page<Article> findBySecondaryCategoryAndAuditStatusEqualsAndArticlePropertyEquals(SecondaryCategory secondaryCategory, AuditStatus auditStatus, ArticleProperty articleProperty, Pageable pageable);
 

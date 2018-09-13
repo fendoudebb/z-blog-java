@@ -1,6 +1,6 @@
-package com.msj.blog.controller.admin.category;
+package com.msj.blog.controller.rest.category;
 
-import com.msj.blog.controller.BaseController;
+import com.msj.blog.controller.rest.BaseController;
 import com.msj.blog.response.Response;
 import com.msj.blog.service.category.PrimaryCategoryService;
 import lombok.extern.slf4j.Slf4j;

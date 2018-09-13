@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style th:fragment="css">
+        ::-webkit-scrollbar {
+            width: .5rem;
+            height: .5rem;
+            background: hsla(0, 0%, 100%, 0.6);
+        }
+
+        ::-webkit-scrollbar-track {
+            border-radius: 0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(95, 95, 95, .4);
+            transition: all .2s;
+            border-radius: .5rem;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(95, 95, 95, .7);
+        }
+
+        html {
+            height: 100%;
+            overflow-y: scroll;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        :root body {
+            position: absolute;
+        }
+
+        body {
+            height: 100%;
+            width: 100vw;
+            /*overflow: hidden;*/
+            background-color: #F6F8F9;
+            margin: 0;
+            padding: 0;
+        }
+
+        hr {
+            margin: 0;
+            height: 1px;
+            border: none;
+            border-top: 1px solid #F0F0F0;
+        }
+
+        ul, li, ol, dl, dd, dt, form {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .shadow {
+            border-radius: 2px;
+            -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+            background-color: white;
+        }
+
+        .toolbar {
+            background-color: white;
+            height: 48px;
+        }
+
+        .footer {
+            margin: 0 10px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #999;
+        }
+
+        .flex-vertical {
+            display: flex;
+            align-items: center
+        }
+
+        @media only screen and (max-width: 767px) {
+            .content {
+                margin-left: 0;
+                width: auto !important;
+                float: none;
+                display: block;
+            }
+        }
+
+        .content {
+            flex: 1;
+            width: 765px;
+            margin: auto;
+        }
+
+        .article-tag {
+            font-size: 5px;
+            margin-right: 10px;
+            display: inline-block;
+            padding: 2px 5px;
+            border-radius: 2px;
+            color: white;
+            background-color: #4CAF50;
+        }
+
+        .article-dot {
+            margin: 0 5px
+        }
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+    </style>
+    <th:block th:fragment="meta">
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="copyright" content="maisiji.cn">
+        <meta name="google-site-verification" content="fmc_T5F0D4mqFYid4LrpOiVOEA4p8l_R5xjQCveieDE"/>
+        <meta name="baidu-site-verification" content="ntadyLojR3"/>
+    </th:block>
+    <th:block th:fragment="link">
+        <link rel="shortcut icon" href="https://s.maisiji.cn/pic/ico/favicon.ico">
+
+        <!--<link rel="stylesheet" href="https://cdn.bootcss.com/normalize/8.0.0/normalize.min.css" media="none"
+              onload="if(media!='all')media='all'">
+        <noscript>
+            <link rel="stylesheet" href="https://cdn.bootcss.com/normalize/8.0.0/normalize.min.css">
+        </noscript>-->
+    </th:block>
+</head>
+<body>
+<header th:fragment="toolbar" >
+    <div class="toolbar">
+        <nav id="bs-navbar" class="collapse navbar-collapse">
+            <a th:href="@{/}" class="navbar-brand">Blog</a>
+
+            <a th:href="@{/}" onclick="">首页</a>
+        </nav>
+    </div>
+    <hr style="margin-bottom: 20px">
+</header>
+
+<footer th:fragment="footer">
+    <div class="footer">
+        <p>沪ICP备18012661号|Copyright ©2018-[[${#dates.format(new java.util.Date().getTime(), 'yyyy')}]] maisiji.cn, All
+            Rights Reserved.</p>
+        <p><a th:href="@{/article/1}">关于我们</a> | <a th:href="@{/article/2}">免责声明</a></p>
+    </div>
+</footer>
+
+<th:block th:fragment="js">
+    <script src="https://s.maisiji.cn/lib/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://s.maisiji.cn/lib/bootstrap/3.7.3/js/bootstrap.min.js"></script>
+
+    <!--<script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>-->
+
+    <!--<![endif]-->
+    <!--[if lt IE 9]>
+    <script src="https://s.maisiji.cn/lib/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://s.maisiji.cn/lib/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://s.maisiji.cn/lib/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+</th:block>
+
+<th:block th:fragment="analysis">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-4671741323231057",
+            enable_page_level_ads: true
+        });
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117165778-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-117165778-1');
+    </script>
+    <script defer="defer">
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d6a6afb0ede1dc335c85c4fe16c9c8d6";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</th:block>
+
+</body>
+</html>

@@ -16,15 +16,15 @@ public interface ArticleBaseService {
 
     Article saveOrUpdate(Article article);
 
-    Optional<Article> findById(Long id);
+    Article findById(Long id);
 
-    Optional<Article> findByIdAndAuditStatusAndArticleProperty(Long id, AuditStatus auditStatus, ArticleProperty articleProperty);
+    Article findByIdAndAuditStatusAndArticleProperty(Long id, AuditStatus auditStatus, ArticleProperty articleProperty);
 
     Page<Article> findByPageAndArticleProperty(ArticleProperty articleProperty, Integer page, Integer size);
 
     Page<Article> findByPageAndArticlePropertyExclude(ArticleProperty articleProperty, Integer page, Integer size);
 
-    Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, Integer page, Integer size);
+    Page<Article> findByPageAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, String secondaryCategoryName, Integer page, Integer size);
 
     Slice<Article> findBySliceAndAuditStatusAndArticleProperty(AuditStatus auditStatus, ArticleProperty articleProperty, String secondaryCategoryName, Integer page, Integer size);
 

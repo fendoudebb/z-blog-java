@@ -1,4 +1,4 @@
-package com.msj.blog.controller.ui.wechat;
+package com.msj.blog.controller.rest.wechat;
 
 import com.msj.blog.entity.vo.wechat.WechatCallback;
 import com.msj.blog.property.WechatProperty;

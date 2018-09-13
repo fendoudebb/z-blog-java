@@ -1,4 +1,4 @@
-package com.msj.blog.controller.admin.user;
+package com.msj.blog.controller.rest.user;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

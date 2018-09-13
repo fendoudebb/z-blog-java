@@ -1,6 +1,6 @@
-package com.msj.blog.controller.admin.excel;
+package com.msj.blog.controller.rest.excel;
 
-import com.msj.blog.controller.BaseController;
+import com.msj.blog.controller.rest.BaseController;
 import com.msj.blog.entity.dto.excel.ExcelData;
 import com.msj.blog.util.ExcelUtil;
 import lombok.extern.slf4j.Slf4j;

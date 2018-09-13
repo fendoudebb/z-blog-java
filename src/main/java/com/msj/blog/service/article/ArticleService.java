@@ -9,8 +9,6 @@ public interface ArticleService {
 
     ArticleVo findArticleById(Long id);
 
-    PageVo<ArticlePageVo> findArticleListByPage(Integer page, Integer size);
-
     SliceVo<ArticlePageVo> findArticleListBySlice(String secondaryCategoryName, Integer page, Integer size);
 
 }
