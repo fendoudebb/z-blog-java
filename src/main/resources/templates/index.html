@@ -14,13 +14,13 @@
 <body>
 <div style="display:flex;flex-direction: column;height: 100%">
     <th:block th:replace="base/common :: toolbar"/>
-    <div class="content">
-        <ul>
+    <div style="flex: 1;margin: 5px">
+        <ul class="content">
             <li class="shadow index-article-item" th:each="content : ${page.content}">
                 <a th:href="@{/{author}/{id}(author=${content.author},id=${content.id})}" class="index-article-title"
                    th:text="${content.title}" th:alt-title="${content.title}">
                 </a>
-                <p class="ellipsis flex-vertical">
+                <p>
                     <span th:if="${content.isOriginal()}" class="article-tag" th:text="原创"></span>
                     <span th:text="${content.author}"></span>
                     <span class="article-dot">·</span>
@@ -28,13 +28,9 @@
                     <span class="article-dot">·</span>
                     <span th:text="${#temporals.format(content.getCreateTime(),'yyy-MM-dd')}"></span>
                 </p>
-                <span class="ellipsis" th:text="${content.getDescription()}" style="color: #8a8a8a"></span>
+                <p class="index-article-desc" th:text="${content.getDescription()}" ></p>
             </li>
         </ul>
-
-        <!--<div th:if="${slice.hasNext()}" class="shadow button">
-            load more
-        </div>-->
 
         <div style="text-align: center;margin-top: 20px">
             <ul class="pagination">

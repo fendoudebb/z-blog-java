@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:fragment="site">
+        <style>
+            .p {
+                margin: 0;
+            }
+
+            .a {
+                margin: 5px 10px;
+                padding: 8px 20px;
+                text-decoration: none
+            }
+
+            .hr {
+                margin-top: 15px;
+                margin-bottom: 5px
+            }
+
+            .site-content {
+                padding: 20px;
+                margin-bottom: 20px
+            }
+
+            .shadow {
+                border: 1px solid #ebeef5;
+            }
+
+            .green-btn:hover {
+                color: #4CAF50;
+            }
+
+            .green-btn:hover:before, .green-btn:hover:after {
+                background: #4CAF50;
+            }
+
+            .pan-btn {
+                cursor: pointer;
+                background: #ffffff;
+                font-size: 14px;
+                color: #000000;
+                padding: 8px 10px;
+                /*border: none;*/
+                outline: none;
+                /*/ / transition: 600 ms ease all;*/
+                position: relative;
+                display: inline-block;
+            }
+
+            .pan-btn:before, .pan-btn:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 2px;
+                width: 0;
+                transition: 400ms ease all;
+            }
+
+            .pan-btn:after {
+                right: inherit;
+                top: inherit;
+                left: 0;
+                bottom: 0;
+            }
+
+            .pan-btn:hover {
+                background: #ffffff;
+            }
+
+            .pan-btn:hover:before, .pan-btn:hover:after {
+                width: 100%;
+                /*//transition: 300ms ease all;*/
+            }
+
+        </style>
+    </th:block>
+</head>
+<body>
+
+</body>
+</html>

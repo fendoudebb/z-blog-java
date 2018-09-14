@@ -54,13 +54,23 @@
             border-top: 1px solid #F0F0F0;
         }
 
-        ul, li, ol, dl, dd, dt, form {
-            list-style: none;
-            margin: 0;
-            padding: 0;
+        /*CSS实现内容超过长度后以省略号显示*/
+        p, .ellipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        a:hover {
+            color: #5BC0DE;
+        }
+
+        a:active {
+            color: #999;
         }
 
         .shadow {
+            /*border: 1px solid #ebeef5;*/
             border-radius: 2px;
             -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
             -moz-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
@@ -71,6 +81,13 @@
         .toolbar {
             background-color: white;
             height: 48px;
+            min-height: 48px;
+            max-height: 48px;
+            line-height: 48px;
+        }
+
+        .toolbar a {
+            text-decoration: none;
         }
 
         .footer {
@@ -80,6 +97,7 @@
 
         .footer a {
             color: #999;
+            text-decoration: none;
         }
 
         .flex-vertical {
@@ -89,7 +107,6 @@
 
         @media only screen and (max-width: 767px) {
             .content {
-                margin-left: 0;
                 width: auto !important;
                 float: none;
                 display: block;
@@ -97,7 +114,6 @@
         }
 
         .content {
-            flex: 1;
             width: 765px;
             margin: auto;
         }
@@ -120,11 +136,11 @@
             background-color: #4CAF50; /* Green */
             border: none;
             color: white;
-            padding: 15px 32px;
+            padding: 5px 10px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            font-size: 16px;
+            cursor: pointer;
         }
     </style>
     <th:block th:fragment="meta">
@@ -147,31 +163,26 @@
     </th:block>
 </head>
 <body>
-<header th:fragment="toolbar" >
-    <div class="toolbar">
-        <nav id="bs-navbar" class="collapse navbar-collapse">
-            <a th:href="@{/}" class="navbar-brand">Blog</a>
-
-            <a th:href="@{/}" onclick="">首页</a>
-        </nav>
-    </div>
+<th:block th:fragment="toolbar">
+    <header class="toolbar" style="display: flex;justify-content: space-around">
+        <a class="ellipsis" th:href="@{/}" title="Blog">Blog</a>
+        <a class="ellipsis" th:href="@{/site}" title="网址导航">网址导航</a>
+        <a class="ellipsis" th:href="@{/format/json}" title="解析JSON">解析Json</a>
+        <a href="https://github.com/fendoudebb" target="_blank" title="Github">Github</a>
+    </header>
     <hr style="margin-bottom: 20px">
-</header>
+</th:block>
 
-<footer th:fragment="footer">
-    <div class="footer">
+<th:block th:fragment="footer">
+    <footer class="footer">
         <p>沪ICP备18012661号|Copyright ©2018-[[${#dates.format(new java.util.Date().getTime(), 'yyyy')}]] maisiji.cn, All
             Rights Reserved.</p>
         <p><a th:href="@{/article/1}">关于我们</a> | <a th:href="@{/article/2}">免责声明</a></p>
-    </div>
-</footer>
+    </footer>
+</th:block>
 
 <th:block th:fragment="js">
     <script src="https://s.maisiji.cn/lib/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://s.maisiji.cn/lib/bootstrap/3.7.3/js/bootstrap.min.js"></script>
-
-    <!--<script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>-->
-
     <!--<![endif]-->
     <!--[if lt IE 9]>
     <script src="https://s.maisiji.cn/lib/jquery/1.12.4/jquery.min.js"></script>

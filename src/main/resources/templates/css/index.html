@@ -2,8 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <style th:fragment="index">
-
-
+        ul, li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
         .index-article-item {
             padding: 18px 24px;
             border-bottom: 1px solid #f4f4f4;
@@ -28,16 +31,13 @@
             color: #999;
         }
 
-        /*CSS实现内容超过长度后以省略号显示*/
-        .ellipsis {
-            margin: 10px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis
-        }
-
         .index-article-title {
             font-size: 20px;
+        }
+
+        .index-article-desc {
+            margin: 0;
+            color: #8a8a8a;
         }
 
         ul.pagination {

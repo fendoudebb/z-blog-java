@@ -1,45 +1,30 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>网址导航 | msj</title>
-    <meta name="keywords" th:content="网址导航,网址,导航,麦司机">
-    <meta name="description" th:content="网址导航 麦司机">
-    <meta name="copyright" content="maisiji.cn">
-    <meta name="google-site-verification" content="fmc_T5F0D4mqFYid4LrpOiVOEA4p8l_R5xjQCveieDE" />
-    <meta name="baidu-site-verification" content="ntadyLojR3" />
-    <link rel="shortcut icon" href="https://s.maisiji.cn/pic/ico/favicon.ico">
-    <link href="https://s.maisiji.cn/lib/normalize/8.0.0/normalize.min.css" rel="stylesheet">
-    <link href="https://s.maisiji.cn/lib/bootstrap/3.7.3/css/bootstrap.min.css" rel="stylesheet">
+    <th:block th:replace="base/common :: meta"/>
+    <title>网址导航 | 麦司机</title>
+    <meta name="keywords" content="网址导航，网址，导航，麦司机">
+    <meta name="description" content="网址导航 麦司机">
+    <th:block th:replace="base/common :: link"/>
+    <th:block th:replace="base/common :: css"/>
+    <th:block th:replace="css/site :: site"/>
+    <th:block th:replace="base/common :: analysis"/>
 </head>
 <body>
-<div th:replace="base/navbar :: navbar"></div>
-
-<div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6 article-column">
-
+<div style="display:flex;flex-direction: column;height: 100%">
+    <th:block th:replace="base/common :: toolbar"/>
+    <div style="flex: 1;margin: 5px">
+        <div class="content">
+            <div class="shadow site-content" th:each="map : ${siteMap}">
+                <p class="p" th:text="${map.key}"></p>
+                <hr class="hr">
+                <a class="shadow pan-btn green-btn ellipsis a" th:each="site : ${map.value}" th:text="${site.name}"
+                   th:href="${site.url}" target="_blank"></a>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3"></div>
+    <th:block th:replace="base/common :: footer"/>
 </div>
-
-<span th:replace="base/js :: js"></span>
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
+<th:block th:replace="base/common :: js"/>
 </body>
 </html>

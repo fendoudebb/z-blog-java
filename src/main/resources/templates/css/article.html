@@ -2,34 +2,29 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:fragment="article">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/ocean.min.css" media="none"
+              onload="if(media!='all')media='all'">
+        <noscript>
+            <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/ocean.min.css">
+        </noscript>
         <style>
             pre {
-                padding: 0;
                 overflow-y: auto;
                 overflow-x: hidden;
             }
 
             pre code {
+                border-radius: 3px;
                 white-space: pre;
+                padding: 8px 0 !important;
             }
 
-            code > ol {
+            code ol {
                 margin: 0;
             }
 
-            .article-column {
-                background-color: white;
-                margin-bottom: 20px;
-            }
-
-            .article-tag {
-                margin-left: 5px;
-                margin-right: 5px;
-            }
-
-            .page-header {
-                margin: 0;
-                padding: 0;
+            code ol li {
+                padding-left: 8px;
             }
 
             pre {
@@ -38,6 +33,29 @@
 
             pre:hover .hljs-button {
                 display: block
+            }
+
+            blockquote {
+                margin: 14px 0;
+                padding: 14px;
+                font-size: 14px;
+                border-left: 5px solid #4CAF50;
+                background-color: #F6F6F6;
+                color: #999;
+            }
+
+            blockquote p {
+                line-height: 1.6;
+                word-wrap: break-word;
+                margin: 0;
+            }
+
+            h1 {
+                margin: 15px 0;
+            }
+
+            .article-content {
+                padding: 16px 24px;
             }
 
             .hljs-button {
@@ -52,38 +70,30 @@
                 cursor: pointer;
             }
 
-            #go-top {
+            .go-top {
+                fill: #ffffff;
+                border-radius: 5px;
                 cursor: pointer;
                 display: none;
                 width: 40px;
                 height: 40px;
+                line-height: 42px;
                 position: fixed;
                 right: 50px;
                 bottom: 50px;
                 /*background:url(../../images/favicon.ico) no-repeat -70px 0px;*/
-                background-color: white;
-                border: 1px solid #DCDCDC;
+                background-color: #4CAF50;
                 text-align: center;
             }
 
-            .icon-up {
-                line-height: 35px;
-                color: #5BC0DE;
-                font-size: 20px
+            .article-column {
+                background-color: white;
+                margin-bottom: 20px;
             }
 
-            blockquote {
-                padding: 14px;
-                font-size: 14px;
-                border-left: 2px solid #009A61;
-                background-color: #F6F6F6;
-                color: #999;
-            }
-
-            blockquote p {
-                line-height: 1.6;
-                word-wrap: break-word;
-                margin: 0;
+            .article-tag {
+                margin-left: 5px;
+                margin-right: 5px;
             }
         </style>
     </th:block>

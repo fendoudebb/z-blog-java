@@ -7,41 +7,42 @@
     <meta name="description" th:content="${article.description}">
     <th:block th:replace="base/common :: link"/>
     <th:block th:replace="base/common :: css"/>
-    <th:block th:replace="css/index :: index"/>
-    <th:block th:replace="js/article :: article"/>
     <th:block th:replace="css/article :: article"/>
     <th:block th:replace="base/common :: analysis"/>
 </head>
 <body>
 <div style="display:flex;flex-direction: column;height: 100%">
-
     <th:block th:replace="base/common :: toolbar"/>
+    <div style="flex: 1;margin: 5px">
+        <div class="shadow content article-content">
+            <h1 class="article-title" th:text="${article.title}"></h1>
+            <hr>
+            <p>
+                <span th:if="${article.original}" class="article-tag" th:text="原创"></span>
+                <span th:text="${article.author}"></span>
+                <span class="article-dot">·</span>
+                <span th:text="${article.secondaryCategory.name}"></span>
+                <span class="article-dot">·</span>
+                <span th:text="${#temporals.format(article.createTime,'yyy-MM-dd')}"></span>
+            </p>
 
-    <div class="page-header">
-        <h1 class="article-title" th:text="${article.title}"></h1>
+            <div style="margin-top: 15px" th:utext="${article.content}"></div>
+        </div>
     </div>
-
-    <p class="flex-vertical">
-        <span th:if="${article.original}" class="article-tag" th:text="原创"></span>
-        <span th:text="${article.author}"></span>
-        <span class="article-dot">·</span>
-        <span th:text="${article.secondaryCategory.name}"></span>
-        <span class="article-dot">·</span>
-        <span th:text="${#temporals.format(article.createTime,'yyy-MM-dd')}"></span>
-    </p>
-
-    <div style="margin-top: 15px" th:utext="${article.content}"></div>
-
     <th:block th:replace="base/common :: footer"/>
-
-    <div id="go-top" title="回到顶部">
-        <i class="icon-up"></i>
+    <div class="shadow go-top" title="回到顶部">
+        <svg width="16" height="16" viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg"
+             class="Icon Icon--backToTopArrow" aria-hidden="true" style="height: 16px; width: 16px;">
+            <g>
+                <path d="M12.036 15.59c0 .55-.453.995-.997.995H5.032c-.55 0-.997-.445-.997-.996V8.584H1.03c-1.1 0-1.36-.633-.578-1.416L7.33.29c.39-.39 1.026-.385 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.004z"
+                      fill-rule="evenodd"></path>
+            </g>
+        </svg>
     </div>
 </div>
 
 <th:block th:replace="base/common :: js"/>
-<script src="https://s.maisiji.cn/lib/highlight/9.12.0/js/highlight.min.js"></script>
-<script src="https://s.maisiji.cn/lib/clipboard/2.0.1/clipboard.min.js"></script>
+<th:block th:replace="js/article :: article"/>
 <script>
     hljs.initHighlightingOnLoad();
 
@@ -73,31 +74,17 @@
     $(window).scroll(function () {
         //若滚动条离顶部大于100元素
         if ($(window).scrollTop() > 100)
-            $("#go-top").fadeIn(1000);
+            $(".go-top").fadeIn(1000);
         // $("#go-top").show();
         else
-            $("#go-top").fadeOut(1000);
+            $(".go-top").fadeOut(1000);
         // $("#go-top").hide();
     });
 
-    $("#go-top").click(function (e) {
+    $(".go-top").click(function (e) {
         e.preventDefault();
         $('body,html').animate({scrollTop: 0}, 1000);
     });
-</script>
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
 </script>
 </body>
 </html>
