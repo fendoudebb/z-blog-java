@@ -26,7 +26,7 @@
                     <span class="article-dot">·</span>
                     <span th:text="${content.getSecondaryCategory().getName()}"></span>
                     <span class="article-dot">·</span>
-                    <span th:text="${#temporals.format(content.getCreateTime(),'yyy-MM-dd')}"></span>
+                    <span th:text="${#temporals.format(content.getCreateTime(),'yyyy-MM-dd')}"></span>
                 </p>
                 <p class="index-article-desc" th:text="${content.getDescription()}" ></p>
             </li>

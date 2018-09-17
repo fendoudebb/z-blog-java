@@ -1,6 +1,6 @@
 package com.msj.blog.controller.rest.excel;
 
-import com.msj.blog.controller.rest.BaseController;
+import com.msj.blog.controller.BaseRestController;
 import com.msj.blog.entity.dto.excel.ExcelData;
 import com.msj.blog.util.ExcelUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 @PreAuthorize(value = "hasRole('ADMIN')")
-public class ExcelController extends BaseController {
+public class ExcelController extends BaseRestController {
 
     @Resource
     private ExcelUtil excelUtil;

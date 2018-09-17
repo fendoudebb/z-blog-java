@@ -1,5 +1,6 @@
 package com.msj.blog.controller.rest;
 
+import com.msj.blog.controller.BaseRestController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,10 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-public class AdminLoginController extends BaseController{
-
-
-
+public class AdminLoginController extends BaseRestController {
 
 
 

@@ -1,6 +1,6 @@
 package com.msj.blog.controller.rest.article;
 
-import com.msj.blog.controller.rest.BaseController;
+import com.msj.blog.controller.BaseRestController;
 import com.msj.blog.entity.dto.page.PageDto;
 import com.msj.blog.entity.vo.article.ArticlePageVo;
 import com.msj.blog.entity.vo.article.ArticleVo;
@@ -23,7 +23,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("/article")
-public class ArticleController extends BaseController {
+public class ArticleController extends BaseRestController {
 
     @Resource
     private CacheService cacheService;

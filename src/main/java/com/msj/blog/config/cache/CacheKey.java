@@ -9,4 +9,8 @@ public class CacheKey {
     public static final String KEY_PREFIX_ARTICLE_SLICE = "article-slice:";
     public static final String KEY_PREFIX_SECONDARY_CATEGORY_NAMES = "secondary-category-names:";
 
+    public static final String KEY_PREFIX_TEMPLATE = "template:";
+    public static final String KEY_PREFIX_TEMPLATE_INDEX = "template-index:";
+    public static final String KEY_PREFIX_TEMPLATE_ARTICLE = "template-article:";
+
 }

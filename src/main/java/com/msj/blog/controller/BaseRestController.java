@@ -1,4 +1,4 @@
-package com.msj.blog.controller.rest;
+package com.msj.blog.controller;
 
 
 import com.msj.blog.response.Response;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * zbj: created on 2018/6/2 8:59.
  */
-public class BaseController {
+public class BaseRestController {
     @Resource
     protected HttpServletRequest request;
     @Resource

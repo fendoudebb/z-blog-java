@@ -1,6 +1,6 @@
 package com.msj.blog.controller.rest.category;
 
-import com.msj.blog.controller.rest.BaseController;
+import com.msj.blog.controller.BaseRestController;
 import com.msj.blog.response.Response;
 import com.msj.blog.service.category.PrimaryCategoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/admin/primary")
 @PreAuthorize(value = "hasRole('ADMIN')")
-public class PrimaryCategoryController extends BaseController{
+public class PrimaryCategoryController extends BaseRestController {
 
     @Resource
     private PrimaryCategoryService primaryCategoryService;

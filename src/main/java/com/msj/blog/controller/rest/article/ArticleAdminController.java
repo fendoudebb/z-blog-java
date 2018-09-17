@@ -1,6 +1,6 @@
 package com.msj.blog.controller.rest.article;
 
-import com.msj.blog.controller.rest.BaseController;
+import com.msj.blog.controller.BaseRestController;
 import com.msj.blog.entity.domain.article.Article;
 import com.msj.blog.entity.domain.enu.AuditStatus;
 import com.msj.blog.entity.dto.article.ArticleDto;
@@ -22,7 +22,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/admin/article")
 @PreAuthorize(value = "hasAnyRole('ADMIN','USER')")
-public class ArticleAdminController extends BaseController {
+public class ArticleAdminController extends BaseRestController {
 
     @Resource
     private ArticleBaseService articleBaseService;

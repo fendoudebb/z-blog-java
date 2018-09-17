@@ -1,5 +1,6 @@
 package com.msj.blog.controller.rest;
 
+import com.msj.blog.controller.BaseRestController;
 import com.msj.blog.entity.vo.article.ArticleVo;
 import com.msj.blog.entity.vo.wechat.WechatCallback;
 import com.msj.blog.event.DemoEvent;
@@ -29,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Controller
-public class DemoController extends BaseController {
+public class DemoController extends BaseRestController {
 
     @Resource
     private ArticleService articleService;

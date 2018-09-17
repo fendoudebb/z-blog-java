@@ -23,7 +23,7 @@
                 <span class="article-dot">·</span>
                 <span th:text="${article.secondaryCategory.name}"></span>
                 <span class="article-dot">·</span>
-                <span th:text="${#temporals.format(article.createTime,'yyy-MM-dd')}"></span>
+                <span th:text="${#temporals.format(article.createTime,'yyyy-MM-dd')}"></span>
             </p>
 
             <div style="margin-top: 15px" th:utext="${article.content}"></div>

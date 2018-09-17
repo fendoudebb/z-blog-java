@@ -1,6 +1,6 @@
 package com.msj.blog.controller.rest.category;
 
-import com.msj.blog.controller.rest.BaseController;
+import com.msj.blog.controller.BaseRestController;
 import com.msj.blog.entity.dto.category.PrimaryCategoryNameDto;
 import com.msj.blog.response.MsgTable;
 import com.msj.blog.response.Response;
@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/category")
-public class CategoryController extends BaseController{
+public class CategoryController extends BaseRestController {
 
     @Resource
     private CacheService cacheService;
