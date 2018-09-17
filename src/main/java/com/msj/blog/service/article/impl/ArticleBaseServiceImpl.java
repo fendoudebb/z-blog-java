@@ -30,7 +30,9 @@ public class ArticleBaseServiceImpl implements ArticleBaseService {
         Article saveArticle = articleRepository.save(article);
         if (Objects.equals(article.getArticleProperty(), ArticleProperty.PUBLIC)) {
             redisService.del(CacheKey.KEY_PREFIX_ARTICLE_VO + article.getId());
+            redisService.del(CacheKey.KEY_PREFIX_TEMPLATE_ARTICLE + article.getAuthor() + "-" + article.getId());
             redisService.delAll(CacheKey.KEY_PREFIX_ARTICLE_SLICE);
+            redisService.delAll(CacheKey.KEY_PREFIX_TEMPLATE_INDEX);
         }
         return saveArticle;
     }
