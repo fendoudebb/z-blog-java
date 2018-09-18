@@ -1,10 +1,6 @@
 package com.msj.blog.response;
 
-import java.io.Serializable;
-
-public class MsgTable implements Serializable{
-
-    private static final long serialVersionUID = -7466519734119831888L;
+public class MsgTable{
     public static final Integer SUCCESS_CODE = 0;
     public static final String SUCCESS = "请求成功";
 

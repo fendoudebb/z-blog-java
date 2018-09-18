@@ -17,8 +17,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "sys_role",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
+@Table(name = "sys_role", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 public class SysRole extends BaseEntity {
     private static final long serialVersionUID = -6647325354310157513L;
 

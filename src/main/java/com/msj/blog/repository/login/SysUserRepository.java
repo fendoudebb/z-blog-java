@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface SysUserRepository extends PagingAndSortingRepository<SysUser, Integer> {
+public interface SysUserRepository extends PagingAndSortingRepository<SysUser, Long> {
 
-    Optional<SysUser> findByUsername(String username);
+    SysUser findByUsername(String username);
 
 }

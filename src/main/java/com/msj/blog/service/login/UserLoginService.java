@@ -19,7 +19,10 @@ public class UserLoginService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser user = sysUserRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("用户名: %s不存在", username)));
+        SysUser user = sysUserRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("用户名: %s不存在", username));
+        }
         log.info("request param: {} ,and username is {} and password is {}", username, user.getUsername(), user.getPassword());
         return user;
     }

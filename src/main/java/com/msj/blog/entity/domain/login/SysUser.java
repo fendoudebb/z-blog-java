@@ -21,8 +21,7 @@ import java.util.Set;
 @Entity
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "sys_user",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+@Table(name = "sys_user", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 public class SysUser extends BaseEntity implements UserDetails {
     private static final long serialVersionUID = -5182214462141979431L;
 
