@@ -1,6 +1,7 @@
 package com.msj.blog.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.msj.blog.entity.domain.login.SysUser;
 import com.msj.blog.response.MsgTable;
 import com.msj.blog.response.Response;
 import lombok.Cleanup;
@@ -27,8 +28,9 @@ public class LogoutHandler implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
-        log.info("登出成功");
-
+        SysUser user = (SysUser) authentication.getPrincipal();
+        String name = authentication.getName();
+        log.info("logout success name: [{}], user: [{}]", name, user.getUsername());
         @Cleanup PrintWriter writer = response.getWriter();
         Response<String> res = new Response<>();
         res.setMsg(MsgTable.LOGOUT_SUCCESS);

@@ -27,7 +27,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler{
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
-        log.info("登录验证失败");
+        log.info("login fail [{}:{}]", request.getParameter("username"), request.getParameter("password"));
         response.setContentType("application/json;charset=UTF-8");
         @Cleanup PrintWriter writer = response.getWriter();
         Response<String> res = new Response<>();
