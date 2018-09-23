@@ -23,7 +23,7 @@ public class UserLoginService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("用户名: %s不存在", username));
         }
-        log.info("request param: {} ,and username is {} and password is {}", username, user.getUsername(), user.getPassword());
+        //log.info("request param: {} ,and username is {} and password is {}", username, user.getUsername(), user.getPassword());
         return user;
     }
 }
