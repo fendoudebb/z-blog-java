@@ -19,13 +19,12 @@ import java.util.Set;
 @Entity
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "primary_category",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
+@Table(name = "primary_category")
 public class PrimaryCategory extends BaseEntity {
 
     private static final long serialVersionUID = 2205376374916451004L;
     private Integer sort;//模块排序
-    @Column(name = "name", length = FieldLength.NORMAL, nullable = false)
+    @Column(name = "name", length = FieldLength.NORMAL, nullable = false, unique = true)
     private String name;//模块名字
 
     @OneToMany(mappedBy = "primaryCategory")

@@ -18,8 +18,7 @@ import javax.persistence.*;
 @Entity
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "site",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "url"})})
+@Table(name = "site", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "url"})})
 public class Site extends BaseEntity {
 
     private static final long serialVersionUID = -7660383773690507443L;

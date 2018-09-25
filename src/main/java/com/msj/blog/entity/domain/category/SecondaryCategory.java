@@ -25,8 +25,7 @@ import java.util.Set;
 @Entity
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "secondary_category",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
+@Table(name = "secondary_category")
 public class SecondaryCategory extends BaseEntity {
     private static final long serialVersionUID = -9123364858524160112L;
 
@@ -35,7 +34,7 @@ public class SecondaryCategory extends BaseEntity {
     }
 
     private Integer sort;//分类排序
-    @Column(name = "name", length = FieldLength.NORMAL, nullable = false)
+    @Column(name = "name", length = FieldLength.NORMAL, nullable = false, unique = true)
     private String name;
 
     @ManyToOne

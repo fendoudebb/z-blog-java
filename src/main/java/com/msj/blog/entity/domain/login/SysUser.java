@@ -21,11 +21,11 @@ import java.util.Set;
 @Entity
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "sys_user", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+@Table(name = "sys_user")
 public class SysUser extends BaseEntity implements UserDetails {
     private static final long serialVersionUID = -5182214462141979431L;
 
-    @Column(name = "username", length = FieldLength.NORMAL, nullable = false)
+    @Column(name = "username", length = FieldLength.NORMAL, nullable = false, unique = true)
     private String username;
     @Column(name = "password", length = FieldLength.NORMAL, nullable = false)
     private String password;

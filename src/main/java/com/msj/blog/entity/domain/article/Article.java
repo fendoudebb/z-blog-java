@@ -59,15 +59,15 @@ public class Article extends BaseEntity {
     private SecondaryCategory secondaryCategory;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(columnDefinition = "int(11) not null default 0")
+    @Column(columnDefinition = "tinyint(4) unsigned not null default 0")
     private MarkupLanguage markupLanguage;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(columnDefinition = "int(11) not null default 0")
+    @Column(columnDefinition = "tinyint(4) unsigned not null default 0")
     private AuditStatus auditStatus;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(columnDefinition = "int(11) not null default 0")
+    @Column(columnDefinition = "tinyint(4) unsigned not null default 0")
     private ArticleProperty articleProperty;
 
 }
